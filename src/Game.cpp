@@ -15,7 +15,8 @@ Game::~Game(){
 
 
     //Methods
-void Game::updateSFMLEvents(){
+
+void Game::TestIsClosed(){
     while(this->GameWindow->pollEvent(this->SFML_event)){
         if(this->SFML_event.type == sf::Event::Closed){
             this->GameWindow->close();
@@ -25,7 +26,8 @@ void Game::updateSFMLEvents(){
 }
 
 void Game::update(){
-    this->updateSFMLEvents();
+    this->TestIsClosed();
+
 }
 
 void Game::render(){

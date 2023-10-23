@@ -15,7 +15,7 @@ private:
     sf::RenderWindow *GameWindow;
     sf::Event SFML_event;
 
-    //Inicialization
+    /// @brief Cria um novo objeto do tipo RenderWindow
     void initWindow();
 
 
@@ -29,9 +29,18 @@ public:
 
     //Methods
 
-    void updateSFMLEvents();
+    /// @brief Enquanto houver eventos ocorrendo na janela
+    /// testa se um dos eventos é do tipo Closed(Apertar no x da janela)
+    void TestIsClosed();
+
+    /// @brief Atualiza a janela para cada evento que deve ocorrer
     void update();
+
+    /// @brief Limpa a tela que foi renderizada e em seguida renderiza novas imagens
     void render();
+
+    /// @brief Essa função garante que enquanto o jogo estiver aberto ele continue
+    /// funcionando como deveria
     void run();
 
 };
