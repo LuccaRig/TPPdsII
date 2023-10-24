@@ -31,7 +31,7 @@ public:
 
     /// @brief Enquanto houver eventos ocorrendo na janela
     /// testa se um dos eventos é do tipo Closed(Apertar no x da janela)
-    void TestIsClosed();
+    void testIsClosed();
 
     /// @brief Atualiza a janela para cada evento que deve ocorrer
     void update();
