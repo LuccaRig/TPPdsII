@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -g -Wall -O3 -std=c++20
+CXXFLAGS = -g -Wall -O3 -std=c++11
 INC_DIRS = -I include/ -I third_party/
 LIB_DIRS = -L/usr/lib/x86_64-linux-gnu/
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system
