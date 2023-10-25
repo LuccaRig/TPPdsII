@@ -8,22 +8,22 @@ Tile::~Tile()
 {
 }
 
-bool Tile::IsEmpty()
+bool Tile::isEmpty()
 {
     return false;
 }
 
-bool Tile::Hero_IsInTile()
+bool Tile::hero_IsInTile()
 {
     return false;
 }
 
-bool Tile::Monster_IsInTile()
+bool Tile::monster_IsInTile()
 {
     return false;
 }
 
-bool Tile::Item_IsInTile()
+bool Tile::item_IsInTile()
 {
     return false;
 }

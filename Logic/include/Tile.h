@@ -16,16 +16,16 @@ public:
     ~Tile();
 
     /// @brief Checa se o quadrado está vazio
-    bool IsEmpty();
+    bool isEmpty();
 
     /// @brief Checa se o quadrado tem um heroi
-    bool Hero_IsInTile();
+    bool hero_IsInTile();
 
     /// @brief Checa se o quadrado tem um monstro
-    bool Monster_IsInTile();
+    bool monster_IsInTile();
 
     /// @brief Checa se o quadrado tem um item
-    bool Item_IsInTile();
+    bool item_IsInTile();
 
 };
 
