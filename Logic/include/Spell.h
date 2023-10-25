@@ -3,8 +3,6 @@
 
 #include <string>
 
-#include "Hero.h"
-
 class Spell{
   public:
     
@@ -15,7 +13,7 @@ class Spell{
     ~Spell();
     
     /// @brief Determina o que cada magia faz
-    void SpellsTraits(std::string spell_type_);
+    void GetSpellsTraits();
 
   private:
     std::string spell_type_;
