@@ -20,23 +20,23 @@ public:
     /// @brief Destructor
     ~Board();
 
-    /// @brief Coloca um heroi no tabuleiro PRECONDIÇÃO:lugar que esteja vazio TODO: classe Hero
-    void HeroPutInBoard(/*Hero myHero*/ int linha, int coluna);
+    /// @brief Coloca um heroi no tabuleiro PRECONDIÇÃO:lugar que esteja vazio
+    void heroPutInBoard(std::string Hero, int linha, int coluna);
 
-    /// @brief Move o heroi no tabuleiro PRECONDIÇÃO:lugar que esteja vazio TODO: classe Hero
-    void HeroMoveInBoard(/*Hero myHero*/ int linha, int coluna);
+    /// @brief Move o heroi no tabuleiro PRECONDIÇÃO:lugar que esteja vazio
+    void heroMoveInBoard(std::string Hero, int linha, int coluna);
 
-    /// @brief Coloca um monstro no tabuleiro PRECONDIÇÃO:lugar que esteja vazio TODO: classe Monster
-    void MonsterPutInBoard(/*Monster myMonster*/ int linha, int coluna);
+    /// @brief Coloca um monstro no tabuleiro PRECONDIÇÃO:lugar que esteja vazio
+    void monsterPutInBoard(std::string Hero, int linha, int coluna);
 
-    /// @brief Move um monstro no tabuleiro PRECONDIÇÃO:lugar que esteja vazio TODO: classe Monster
-    void MonsterMoveInBoard(/*Monster myMonster*/ int linha, int coluna);
+    /// @brief Move um monstro no tabuleiro PRECONDIÇÃO:lugar que esteja vazio
+    void monsterMoveInBoard(std::string MonsterType, int linha, int coluna);
 
-    /// @brief Coloca um item no tabuleiro PRECONDIÇÃO:lugar que esteja vazio TODO: classe Item
-    void ItemPutInBoard(/*Item itemDropped*/ int linha, int coluna);
+    /// @brief Coloca um item no tabuleiro PRECONDIÇÃO:lugar que esteja vazio
+    void itemPutInBoard(std::string Item, int linha, int coluna);
 
     /// @brief Checa se ainda existe algum inimigo no tabuleiro
-    bool HordeIsDefeted();
+    bool hordeIsDefeted();
 };
 
 #endif
