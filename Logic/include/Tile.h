@@ -4,13 +4,10 @@
 #include <iostream>
 
 class Tile{
-private:
-    std::string Content_;
-
-public:
+  public:
 
     /// @brief Constructor
-    Tile(std::string Objectflag);
+    Tile(std::string object_flag);
 
     /// @brief Destructor
     ~Tile();
@@ -19,13 +16,16 @@ public:
     bool isEmpty();
 
     /// @brief Checa se o quadrado tem um heroi
-    bool hero_IsInTile();
+    bool heroIsInTile();
 
     /// @brief Checa se o quadrado tem um monstro
-    bool monster_IsInTile();
+    bool monsterIsInTile();
 
     /// @brief Checa se o quadrado tem um item
-    bool item_IsInTile();
+    bool itemIsInTile();
+
+  private:
+    std::string content_;
 
 };
 
