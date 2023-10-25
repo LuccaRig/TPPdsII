@@ -9,7 +9,7 @@
 class Hero{
   public:
 
-    /// @brief Constructor
+    /// @brief Constructor TODO: Atribui os status para cada hero_type_, assim como o spell_type_
     Hero(std::string type);
 
     /// @brief Destructor
@@ -22,7 +22,7 @@ class Hero{
     void HeroAttack();
 
     /// @brief Utiliza a habilidade especial do herói
-    void HeroSpell();
+    void CastSpell();
 
     /// @brief Retorna o nível do herói
     int current_lvl();

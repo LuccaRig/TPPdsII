@@ -3,19 +3,17 @@
 
 #include <string>
 
-#include "Hero.h"
-
 class Spell{
   public:
     
-    /// @brief Constructor
-    Spell(int type); //Atribui ao spell_type_ um inteiro
+    /// @brief Constructor TODO: Atribui ao spell_type_ um inteiro
+    Spell(int type);
 
     /// @brief Destructor
     ~Spell();
     
     /// @brief Determina o que cada magia faz
-    void SpellsTraits(std::string spell_type_);
+    void GetSpellsTraits();
 
   private:
     std::string spell_type_;
