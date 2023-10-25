@@ -24,11 +24,11 @@ class Hero{
     /// @brief Utiliza a habilidade especial do herói
     void HeroSpell();
 
-    /// @brief Determina o nível do herói
+    /// @brief Retorna o nível do herói
     int current_lvl();
 
     /// @brief Aumenta o nível do herói
-    void lvl_up(int Exp);
+    void LvlUp(int Exp);
 
   private:
     struct Status{
@@ -38,7 +38,7 @@ class Hero{
     };
     int exp;
     std::string hero_type;
-    
+    Spell spell_type;
 };
 
 #endif
