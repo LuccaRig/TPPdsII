@@ -1,0 +1,1 @@
+Pasta necessária para a build dos arquivos, permitindo a compilação correta pelo Makefile

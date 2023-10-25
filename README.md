@@ -20,7 +20,11 @@ Como jogador, quero poder controlar 3 diferentes heróis, que me permitam atacar
 
 Como jogador, quero que cada herói seja capaz de utilizar uma magia(habilidade especial), tornando as batalhas contra os monstros mais estratégicas e mais divertidas.
 
-# Instalação e Execução
+# Pasta Logic
+
+Como o trabalho de PDS2 tem a finalidade de testar nossos conhecimentos sobre implementação das classes, métodos e organização de software, percebemos que não havia motivo para implementarmos diretamente a nossa bibilioteca gráfica, ja que ela exige um conhecimento não relacionado ao exigidos pelo trabalho prático(entendimento das bibiliotecas unicas do SFML, renderização e outros). Portanto decidimos criar uma pasta chamada logic que auxiliará na correção pois não terá nada relacionado a bibilioteca gráfica, além de possuir alguns casos de teste que nos ajudará a encontrar alguns erros não perceptíveis na parte gráfica
+
+# Instalação e Execução da parte gráfica
 
 Para conseguir instalar e executar o nosso jogo basta seguir os seguintes passos:
 

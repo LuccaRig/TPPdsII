@@ -2,13 +2,7 @@
 #define BOARD_H
 
 #include "Tile.h"
-
-
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
+#include <vector>
 
 class Board{
 private:
@@ -27,22 +21,22 @@ public:
     ~Board();
 
     /// @brief Coloca um heroi no tabuleiro PRECONDIÇÃO:lugar que esteja vazio TODO: classe Hero
-    void ieroPutInBoard(/*Hero myHero*/ int linha, int coluna);
+    void HeroPutInBoard(/*Hero myHero*/ int linha, int coluna);
 
     /// @brief Move o heroi no tabuleiro PRECONDIÇÃO:lugar que esteja vazio TODO: classe Hero
-    void heroMoveInBoard(/*Hero myHero*/ int linha, int coluna);
+    void HeroMoveInBoard(/*Hero myHero*/ int linha, int coluna);
 
     /// @brief Coloca um monstro no tabuleiro PRECONDIÇÃO:lugar que esteja vazio TODO: classe Monster
-    void monsterPutInBoard(/*Monster myMonster*/ int linha, int coluna);
+    void MonsterPutInBoard(/*Monster myMonster*/ int linha, int coluna);
 
     /// @brief Move um monstro no tabuleiro PRECONDIÇÃO:lugar que esteja vazio TODO: classe Monster
-    void monsterMoveInBoard(/*Monster myMonster*/ int linha, int coluna);
+    void MonsterMoveInBoard(/*Monster myMonster*/ int linha, int coluna);
 
     /// @brief Coloca um item no tabuleiro PRECONDIÇÃO:lugar que esteja vazio TODO: classe Item
-    void itemPutInBoard(/*Item itemDropped*/ int linha, int coluna);
+    void ItemPutInBoard(/*Item itemDropped*/ int linha, int coluna);
 
     /// @brief Checa se ainda existe algum inimigo no tabuleiro
-    bool hordeIsDefeted();
+    bool HordeIsDefeted();
 };
 
 #endif
