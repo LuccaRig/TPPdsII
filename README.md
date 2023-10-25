@@ -21,6 +21,10 @@ Como jogador, quero poder controlar 3 diferentes heróis, que me permitam atacar
 
 Como jogador, quero ser capaz de enfrentar e derrotar diferentes tipos de monstros (todos capazes de se movimentar), cada um dotado de características específicas relacionadas ao número de pontos de vida, quantidade de dano do ataque e aparência estética. Além disso, ao serem derrotados, quero que os monstros deixem experiência para ser coletada e deve existir uma chance de eles deixarem um item vantajoso ao herói que coletá-lo.
 
+### Itens
+
+Como jogador, quero que meus heróis possam coletar itens que esporadicamente são deixados por monstros no local onde foram derrotados. Adicionalmente, quero que o item proporcione alguma vantagem ao herói que o coletou, como um aumento nos seus pontos de vida, um aumento na quantidade de dano infligido pelo seu ataque normal ou especial.
+
 ### Spells
 
 Como jogador, quero que cada herói seja capaz de utilizar uma magia(habilidade especial), tornando as batalhas contra os monstros mais estratégicas e mais divertidas.
