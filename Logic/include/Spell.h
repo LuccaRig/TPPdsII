@@ -6,8 +6,8 @@
 class Spell{
   public:
     
-    /// @brief Constructor
-    Spell(int type); //Atribui ao spell_type_ um inteiro
+    /// @brief Constructor TODO: Atribui ao spell_type_ um inteiro
+    Spell(int type);
 
     /// @brief Destructor
     ~Spell();
