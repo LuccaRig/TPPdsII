@@ -63,3 +63,31 @@ Para compilar e executar é necessário estar no diretório onde o repositório 
 ```
 
 Se tudo estiver correto uma janela com o jogo funcionando deverá ser aberta, Divirta-se 😉
+
+
+## Colaboradores
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="#">
+        <sub>
+          <b><a href="https://github.com/LuccaRig">Lucca Rigueira</a></b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="#">
+        <sub>
+          <b><a href="https://github.com/DaviZTS">Davi Zumpano</a></b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="#">
+        <sub>
+          <b><a href="https://github.com/pedr0caversan">Pedro Caversan</a></b>
+        </sub>
+      </a>
+  </tr>
+</table>

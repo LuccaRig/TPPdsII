@@ -13,17 +13,17 @@ bool Tile::isEmpty()
     return false;
 }
 
-bool Tile::hero_IsInTile()
+bool Tile::heroIsInTile()
 {
     return false;
 }
 
-bool Tile::monster_IsInTile()
+bool Tile::monsterIsInTile()
 {
     return false;
 }
 
-bool Tile::item_IsInTile()
+bool Tile::itemIsInTile()
 {
     return false;
 }
