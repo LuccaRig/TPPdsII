@@ -11,3 +11,11 @@ Como jogador, busco um jogo divertido e estratégico, no qual sou capaz de derro
 ### Board
 
 Como jogador, devo ser capaz de me locomover na masmorra, por isso será utizado um tabuleiro quadriculado 5x5, e com isso serei capaz de realizar minhas ações clicando no mapa e ver meus inimigos se aproximando dos meus personagens para me preparar contra o perigo. 
+
+### Hero
+
+Como jogador, quero poder controlar 3 diferentes heróis, que me permitam atacar os monstros de formas diferentes ao entender as características de cada herói. Também sendo capaz de movimentar meus heróis e utilizar habilidades especiais com cada um deles.
+
+### Spells
+
+Como jogador, quero que cada herói seja capaz de utilizar uma magia(habilidade especial), tornando as batalhas contra os monstros mais estratégicas e mais divertidas.
