@@ -1,3 +1,4 @@
+
 # TPPdsII
 Esse repositório tem a finalidade de realizar um controle de versão do código feito para a disciplina PDS2, além disso ele está sendo utilizado para a correção e acompanhamento do projeto pelo monitor/professor. Nosso projeto tem como objetivo colocar em prática os conceitos aprendidos durante o semestre, como Classes, Herança, Vetores, Polimorfismo e técnicas de desenvolvimento de software mais eficientes. Para isso decidimos criar um jogo de estratégia estilo RPG e incluimos uma bibilioteca gráfica, para auxiliar na visualização dos objetos do jogo, além de tornar a experiência de desenvolvimento mais completa.      
 
@@ -15,6 +16,10 @@ Como jogador, devo ser capaz de me locomover na masmorra, por isso será utizado
 ### Hero
 
 Como jogador, quero poder controlar 3 diferentes heróis, que me permitam atacar os monstros de formas diferentes ao entender as características de cada herói. Também sendo capaz de movimentar meus heróis e utilizar habilidades especiais com cada um deles.
+
+### Monster
+
+Como jogador, quero ser capaz de enfrentar e derrotar diferentes tipos de monstros (todos capazes de se movimentar), cada um dotado de características específicas relacionadas ao número de pontos de vida, quantidade de dano do ataque e aparência estética. Além disso, ao serem derrotados, quero que os monstros deixem experiência para ser coletada e deve existir uma chance de eles deixarem um item vantajoso ao herói que coletá-lo.
 
 ### Spells
 
