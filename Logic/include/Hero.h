@@ -3,37 +3,42 @@
 
 #include <string>
 
-class Hero{
-private:
-    struct Status{
-        int HP;
-        int Attack;
-        int Defense;
-        int SpecialAttack;
-    };
-    int Exp;
-    std::string HeroType;
+#include "Board.h"
+#include "Spell.h"
 
-public:
+class Hero{
+  public:
 
     /// @brief Constructor
-    Hero(std::string Type);
+    Hero(std::string type);
 
     /// @brief Destructor
     ~Hero();
 
+    /// @brief Move o herói para um número determinado de casas adjacentes
+    void HeroMove();
+
     /// @brief Ataca uma das 4 casas adjacentes ao herói
-    void heroAttack();
+    void HeroAttack();
 
     /// @brief Utiliza a habilidade especial do herói
-    void heroSpell();
+    void HeroSpell();
 
     /// @brief Determina o nível do herói
-    int currentLvl();
+    int current_lvl();
 
     /// @brief Aumenta o nível do herói
-    void lvlUp(int Exp);
+    void lvl_up(int Exp);
 
+  private:
+    struct Status{
+        int hp;
+        int attack;
+        int special_attack;
+    };
+    int exp;
+    std::string hero_type;
+    
 };
 
 #endif
