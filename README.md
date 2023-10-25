@@ -1,8 +1,8 @@
-## TPPdsII
+# TPPdsII
 Esse repositório tem a finalidade de realizar um controle de versão do código feito para a disciplina PDS2, além disso ele está sendo utilizado para a correção e acompanhamento do projeto pelo monitor/professor. Nosso projeto tem como objetivo colocar em prática os conceitos aprendidos durante o semestre, como Classes, Herança, Vetores, Polimorfismo e técnicas de desenvolvimento de software mais eficientes. Para isso decidimos criar um jogo de estratégia estilo RPG e incluimos uma bibilioteca gráfica, para auxiliar na visualização dos objetos do jogo, além de tornar a experiência de desenvolvimento mais completa.      
 
 
-## User Storys
+# User Storys
 
 ### Game
 
@@ -19,3 +19,40 @@ Como jogador, quero poder controlar 3 diferentes heróis, que me permitam atacar
 ### Spells
 
 Como jogador, quero que cada herói seja capaz de utilizar uma magia(habilidade especial), tornando as batalhas contra os monstros mais estratégicas e mais divertidas.
+
+# Instalação e Execução
+
+Para conseguir instalar e executar o nosso jogo basta seguir os seguintes passos:
+
+AVISO: Nosso projeto está feito para funcionar exclusivamente em linux, não fizemos testes nem desenvolvemos nenhuma forma do código ser executado no windows 
+
+Instalar a bibilioteca gráfica SFML no terminal linux:
+
+```
+    sudo apt-get install libsfml-dev
+```
+
+*Link do Site oficial do SFML: https://www.sfml-dev.org/tutorials/2.6/start-linux.php
+
+Logo em seguida é necessário fazer um clone do repositório do projeto:
+
+```
+    git clone https://github.com/LuccaRig/TPPdsII.git
+```
+
+
+Para compilar e executar é necessário estar no diretório onde o repositório foi clonado e em seguida executar os comandos:
+
+```
+    make clean
+```
+
+```
+    make
+```
+
+```
+    ./Game.app
+```
+
+Se tudo estiver correto uma janela com o jogo funcionando deverá ser aberta, Divirta-se 😉
