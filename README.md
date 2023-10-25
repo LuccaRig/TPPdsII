@@ -3,7 +3,7 @@
 Esse repositório tem a finalidade de realizar um controle de versão do código feito para a disciplina PDS2, além disso ele está sendo utilizado para a correção e acompanhamento do projeto pelo monitor/professor. Nosso projeto tem como objetivo colocar em prática os conceitos aprendidos durante o semestre, como Classes, Herança, Vetores, Polimorfismo e técnicas de desenvolvimento de software mais eficientes. Para isso decidimos criar um jogo de estratégia estilo RPG e incluimos uma bibilioteca gráfica, para auxiliar na visualização dos objetos do jogo, além de tornar a experiência de desenvolvimento mais completa.
 
 
-Checar a Pasta logic para correção da entrega no dia 27/10(Arquivos .h e cartões CRC estão nela)
+**CHECAR A PASTA LOGIC PARA A ENTREGA DO DIA 27/10(Arquivos .h e cartões CRC estão nela)**
 
 
 # User Storys
@@ -33,6 +33,8 @@ Como jogador, quero que meus heróis possam coletar itens que esporadicamente s�
 Como jogador, quero que cada herói seja capaz de utilizar uma magia(habilidade especial), tornando as batalhas contra os monstros mais estratégicas e mais divertidas.
 
 # Pasta Logic
+
+*Ainda não está funcional*
 
 Como o trabalho de PDS2 tem a finalidade de testar nossos conhecimentos sobre implementação das classes, métodos e organização de software, percebemos que não havia motivo para implementarmos diretamente a nossa bibilioteca gráfica, ja que ela exige um conhecimento não relacionado ao exigidos pelo trabalho prático(entendimento das bibiliotecas unicas do SFML, renderização e outros). Portanto decidimos criar uma pasta chamada logic que auxiliará na correção pois não terá nada relacionado a bibilioteca gráfica, além de possuir alguns casos de teste que nos ajudará a encontrar alguns erros não perceptíveis na parte gráfica
 
