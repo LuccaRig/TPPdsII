@@ -34,11 +34,11 @@ Como jogador, quero que cada herói seja capaz de utilizar uma magia(habilidade 
 
 # Pasta Logic
 
-*Ainda não está funcional*
-
 Como o trabalho de PDS2 tem a finalidade de testar nossos conhecimentos sobre implementação das classes, métodos e organização de software, percebemos que não havia motivo para implementarmos diretamente a nossa bibilioteca gráfica, ja que ela exige um conhecimento não relacionado ao exigidos pelo trabalho prático(entendimento das bibiliotecas unicas do SFML, renderização e outros). Portanto decidimos criar uma pasta chamada logic que auxiliará na correção pois não terá nada relacionado a bibilioteca gráfica, além de possuir alguns casos de teste que nos ajudará a encontrar alguns erros não perceptíveis na parte gráfica
 
 # Instalação e Execução da parte gráfica
+
+*Ainda não está funcional*
 
 Para conseguir instalar e executar o nosso jogo basta seguir os seguintes passos:
 
