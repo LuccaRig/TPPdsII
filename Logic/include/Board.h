@@ -33,6 +33,10 @@ class Board{
     /// @brief Checa se ainda existe algum inimigo no tabuleiro
     bool hordeIsDefeted();
 
+    /// @brief acha um heroi no tabuleiro para o monstro seguir
+    /// @return retona as cordenadas no tabuleiro que está o heroi
+    std::vector<int> findHeroPosition(); 
+
   private:
 
     /// @brief Matriz que armazena os Tiles no tabuleiro, linha/coluna

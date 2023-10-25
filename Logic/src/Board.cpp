@@ -32,3 +32,8 @@ bool Board::hordeIsDefeted()
 {
     return false;
 }
+
+std::vector<int> Board::findHeroPosition()
+{
+    return std::vector<int>();
+}
