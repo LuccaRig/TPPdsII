@@ -7,6 +7,12 @@
 class Board{
   public:
 
+    
+    /// TODO: criar um função que tira do tabuleiro heróis e monstros que foram mortos. A função só vai ser chamada se eles estiverem 
+    // mortos, então não precisa testar isso. Vale lembrar que algo tem que ser feito em relação ao drop de itens dos monstros nessa função
+    /// TODO: monsterMoveInBoard não deve precisar de parâmetros de posição para onde mover, a própria função deve descobrir o melhor lugar
+    // para onde o monstro vai se mover.
+
     //Exemplo para acessar o estado de um Tile: MyBoard[1][2].Hero_IsInTile -> checa se o quadrado tem um heroi 
 
     /// @brief Constructor: Cria o tabuleiro e cria os Tiles como vazios inicialmente
