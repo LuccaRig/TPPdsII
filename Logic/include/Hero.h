@@ -15,6 +15,12 @@ class Hero{
     /// @brief Destructor
     ~Hero();
 
+    /// @brief Retorna a vida do herói
+    int current_hero_hp();
+
+    /// @brief Altera o hp atual do herói
+    void modify_hero_hp(int changed_hp);
+
     /// @brief Move o herói para um número determinado de casas adjacentes
     void HeroMove();
 
@@ -28,7 +34,7 @@ class Hero{
     int current_lvl(int Exp);
 
     /// @brief Aumenta o nível do herói
-    void LvlUp();
+    void LvlUp(int lvl);
 
   private:
     struct Status{
