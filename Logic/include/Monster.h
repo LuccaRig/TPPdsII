@@ -19,19 +19,23 @@ class Monster {
     ~Monster();
     
     /// @brief movimenta o monstro para uma posição mais próxima de um herói. PRECONDIÇÃO: nenhum herói está a alcance de ataque
-    void move_this_monster();
+    void moveThisMonster();
 
     /// @brief ataca o herói. PRECONDIÇÃO: algum herói está a alcance de ataque 
-    void attack_hero();
+    void attackHero(Hero);
+
+    /// @brief  permite que o monstro perca pontos de vida
+    /// @param  dano recebido
+    void monsterGetDamaged(int);
 
     /// @brief determina se um item será deixado pelo monstro e qual.
-    void decide_monster_item();
+    void decideMonsterItem();
 
     /// @return retorna true se o monstro estiver morto e false se não estiver.
-    bool monster_is_dead();
+    bool monsterIsDead();
 
     /// @return retorna o número de experiência que o monstro dará quando for derrotado
-    int return_exp_drop();
+    int returnExpDrop();
 
 
     // aqui será construído um item e monster_item_drop_ será igualado à função returns_random_item
@@ -40,7 +44,7 @@ class Monster {
     int monster_hp_;
     int monster_dmg_;
     int monster_exp_drop_;
-    std::string monster_item_drop_;
+    std::string monster_item_;
 
 
 };
