@@ -8,6 +8,10 @@ Tile::~Tile()
 {
 }
 
+void Tile::setObjectInTile()
+{
+}
+
 bool Tile::isEmpty()
 {
     return false;
