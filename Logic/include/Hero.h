@@ -4,7 +4,7 @@
 #include <string>
 
 #include "Board.h"
-#include "Spell.h"
+#include "Skill.h"
 
 class Hero{
   public:
@@ -22,7 +22,7 @@ class Hero{
     void HeroAttack();
 
     /// @brief Utiliza a habilidade especial do herói
-    void CastSpell();
+    void UseSkill();
 
     /// @brief Retorna o nível do herói
     int current_lvl(int Exp);
@@ -38,7 +38,7 @@ class Hero{
     };
     std::string hero_type_;
     int exp_;
-    Spell spell_type_;
+    Skill skill_type_;
 };
 
 #endif

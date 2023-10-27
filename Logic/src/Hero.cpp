@@ -6,18 +6,21 @@ Hero::Hero(std::string type)
 
     if (hero_type_ == "knight") {
         Status.hp_ = 25;
-        Status.attack_ = 5;
+        Status.attack_ = 7;
         Status.special_attack_ = 5;
+        skill_type_(knight);
     }
     else if (hero_type_ == "rogue"){
         Status.hp_ = 10;
-        Status.attack_ = 10;
+        Status.attack_ = 12;
         Status.special_attack_ = 5;
+        skill_type_(rogue);
     }
     else if (hero_type_ == "mage"){
         Status.hp_ = 15;
         Status.attack_ = 5;
         Status.special_attack_ = 15;
+        skill_type_(mage);
     }
 }
 
@@ -36,7 +39,7 @@ void Hero::HeroAttack()
 
 }
 
-void Hero::CastSpell()
+void Hero::()
 {
 
 }
