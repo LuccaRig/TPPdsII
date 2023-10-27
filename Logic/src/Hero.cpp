@@ -1,4 +1,5 @@
 #include "Hero.h"
+#include "Monster.h"
 
 Hero::Hero(std::string type)
 {
@@ -48,10 +49,11 @@ void Hero::HeroAttack()
 {
 
 }
-
+    /// TODO: implementar a vida tirada do alvo
 void Hero::UseSkill()
 {
-
+    Status.hp_ += skill_type_.skill_heal;
+    Status.attack_ += skill_type_.skill_buff;
 }
 
 int Hero::current_lvl(int experience)
