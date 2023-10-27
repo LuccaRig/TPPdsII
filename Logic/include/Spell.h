@@ -17,8 +17,11 @@ class Spell{
 
   private:
     std::string spell_type_;
-    int spell_damage_;
-    int spell_effect_;
+    
+    struct spellStatus{
+      int hp_;
+      int attack_;
+    };
 
 };
 

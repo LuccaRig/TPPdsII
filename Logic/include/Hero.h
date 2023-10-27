@@ -25,20 +25,20 @@ class Hero{
     void CastSpell();
 
     /// @brief Retorna o nível do herói
-    int current_lvl();
+    int current_lvl(int Exp);
 
     /// @brief Aumenta o nível do herói
-    void LvlUp(int Exp);
+    void LvlUp();
 
   private:
     struct Status{
-        int hp;
-        int attack;
-        int special_attack;
+        int hp_;
+        int attack_;
+        int special_attack_;
     };
-    int exp;
-    std::string hero_type;
-    Spell spell_type;
+    std::string hero_type_;
+    int exp_;
+    Spell spell_type_;
 };
 
 #endif
