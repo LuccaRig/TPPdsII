@@ -3,7 +3,7 @@
 Esse repositório tem a finalidade de realizar um controle de versão do código feito para a disciplina PDS2, além disso ele está sendo utilizado para a correção e acompanhamento do projeto pelo monitor/professor. Nosso projeto tem como objetivo colocar em prática os conceitos aprendidos durante o semestre, como Classes, Herança, Vetores, Polimorfismo e técnicas de desenvolvimento de software mais eficientes. Para isso decidimos criar um jogo de estratégia estilo RPG e incluimos uma bibilioteca gráfica, para auxiliar na visualização dos objetos do jogo, além de tornar a experiência de desenvolvimento mais completa.
 
 
-**CHECAR A PASTA LOGIC PARA A ENTREGA DO DIA 27/10(Arquivos .h da lógica do jogo estão nela estão nela)**
+**CHECAR A PASTA LOGIC PARA A ENTREGA DO DIA 27/10(Arquivos .h da lógica do jogo estão nela)**
 
 
 # User Storys
