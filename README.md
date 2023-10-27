@@ -38,7 +38,7 @@ Como o trabalho de PDS2 tem a finalidade de testar nossos conhecimentos sobre im
 
 # Instalação e Execução da parte gráfica
 
-*Ainda não está funcional*
+*Ja é possível abrir a janela de execução do jogo e observar os sprites que estão sendo utilizados, mas ainda não existe nenhuma feature de jogabilidade*
 
 Para conseguir instalar e executar o nosso jogo basta seguir os seguintes passos:
 
