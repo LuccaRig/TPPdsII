@@ -2,13 +2,7 @@
 
 void Game::initWindow(){
     this->GameWindow = new sf::RenderWindow(sf::VideoMode(800, 600), "My Game");
-    this->GameWindow->setPosition(sf::Vector2i(0,0));
-
-    background_.loadFromFile("Resources/SpritesTobeUsed.png");
-    this->background_pointer = new sf::Sprite;
-    
-    this->background_pointer->setTexture(background_);
-
+    this->gameBoard = new Board();
 }
 
 Game::Game(){
@@ -17,6 +11,7 @@ Game::Game(){
 
 Game::~Game(){
     delete this->GameWindow;
+    delete this->gameBoard;
 }
 
 
@@ -38,7 +33,29 @@ void Game::update(){
 
 void Game::render(){
     this->GameWindow->clear();
-    this->GameWindow->draw(*(this->background_pointer));
+
+    //Renderização do tabuleiro:
+
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            Tile* currentTile = this->gameBoard->getTileAt(i, j);
+
+            sf::RectangleShape tileShape(sf::Vector2f(currentTile->getTileSize(), currentTile->getTileSize()));
+            tileShape.setPosition(i * currentTile->getTileSize(), j * currentTile->getTileSize());
+
+            //Define a cor do quadrado como preto
+            tileShape.setFillColor(sf::Color::Black);
+
+            //Define a cor da borda como branca
+            tileShape.setOutlineThickness(currentTile->getTileBorderSize());
+            tileShape.setOutlineColor(sf::Color::White);
+
+            //Desenha o quadrado na janela
+            this->GameWindow->draw(tileShape);
+        }
+    }
+
+
     this->GameWindow->display();
     
 }

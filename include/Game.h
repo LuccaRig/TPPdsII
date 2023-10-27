@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "Board.h"
+
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -13,9 +15,8 @@ class Game{
 private:
     //Variables
     sf::RenderWindow *GameWindow;
-    sf::Texture background_;
-    sf::Sprite *background_pointer;
     sf::Event SFML_event;
+    Board *gameBoard;
 
     /// @brief Cria um novo objeto do tipo RenderWindow
     void initWindow();
