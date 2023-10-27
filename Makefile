@@ -1,20 +1,29 @@
 CXX = g++
 CXXFLAGS = -g -Wall -O3 -std=c++11
-INC_DIRS = -I include/ -I third_party/
+INC_DIRS = -I include/
 LIB_DIRS = -L/usr/lib/x86_64-linux-gnu/
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system
 
-OBJS = build/Game.o build/main.o
+SRCDIR = src
+OBJDIR = build
+INCLUDEDIR = include
+SOURCES = $(wildcard $(SRCDIR)/*.cpp)
+OBJECTS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SOURCES))
 
-main: $(OBJS)
-	$(CXX) $(OBJS) -o Game.app $(LIB_DIRS) $(LIBS)
+EXECUTABLE = Game.app
 
-build/Game.o: src/Game.cpp
-	$(CXX) $(CXXFLAGS) $(INC_DIRS) -c -o $@ $<
+.PHONY: all clean
 
-build/main.o: src/main.cpp
-	$(CXX) $(CXXFLAGS) $(INC_DIRS) -c -o $@ $<
+all: $(EXECUTABLE)
 
-.PHONY: clean
+$(EXECUTABLE): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $(LIB_DIRS) $^ -o $@ $(LIBS)
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp | $(OBJDIR)
+	$(CXX) $(CXXFLAGS) $(INC_DIRS) -c $< -o $@
+
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+
 clean:
-	rm -f $(OBJS) Game.app
+	-rm -rf $(OBJDIR) $(EXECUTABLE)
