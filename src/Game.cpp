@@ -40,8 +40,17 @@ void Game::render(){
         for (int j = 0; j < 5; j++) {
             Tile* currentTile = this->gameBoard->getTileAt(i, j);
 
+            //Transformar o tamanho do tabuleiro em pixels
+            int board_width_pixels = currentTile->getTileSize() * 5;
+            int board_height_pixels = currentTile->getTileSize() * 5;
+
+            //Calcula as coordenadas para posicionar o tabuleiro no centro da janela
+            int board_positionX = (this->GameWindow->getSize().x - board_width_pixels) / 2;
+            int board_positionY = (this->GameWindow->getSize().y - board_height_pixels) / 2;
+
             sf::RectangleShape tileShape(sf::Vector2f(currentTile->getTileSize(), currentTile->getTileSize()));
-            tileShape.setPosition(i * currentTile->getTileSize(), j * currentTile->getTileSize());
+            tileShape.setPosition(board_positionX + i * currentTile->getTileSize(), 
+                                  board_positionY + j * currentTile->getTileSize());
 
             //Define a cor do quadrado como preto
             tileShape.setFillColor(sf::Color::Black);
@@ -54,6 +63,8 @@ void Game::render(){
             this->GameWindow->draw(tileShape);
         }
     }
+
+    //Fim da renderização do tabuleiro
 
 
     this->GameWindow->display();
