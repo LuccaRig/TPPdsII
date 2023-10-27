@@ -28,7 +28,7 @@ class Board{
     void monsterMoveInBoard(std::string monster_type, int linha, int coluna);
 
     /// @brief Coloca um item no tabuleiro PRECONDIÇÃO:lugar que esteja vazio 
-    void itemPutInBoard(std::string item, int linha, int coluna);
+    void itemPutInBoard(std::string item_type, int linha, int coluna);
 
     /// @brief Checa se ainda existe algum inimigo no tabuleiro
     bool hordeIsDefeted();
@@ -39,7 +39,8 @@ class Board{
 
   private:
 
-    /// @brief Matriz que armazena os Tiles no tabuleiro, linha/coluna
+    /// @brief Matriz que armazena os Tiles, cada Tile tem um conteúdo para distinguir
+    /// qual objeto está em cima dele
     std::vector<std::vector<Tile>> MyBoard[5][5];
 };
 

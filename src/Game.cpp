@@ -2,6 +2,12 @@
 
 void Game::initWindow(){
     this->GameWindow = new sf::RenderWindow(sf::VideoMode(800, 600), "My Game");
+    this->GameWindow->setPosition(sf::Vector2i(0,0));
+
+    background_.loadFromFile("Resources/SpritesTobeUsed.png");
+    this->background_pointer = new sf::Sprite;
+    
+    this->background_pointer->setTexture(background_);
 
 }
 
@@ -32,7 +38,7 @@ void Game::update(){
 
 void Game::render(){
     this->GameWindow->clear();
-
+    this->GameWindow->draw(*(this->background_pointer));
     this->GameWindow->display();
     
 }

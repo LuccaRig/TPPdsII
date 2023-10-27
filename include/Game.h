@@ -13,6 +13,8 @@ class Game{
 private:
     //Variables
     sf::RenderWindow *GameWindow;
+    sf::Texture background_;
+    sf::Sprite *background_pointer;
     sf::Event SFML_event;
 
     /// @brief Cria um novo objeto do tipo RenderWindow
