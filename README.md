@@ -28,9 +28,9 @@ Como jogador, quero ser capaz de enfrentar e derrotar diferentes tipos de monstr
 
 Como jogador, quero que meus heróis possam coletar itens que esporadicamente são deixados por monstros no local onde foram derrotados. Adicionalmente, quero que o item proporcione alguma vantagem ao herói que o coletou, como um aumento nos seus pontos de vida, um aumento na quantidade de dano infligido pelo seu ataque normal ou especial.
 
-### Spells
+### Skills
 
-Como jogador, quero que cada herói seja capaz de utilizar uma magia(habilidade especial), tornando as batalhas contra os monstros mais estratégicas e mais divertidas.
+Como jogador, quero que cada herói seja capaz de utilizar uma habilidade especial, tornando as batalhas contra os monstros mais estratégicas e mais divertidas.
 
 # Pasta Logic
 
