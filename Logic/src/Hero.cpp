@@ -29,6 +29,16 @@ Hero::~Hero()
 
 }
 
+int Hero::current_hero_hp()
+{
+    return Status.hp_;
+}
+
+void Hero::modify_hero_hp(int changed_hp)
+{
+    Status.hp_ += changed_hp;
+}
+
 void Hero::HeroMove()
 {
 
@@ -39,7 +49,7 @@ void Hero::HeroAttack()
 
 }
 
-void Hero::()
+void Hero::UseSkill()
 {
 
 }
@@ -61,7 +71,7 @@ int Hero::current_lvl(int experience)
     }
 }
 
-void Hero::LvlUp()
+void Hero::LvlUp(int lvl)
 {
     
 }
