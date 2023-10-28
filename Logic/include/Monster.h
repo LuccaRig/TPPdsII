@@ -24,8 +24,8 @@ class Monster {
     /// @brief ataca o herói. PRECONDIÇÃO: algum herói está a alcance de ataque 
     void attackHero(Hero);
 
-    /// @brief  permite que o monstro perca pontos de vida
-    /// @param  dano recebido
+    /// @brief  adiciona o valor recebido em pontos de vida para o monstro. PRECONDIÇÃO: parâmetro deve ser valor negativo 
+    /// @param  attack_ do herói
     void monsterGetDamaged(int);
 
     /// @brief determina se um item será deixado pelo monstro e qual.
