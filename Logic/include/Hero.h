@@ -42,8 +42,11 @@ class Hero{
         int attack_;
         int special_attack_;
     };
+
     std::string hero_type_;
+
     int exp_;
+    
     Skill skill_type_;
 };
 

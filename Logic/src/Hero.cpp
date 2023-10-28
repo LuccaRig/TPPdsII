@@ -3,6 +3,7 @@
 
 Hero::Hero(std::string type)
 {
+    exp_ = 0;
     hero_type_ = type;
 
     if (hero_type_ == "knight") {
