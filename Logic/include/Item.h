@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 
 class Item {
@@ -14,7 +15,7 @@ class Item {
 
     /// @returns retorna um tipo de item ou uma string vazia significando nenhum item. Os itens serão
     /// construídos e nomeados dentro da própria função 
-    std::string returns_random_item;
+    std::string returnsRandomItem();
 
   private:
     

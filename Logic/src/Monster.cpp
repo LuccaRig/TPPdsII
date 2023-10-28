@@ -11,12 +11,12 @@
 
     void Monster::attackHero(Hero heroi) 
     {
-        // heroi.heroGetDamaged(monster_dmg_)
+        heroi.modify_hero_hp(monster_dmg_);
     }
 
     void Monster::monsterGetDamaged(int dano) 
     {
-        monster_hp_ -= dano;
+        monster_hp_ += dano;
     }
 
     void Monster::decideMonsterItem()
