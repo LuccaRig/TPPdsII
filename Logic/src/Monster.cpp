@@ -1,5 +1,10 @@
-#include "Monster.h"
+#include <string>
 
+#include "Board.h"
+#include "Tile.h"
+#include "Item.h"
+#include "Hero.h"
+#include "Monster.h"
 
 
     void Monster::moveThisMonster()
