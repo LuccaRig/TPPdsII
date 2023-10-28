@@ -1,5 +1,5 @@
-#ifndef ITEM_H
-#define ITEM_H
+#ifndef ITEM_H_
+#define ITEM_H_
 
 #include <string>
 #include <vector>
@@ -23,4 +23,4 @@ class Item {
     
 };
 
-#endif
+#endif // ITEM_H_
