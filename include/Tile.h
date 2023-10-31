@@ -15,7 +15,7 @@ class Tile{
     /// @brief Modifica o valor do conteúdo do Tile
     void setObjectInTile();
 
-    /// @brief Retorna qual o conteúdo do Tile Atuala 
+    /// @brief Retorna qual o conteúdo do Tile Atual
     void getObjectInTile();
 
     /// @brief Retorna o tamanho do lado do Tile

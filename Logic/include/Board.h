@@ -27,11 +27,17 @@ class Board{
     /// @brief Move o heroi no tabuleiro PRECONDIÇÃO:lugar que esteja vazio
     void heroMoveInBoard(std::string hero_type, int linha, int coluna);
 
+    /// @param monster_type_code Esse é o tipo e o número do monstro para diferenciarmos diferentes monstros
+    /// e suas posições no tabuleiro 
     /// @brief Coloca um monstro no tabuleiro PRECONDIÇÃO:lugar que esteja vazio
-    void monsterPutInBoard(std::string monster_type, int linha, int coluna);
+    void monsterPutInBoard(std::string monster_type_code, int linha, int coluna);
 
-    /// @brief Move um monstro no tabuleiro PRECONDIÇÃO:lugar que esteja vazio e não fora do tabuleiro
-    void monsterMoveInBoard(std::string monster_type, int linha, int coluna);
+    /// @param monster_type_code Esse é o tipo e o número do monstro para diferenciarmos diferentes monstros
+    /// e suas posições no tabuleiro
+    /// @param hero_position Esse valor é o local para onde o monstro deve se mover, esse valor é encontrado
+    /// por meio da função findHeroPosition() 
+    /// @brief Move um monstro no tabuleiro PRECONDIÇÃO: lugar que esteja vazio e não fora do tabuleiro
+    void monsterMoveInBoard(std::string monster_type_code, std::vector<int> hero_position);
 
     /// @brief Coloca um item no tabuleiro PRECONDIÇÃO:lugar que esteja vazio 
     void itemPutInBoard(std::string item_type, int linha, int coluna);
