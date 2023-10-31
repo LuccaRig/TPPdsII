@@ -20,7 +20,7 @@ void Board::monsterPutInBoard(std::string Hero, int linha, int coluna)
 {
 }
 
-void Board::monsterMoveInBoard(std::string MonsterType, int linha, int coluna)
+void Board::monsterMoveInBoard(std::string MonsterType, std::vector<int> hero_position)
 {
 }
 
