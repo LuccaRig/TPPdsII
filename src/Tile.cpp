@@ -1,5 +1,7 @@
 #include "Tile.h"
 
+#include <iostream>
+
 Tile::Tile(){
     this->content_ = "vazio";
     this->tile_size_ = 60;

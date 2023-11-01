@@ -1,5 +1,8 @@
 #include "Board.h"
 
+#include <vector>
+#include <iostream>
+
 Board::Board() {
     MyBoard.resize(5, std::vector<Tile*>(5, nullptr));
     for (int i = 0;i < 5;i++) {

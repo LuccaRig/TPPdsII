@@ -1,15 +1,15 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef GAME_H_
+#define GAME_H_
 
 #include <iostream>
-
-#include "Board.h"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
+
+#include "Board.h"
 
 class Game{
 private:
