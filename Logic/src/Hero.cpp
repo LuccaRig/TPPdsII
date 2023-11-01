@@ -14,19 +14,19 @@ Hero::Hero(std::string type)
         hero_hp_ = 25;
         hero_attack_ = 7;
         hero_special_attack_ = 5;
-        skill_type_("knight");
+        skill_("knight");
     }
     else if (hero_type_ == "rogue"){
         hero_hp_ = 10;
         hero_attack_ = 12;
         hero_special_attack_ = 5;
-        skill_type_("rogue");
+        skill_("rogue");
     }
     else if (hero_type_ == "mage"){
         hero_hp_ = 15;
         hero_attack_ = 5;
         hero_special_attack_ = 15;
-        skill_type_("mage");
+        skill_("mage");
     }
 }
 
@@ -57,8 +57,8 @@ void Hero::HeroAttack()
     /// TODO: implementar a vida tirada do alvo
 void Hero::UseSkill()
 {
-    hero_hp_ += skill_type_.skill_heal();
-    hero_attack_ += skill_type_.skill_buff();
+    hero_hp_ += skill_.skill_heal();
+    hero_attack_ += skill_.skill_buff();
 }
 
 void Hero::UseItem(Item dropped_item)

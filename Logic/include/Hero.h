@@ -5,6 +5,7 @@
 
 #include "Board.h"
 #include "Skill.h"
+#include "Item.h"
 
 class Hero{
 
@@ -46,7 +47,7 @@ class Hero{
     int hero_special_attack_;
     int exp_;
     std::string hero_type_;
-    Skill skill_type_;
+    Skill skill_;
 };
 
 #endif // HERO_H_
