@@ -1,5 +1,5 @@
-#ifndef HERO_H
-#define HERO_H
+#ifndef HERO_H_
+#define HERO_H_
 
 #include <string>
 
@@ -7,6 +7,7 @@
 #include "Skill.h"
 
 class Hero{
+
   public:
 
     /// @brief Constructor TODO: Atribui os status para cada hero_type_, assim como o spell_type_
@@ -15,7 +16,7 @@ class Hero{
     /// @brief Destructor
     ~Hero();
 
-    /// @brief Retorna a vida do herói
+    /// @return Retorna a vida do herói
     int current_hero_hp();
 
     /// @brief Altera o hp atual do herói
@@ -30,24 +31,19 @@ class Hero{
     /// @brief Utiliza a habilidade especial do herói
     void UseSkill();
 
-    /// @brief Retorna o nível do herói
+    /// @return Retorna o nível do herói
     int current_lvl(int Exp);
 
     /// @brief Aumenta o nível do herói
     void LvlUp(int lvl);
 
   private:
-    struct Status{
-        int hp_;
-        int attack_;
-        int special_attack_;
-    };
-
-    std::string hero_type_;
-
+    int hero_hp_;
+    int hero_attack_;
+    int hero_special_attack_;
     int exp_;
-    
+    std::string hero_type_;
     Skill skill_type_;
 };
 
-#endif
+#endif // HERO_H_
