@@ -61,6 +61,11 @@ void Hero::UseSkill()
     hero_attack_ += skill_type_.skill_buff();
 }
 
+void Hero::UseItem(Item dropped_item)
+{
+
+}
+
 int Hero::current_lvl(int experience)
 {
     exp_ = experience;
