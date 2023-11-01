@@ -31,8 +31,11 @@ class Hero{
     /// @brief Utiliza a habilidade especial do herói
     void UseSkill();
 
+    /// @brief Utiliza um item dropado por um monstro
+    void UseItem(Item dropped_item);
+
     /// @return Retorna o nível do herói
-    int current_lvl(int Exp);
+    int current_lvl(int experience);
 
     /// @brief Aumenta o nível do herói
     void LvlUp(int lvl);
