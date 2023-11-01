@@ -1,5 +1,13 @@
 #include "Game.h"
 
+#include <iostream>
+
+#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/Audio.hpp>
+#include <SFML/Network.hpp>
+
 void Game::initWindow(){
     this->GameWindow = new sf::RenderWindow(sf::VideoMode(800, 600), "My Game");
     this->gameBoard = new Board();

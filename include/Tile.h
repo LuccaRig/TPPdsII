@@ -1,5 +1,5 @@
-#ifndef TILE_H
-#define TILE_H
+#ifndef TILE_H_
+#define TILE_H_
 
 #include <iostream>
 
@@ -43,5 +43,5 @@ class Tile{
     int tile_border_size_;
 };
 
-#endif
+#endif // TILE_H_
 

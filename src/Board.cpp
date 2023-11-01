@@ -1,5 +1,8 @@
 #include "Board.h"
 
+#include <vector>
+#include <iostream>
+
 Board::Board() {
     MyBoard.resize(5, std::vector<Tile*>(5, nullptr));
     for (int i = 0;i < 5;i++) {
@@ -29,7 +32,7 @@ void Board::monsterPutInBoard(std::string Hero, int linha, int coluna)
 {
 }
 
-void Board::monsterMoveInBoard(std::string monster_type)
+void Board::monsterMoveInBoard(std::string MonsterType, std::vector<int> hero_position)
 {
 }
 

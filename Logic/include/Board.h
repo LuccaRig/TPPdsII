@@ -1,8 +1,10 @@
-#ifndef BOARD_H
-#define BOARD_H
+#ifndef BOARD_H_
+#define BOARD_H_
+
+#include <vector>
+#include <iostream>
 
 #include "Tile.h"
-#include <vector>
 
 class Board{
   public:
@@ -56,4 +58,4 @@ class Board{
     std::vector<std::vector<Tile>> MyBoard[5][5];
 };
 
-#endif
+#endif // BOARD_H_
