@@ -9,7 +9,7 @@
 #include <SFML/Network.hpp>
 
 void Game::initWindow(){
-    this->GameWindow = new sf::RenderWindow(sf::VideoMode(800, 600), "My Game");
+    this->GameWindow = new sf::RenderWindow(sf::VideoMode(1200, 800), "My Game");
     this->gameBoard = new Board();
 }
 
@@ -39,11 +39,7 @@ void Game::update(){
 
 }
 
-void Game::render(){
-    this->GameWindow->clear();
-
-    //Renderização do tabuleiro:
-
+void Game::boardRender(){
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
             Tile* currentTile = this->gameBoard->getTileAt(i, j);
@@ -71,12 +67,12 @@ void Game::render(){
             this->GameWindow->draw(tileShape);
         }
     }
+}
 
-    //Fim da renderização do tabuleiro
-
-
-    this->GameWindow->display();
-    
+void Game::render(){
+    this->GameWindow->clear();
+    this->boardRender();
+    this->GameWindow->display();  
 }
 
 void Game::run(){

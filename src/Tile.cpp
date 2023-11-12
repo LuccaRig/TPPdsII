@@ -4,7 +4,7 @@
 
 Tile::Tile(){
     this->content_ = "vazio";
-    this->tile_size_ = 60;
+    this->tile_size_ = 80;
     this->tile_border_size_ = 5; 
 }
 
