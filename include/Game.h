@@ -46,6 +46,8 @@ public:
     /// funcionando como deveria
     void run();
 
+    void boardRender();
+
 };
 
 #endif
