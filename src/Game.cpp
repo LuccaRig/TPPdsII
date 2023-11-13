@@ -83,6 +83,7 @@ void Game::boardRender(sf::Time delta_time){
                 knight.getHeroSprite().setScale(3.f, 3.f);
                 knight.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - knight.getHeroSprite().getLocalBounds().width*3) / 2,
                                                 tileShape.getPosition().y + (tileShape.getSize().y - knight.getHeroSprite().getLocalBounds().height*3) / 2);
+                knight.updateAnimation(delta_time);
                 // Desenha o herói na janela
                 this->GameWindow->draw(knight.getHeroSprite());
             }
@@ -91,6 +92,7 @@ void Game::boardRender(sf::Time delta_time){
                 rogue.getHeroSprite().setScale(3.f, 3.f);
                 rogue.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - rogue.getHeroSprite().getLocalBounds().width*3) / 2,
                                                 tileShape.getPosition().y + (tileShape.getSize().y - rogue.getHeroSprite().getLocalBounds().height*3) / 2);
+                rogue.updateAnimation(delta_time);
                 // Desenha o herói na janela
                 this->GameWindow->draw(rogue.getHeroSprite());
             }
