@@ -29,7 +29,7 @@ class Monster {
     void set_monster_hp(int);
 
     /// @brief determina se um item será deixado pelo monstro e qual.
-    void decideMonsterItem();
+    Item returnsMonsterItem();
 
     /// @return retorna true se o monstro estiver morto e false se não estiver.
     bool monsterIsDead();

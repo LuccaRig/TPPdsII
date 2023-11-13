@@ -13,42 +13,36 @@
             monster_hp_ = 12;
             monster_dmg_ = 8;
             monster_exp_drop_ = 5;
-            Monster::decideMonsterItem();
         }
         else if (monster_type_ == "death knight")
         {
              monster_hp_ = 20;
             monster_dmg_ = 6;
             monster_exp_drop_ = 8;
-            Monster::decideMonsterItem();
         }
         else if (monster_type_ == "sand golem")
         {
              monster_hp_ = 40;
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
-            Monster::decideMonsterItem();
         }
         else if (monster_type_ == "ghastly beholder")
         {
              monster_hp_ = 10;
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
-            Monster::decideMonsterItem();
         }
         else if (monster_type_ == "unholy skull")
         {
              monster_hp_ = 10;
             monster_dmg_ = 4;
             monster_exp_drop_ = 1;
-            Monster::decideMonsterItem();
         }
         else if (monster_type_ == "virulent wight")
         {
              monster_hp_ = 13;
             monster_dmg_ = 5;
             monster_exp_drop_ = 1;
-            Monster::decideMonsterItem();
         }
     }
 
@@ -66,18 +60,18 @@
 
     void Monster::set_monster_hp(int dano) 
     {
-        monster_hp_ += dano;
+        monster_hp_ -= dano;
     }
 
-    void Monster::decideMonsterItem()
+    Item Monster::returnsMonsterItem()
     {
-        Item mItem;
-        monster_item_ = mItem.returnsRandomItem();
+        Item mItem(monster_position_x_, monster_position_y_);
+        return mItem;
     }
 
     bool Monster::monsterIsDead()
     {
-        if (monster_hp_>0) 
+        if (monster_hp_ > 0) 
         {
             return false;
         }
