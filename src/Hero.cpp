@@ -51,6 +51,29 @@ Hero::Hero(std::string type){
 
 }
 
+int Hero::get_hero_hp(){
+    return hero_hp_;
+}
+
+void Hero::set_hero_hp(int changed_hp){
+    hero_hp_ - changed_hp;
+}
+
+int Hero::get_hero_attack(){
+    return hero_attack_;
+}
+
+int Hero::get_hero_special_attack(){
+    return hero_special_attack_;
+}
+
+void Hero::UseSkill(){
+    Skill skill(hero_type_, hero_special_attack_);
+    hero_hp_ += skill.skill_heal();
+    hero_attack_ += skill.skill_buff();
+    
+}
+
 Hero::~Hero(){
 
 }
