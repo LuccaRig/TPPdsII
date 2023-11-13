@@ -14,7 +14,7 @@ void Game::initWindow(){
     this->gameBoard = new Board();
 }
 
-Game::Game() : mage("mage"), knight("knight"), rogue("rogue"){
+Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue"){
     this->initWindow();
 }
 
@@ -68,33 +68,33 @@ void Game::boardRender(sf::Time delta_time){
             this->GameWindow->draw(tileShape);
 
             /// TODO: Modificar os valores i e j dos quadrados para as posições específicas dos herois
-            if (i == 1 && j == 2) {
+            if (i == mage_.get_hero_position_x() && j == mage_.get_hero_position_y()) {
                 // Cria o herói e configura sua posição para o centro do quadrado
-                mage.getHeroSprite().setScale(3.f, 3.f);
-                mage.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - mage.getHeroSprite().getLocalBounds().width*3) / 2,
-                                              tileShape.getPosition().y + (tileShape.getSize().y - mage.getHeroSprite().getLocalBounds().height*3) / 2);
+                mage_.getHeroSprite().setScale(3.f, 3.f);
+                mage_.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - mage_.getHeroSprite().getLocalBounds().width*3) / 2,
+                                              tileShape.getPosition().y + (tileShape.getSize().y - mage_.getHeroSprite().getLocalBounds().height*3) / 2);
 
-                mage.updateAnimation(delta_time);
+                mage_.updateAnimation(delta_time);
                 // Desenha o herói na janela
-                this->GameWindow->draw(mage.getHeroSprite());
+                this->GameWindow->draw(mage_.getHeroSprite());
             }
-            if (i == 2 && j == 2) {
+            if (i == knight_.get_hero_position_x() && j == knight_.get_hero_position_y()) {
                 // Cria o herói e configura sua posição para o centro do quadrado
-                knight.getHeroSprite().setScale(3.f, 3.f);
-                knight.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - knight.getHeroSprite().getLocalBounds().width*3) / 2,
-                                                tileShape.getPosition().y + (tileShape.getSize().y - knight.getHeroSprite().getLocalBounds().height*3) / 2);
-                knight.updateAnimation(delta_time);
+                knight_.getHeroSprite().setScale(3.f, 3.f);
+                knight_.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - knight_.getHeroSprite().getLocalBounds().width*3) / 2,
+                                                tileShape.getPosition().y + (tileShape.getSize().y - knight_.getHeroSprite().getLocalBounds().height*3) / 2);
+                knight_.updateAnimation(delta_time);
                 // Desenha o herói na janela
-                this->GameWindow->draw(knight.getHeroSprite());
+                this->GameWindow->draw(knight_.getHeroSprite());
             }
-            if (i == 3 && j == 2) {
+            if (i == rogue_.get_hero_position_x() && j == rogue_.get_hero_position_y()) {
                 // Cria o herói e configura sua posição para o centro do quadrado
-                rogue.getHeroSprite().setScale(3.f, 3.f);
-                rogue.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - rogue.getHeroSprite().getLocalBounds().width*3) / 2,
-                                                tileShape.getPosition().y + (tileShape.getSize().y - rogue.getHeroSprite().getLocalBounds().height*3) / 2);
-                rogue.updateAnimation(delta_time);
+                rogue_.getHeroSprite().setScale(3.f, 3.f);
+                rogue_.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - rogue_.getHeroSprite().getLocalBounds().width*3) / 2,
+                                                tileShape.getPosition().y + (tileShape.getSize().y - rogue_.getHeroSprite().getLocalBounds().height*3) / 2);
+                rogue_.updateAnimation(delta_time);
                 // Desenha o herói na janela
-                this->GameWindow->draw(rogue.getHeroSprite());
+                this->GameWindow->draw(rogue_.getHeroSprite());
             }
         }
     }
