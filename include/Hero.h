@@ -54,7 +54,9 @@ class Hero{
     sf::Sprite& getHeroSprite();
 
     /// @brief Define um corte ou sprite específico do heroi
-    void setHeroSprite(sf::Sprite defined_sprite);    
+    void setHeroSprite(sf::Sprite defined_sprite);
+
+    void updateAnimation(sf::Time deltaTime);    
 
   private:
     //Características
@@ -68,6 +70,10 @@ class Hero{
     //Animações
     sf::Texture hero_texture_;
     sf::Sprite hero_sprite_;
+
+    int number_of_frames_;
+    int current_frame_;
+    float animation_timer_;
 
 };
 

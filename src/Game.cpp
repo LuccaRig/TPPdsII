@@ -40,9 +40,10 @@ void Game::update(){
 
 }
 
-void Game::boardRender(){
+void Game::boardRender(sf::Time delta_time){
     Hero mage("mage");
     Hero knight("knight");
+    Hero rogue("rogue");
 
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
@@ -71,18 +72,31 @@ void Game::boardRender(){
             this->GameWindow->draw(tileShape);
 
             /// TODO: Modificar os valores i e j dos quadrados para as posições específicas dos herois
-            if (i == 2 && j == 2) {
+            if (i == 1 && j == 2) {
                 // Cria o herói e configura sua posição para o centro do quadrado
-                mage.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - mage.getHeroSprite().getLocalBounds().width) / 2,
-                                              tileShape.getPosition().y + (tileShape.getSize().y - mage.getHeroSprite().getLocalBounds().height) / 2);
+                mage.getHeroSprite().setScale(3.f, 3.f);
+                mage.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - mage.getHeroSprite().getLocalBounds().width*3) / 2,
+                                              tileShape.getPosition().y + (tileShape.getSize().y - mage.getHeroSprite().getLocalBounds().height*3) / 2);
+
+                mage.updateAnimation(delta_time);
+                // Desenha o herói na janela
                 this->GameWindow->draw(mage.getHeroSprite());
             }
-            if (i == 2 && j == 1) {
+            if (i == 2 && j == 2) {
                 // Cria o herói e configura sua posição para o centro do quadrado
-                knight.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - knight.getHeroSprite().getLocalBounds().width) / 2,
-                                                tileShape.getPosition().y + (tileShape.getSize().y - knight.getHeroSprite().getLocalBounds().height) / 2);
+                knight.getHeroSprite().setScale(3.f, 3.f);
+                knight.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - knight.getHeroSprite().getLocalBounds().width*3) / 2,
+                                                tileShape.getPosition().y + (tileShape.getSize().y - knight.getHeroSprite().getLocalBounds().height*3) / 2);
                 // Desenha o herói na janela
                 this->GameWindow->draw(knight.getHeroSprite());
+            }
+            if (i == 3 && j == 2) {
+                // Cria o herói e configura sua posição para o centro do quadrado
+                rogue.getHeroSprite().setScale(3.f, 3.f);
+                rogue.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - rogue.getHeroSprite().getLocalBounds().width*3) / 2,
+                                                tileShape.getPosition().y + (tileShape.getSize().y - rogue.getHeroSprite().getLocalBounds().height*3) / 2);
+                // Desenha o herói na janela
+                this->GameWindow->draw(rogue.getHeroSprite());
             }
         }
     }
@@ -90,7 +104,7 @@ void Game::boardRender(){
 
 void Game::render(sf::Time delta_time){
     this->GameWindow->clear();
-    this->boardRender();
+    this->boardRender(delta_time);
     this->GameWindow->display();  
 }
 
