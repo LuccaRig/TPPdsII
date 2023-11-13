@@ -10,6 +10,7 @@
 #include <SFML/Network.hpp>
 
 #include "Board.h"
+#include "Hero.h"
 
 class Game{
 private:
@@ -20,6 +21,10 @@ private:
 
     /// @brief Cria um novo objeto do tipo RenderWindow
     void initWindow();
+
+    Hero mage;
+    Hero knight;
+    Hero rogue;
 
 
 public:

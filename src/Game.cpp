@@ -14,7 +14,7 @@ void Game::initWindow(){
     this->gameBoard = new Board();
 }
 
-Game::Game(){
+Game::Game() : mage("mage"), knight("knight"), rogue("rogue"){
     this->initWindow();
 }
 
@@ -41,10 +41,6 @@ void Game::update(){
 }
 
 void Game::boardRender(sf::Time delta_time){
-    Hero mage("mage");
-    Hero knight("knight");
-    Hero rogue("rogue");
-
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
             Tile* currentTile = this->gameBoard->getTileAt(i, j);
