@@ -23,11 +23,23 @@ class Hero{
     /// @brief Destructor
     ~Hero();
 
-    // /// @return Retorna a vida do herói
-    // int current_hero_hp();
+    /// @return Retorna o hp do herói
+    int get_hero_hp();
 
-    // /// @brief Altera o hp atual do herói
-    // void modify_hero_hp(int changed_hp);
+    /// @brief Altera o hp atual do herói
+    void modify_hero_hp(int changed_hp);
+
+    /// @return Retorna o ataque do herói
+    int get_hero_attack();
+
+    /// @brief Altera o ataque atual do herói
+    void modify_hero_attack(int changed_attack);
+
+    /// @return Retorna o ataque especial do herói
+    int get_hero_special_attack();
+
+    /// @brief Altera o ataque especial atual do herói
+    void modify_hero_special_attack(int changed_special_attack);
 
     // /// @brief Move o herói para um número determinado de casas adjacentes
     // void HeroMove();
@@ -46,6 +58,18 @@ class Hero{
 
     // /// @brief Aumenta o nível do herói
     // void LvlUp(int lvl);
+
+    /// @return Posição x do herói no tabuleiro
+    int get_hero_position_x();
+
+    /// @brief Altera a posição x do herói no tabuleiro
+    void set_hero_position_x(int current_position);
+
+    /// @return Posição y do herói no tabuleiro
+    int get_hero_position_y();
+
+    /// @brief Altera a posição y do herói no tabuleiro
+    void set_hero_position_y(int current_position);
 
     /// @return Textura do heroi/SpriteSheet
     sf::Texture getHeroTexture();
@@ -66,6 +90,9 @@ class Hero{
     int exp_;
     std::string hero_type_;
     // Skill skill_;
+
+    int hero_position_x_;
+    int hero_position_y_;
 
     //Animações
     sf::Texture hero_texture_;
