@@ -10,7 +10,7 @@
 #include <SFML/Network.hpp>
 
 #include "Board.h"
-//#include "Skill.h"
+#include "Skill.h"
 //#include "Item.h"
 
 class Hero{
@@ -27,19 +27,13 @@ class Hero{
     int get_hero_hp();
 
     /// @brief Altera o hp atual do herói
-    void modify_hero_hp(int changed_hp);
+    void set_hero_hp(int changed_hp);
 
     /// @return Retorna o ataque do herói
     int get_hero_attack();
 
-    /// @brief Altera o ataque atual do herói
-    void modify_hero_attack(int changed_attack);
-
     /// @return Retorna o ataque especial do herói
     int get_hero_special_attack();
-
-    /// @brief Altera o ataque especial atual do herói
-    void modify_hero_special_attack(int changed_special_attack);
 
     // /// @brief Move o herói para um número determinado de casas adjacentes
     // void HeroMove();
@@ -47,8 +41,8 @@ class Hero{
     // /// @brief Ataca uma das 4 casas adjacentes ao herói
     // void HeroAttack();
 
-    // /// @brief Utiliza a habilidade especial do herói
-    // void UseSkill();
+    /// @brief Utiliza a habilidade especial do herói
+    void UseSkill();
 
     // /// @brief Utiliza um item dropado por um monstro
     // void UseItem(Item dropped_item);
@@ -89,8 +83,7 @@ class Hero{
     int hero_special_attack_;
     int exp_;
     std::string hero_type_;
-    // Skill skill_;
-
+  
     int hero_position_x_;
     int hero_position_y_;
 
