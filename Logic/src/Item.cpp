@@ -1,8 +1,8 @@
+#include "Item.h"
+
 #include <string>
 #include <vector>
 #include <map>
-
-#include "Item.h"
 
 using std::string;
 using std::vector;
