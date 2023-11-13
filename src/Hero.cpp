@@ -68,7 +68,7 @@ void Hero::setHeroSprite(sf::Sprite defined_sprite){
 }
 
 void Hero::updateAnimation(sf::Time delta_time){
-    float animation_interval = 0.0f;
+    float animation_interval = 0.5f;
     animation_timer_ += delta_time.asSeconds();
 
     if(animation_timer_ > animation_interval){
