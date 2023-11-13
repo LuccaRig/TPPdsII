@@ -35,3 +35,19 @@ string Item::returnsRandomItem()
         return "empty";
     }
 }
+
+int Item::returns_item_position_x()
+{
+    return item_position_x_;
+}
+
+int Item::returns_item_position_y()
+{
+    return item_position_y_;
+}
+
+string Item::returns_item_type()
+{
+  return item_type_;
+}
+
