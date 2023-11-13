@@ -40,11 +40,11 @@ public:
     void update();
 
     /// @brief Limpa a tela que foi renderizada e em seguida renderiza novas imagens
-    void render();
+    void render(sf::Time delta_time);
 
     /// @brief Essa função garante que enquanto o jogo estiver aberto ele continue
     /// funcionando como deveria
-    void run();
+    void run(sf::Clock clock);
 
     void boardRender();
 

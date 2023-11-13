@@ -4,9 +4,11 @@
 
 int main(){
 
+    sf::Clock clock;
+
     Game myGame;
 
-    myGame.run();
+    myGame.run(clock);
 
 
     return 0;
