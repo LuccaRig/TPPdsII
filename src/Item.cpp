@@ -8,8 +8,11 @@ using std::string;
 using std::vector;
 using std::map;
 
-Item::Item() 
+Item::Item(int x, int y)  
 {
+    item_type_ = returnsRandomItem();
+    item_position_x_ = x;
+    item_position_y_ = y;
 }
 
 string Item::returnsRandomItem() 
