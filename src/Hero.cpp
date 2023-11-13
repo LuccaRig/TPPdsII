@@ -23,6 +23,9 @@ Hero::Hero(std::string type){
         hero_attack_ = 5;
         hero_special_attack_ = 5;
         
+        hero_position_x_ = 2;
+        hero_position_y_ = 2;
+
         //Parte das texturas e animações
         hero_texture_.loadFromFile("Textures/RadiantPaladinIdleSide.png");
         hero_sprite_.setTexture(hero_texture_);
@@ -32,6 +35,9 @@ Hero::Hero(std::string type){
         hero_hp_ = 25;
         hero_attack_ = 10;
         hero_special_attack_ = 1;
+
+        hero_position_x_ = 3;
+        hero_position_y_ = 2;
 
         //Parte das texturas e animações
         hero_texture_.loadFromFile("Textures/HalflingAssassinIdleSide.png");
@@ -43,6 +49,9 @@ Hero::Hero(std::string type){
         hero_attack_ = 4;
         hero_special_attack_ = 15;
         
+        hero_position_x_ = 1;
+        hero_position_y_ = 2;
+
         //Parte das texturas e animações
         hero_texture_.loadFromFile("Textures/NovicePyromancerIdle.png");
         hero_sprite_.setTexture(hero_texture_);
