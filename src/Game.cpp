@@ -10,7 +10,7 @@
 #include <SFML/Network.hpp>
 
 void Game::initWindow(){
-    this->GameWindow = new sf::RenderWindow(sf::VideoMode(1200, 800), "My Game");
+    this->GameWindow = new sf::RenderWindow(sf::VideoMode(1200, 800), "My Game",sf::Style::Close);
     this->gameBoard = new Board();
 }
 
