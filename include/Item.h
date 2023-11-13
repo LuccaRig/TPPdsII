@@ -7,6 +7,7 @@
 
 #include "Monster.h"
 
+using std::string;
 
 class Item {
     
@@ -17,13 +18,21 @@ class Item {
 
     /// @returns retorna um tipo de item ou uma string vazia significando nenhum item. Os itens serão
     /// construídos e nomeados dentro da própria função 
-    std::string returnsRandomItem();
+    string returnsRandomItem();
 
-  
+    /// @return retorna posição x do item
+    int returns_item_position_x();
+
+    /// @return retorna posição y do item
+    int returns_item_position_y();
+
+    /// @return retorna tipo do item 
+    string returns_item_type();
+
 
   private:
     
-    std::string item_type_;
+    string item_type_;
     int item_position_x_;
     int item_position_y_;
     
