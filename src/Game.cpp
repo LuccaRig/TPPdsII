@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Hero.h"
 
 #include <iostream>
 
@@ -40,6 +41,9 @@ void Game::update(){
 }
 
 void Game::boardRender(){
+    Hero mage("mage");
+    Hero knight("knight");
+
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
             Tile* currentTile = this->gameBoard->getTileAt(i, j);
@@ -65,20 +69,37 @@ void Game::boardRender(){
 
             //Desenha o quadrado na janela
             this->GameWindow->draw(tileShape);
+
+            /// TODO: Modificar os valores i e j dos quadrados para as posições específicas dos herois
+            if (i == 2 && j == 2) {
+                // Cria o herói e configura sua posição para o centro do quadrado
+                mage.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - mage.getHeroSprite().getLocalBounds().width) / 2,
+                                              tileShape.getPosition().y + (tileShape.getSize().y - mage.getHeroSprite().getLocalBounds().height) / 2);
+                this->GameWindow->draw(mage.getHeroSprite());
+            }
+            if (i == 2 && j == 1) {
+                // Cria o herói e configura sua posição para o centro do quadrado
+                knight.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - knight.getHeroSprite().getLocalBounds().width) / 2,
+                                                tileShape.getPosition().y + (tileShape.getSize().y - knight.getHeroSprite().getLocalBounds().height) / 2);
+                // Desenha o herói na janela
+                this->GameWindow->draw(knight.getHeroSprite());
+            }
         }
     }
 }
 
-void Game::render(){
+void Game::render(sf::Time delta_time){
     this->GameWindow->clear();
     this->boardRender();
     this->GameWindow->display();  
 }
 
-void Game::run(){
+void Game::run(sf::Clock clock){
     while(this->GameWindow->isOpen()){
+        //Conta a passagem de tempo desde a ultima vez que o clock.restart() foi chamado
+        sf::Time delta_time = clock.restart();
         this->update();
-        this->render();
+        this->render(delta_time);
     }
 
 }
