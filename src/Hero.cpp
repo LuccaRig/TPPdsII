@@ -71,11 +71,27 @@ void Hero::UseSkill(){
     Skill skill(hero_type_, hero_special_attack_);
     hero_hp_ += skill.skill_heal();
     hero_attack_ += skill.skill_buff();
-
+    //Dar dano nos monstros
 }
 
 Hero::~Hero(){
 
+}
+
+int Hero::get_hero_position_x(){
+    return hero_position_x_;
+}
+
+void Hero::set_hero_position_x(int current_position){
+    hero_position_x_ = current_position;
+}
+
+int Hero::get_hero_position_y(){
+    return hero_position_y_;
+}
+
+void Hero::set_hero_position_y(int current_position){
+    hero_position_y_ = current_position;
 }
 
 sf::Texture Hero::getHeroTexture(){
