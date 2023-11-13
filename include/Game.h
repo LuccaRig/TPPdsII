@@ -19,13 +19,12 @@ private:
     sf::Event SFML_event;
     Board *gameBoard;
 
+    Hero mage_;
+    Hero knight_;
+    Hero rogue_;
+
     /// @brief Cria um novo objeto do tipo RenderWindow
     void initWindow();
-
-    Hero mage;
-    Hero knight;
-    Hero rogue;
-
 
 public:
     
@@ -45,12 +44,15 @@ public:
     void update();
 
     /// @brief Limpa a tela que foi renderizada e em seguida renderiza novas imagens
+    /// @param delta_time = tempo decorrido desde o ultimo clock/renderização
     void render(sf::Time delta_time);
 
     /// @brief Essa função garante que enquanto o jogo estiver aberto ele continue
     /// funcionando como deveria
     void run(sf::Clock clock);
 
+    /// @brief Renderiza o tabuleiro com os personagens nele
+    /// @param delta_time = tempo decorrido desde o ultimo clock/renderização
     void boardRender(sf::Time delta_time);
 
 };
