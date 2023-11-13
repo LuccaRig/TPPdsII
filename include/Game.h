@@ -46,7 +46,7 @@ public:
     /// funcionando como deveria
     void run(sf::Clock clock);
 
-    void boardRender();
+    void boardRender(sf::Time delta_time);
 
 };
 
