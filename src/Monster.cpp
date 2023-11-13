@@ -8,38 +8,45 @@
 
     Monster::Monster (std::string monster_type) 
     {
-        if (monster_type_ == "murky slaad")
+        if (monster_type_ == "bloody abomination")
         {
-            monster_hp_ = 40;
-            monster_dmg_ = 4;
+            monster_hp_ = 12;
+            monster_dmg_ = 8;
             monster_exp_drop_ = 5;
             Monster::decideMonsterItem();
         }
-        else if (monster_type_ == "poison drake")
+        else if (monster_type_ == "death knight")
         {
-             monster_hp_ = 18;
-            monster_dmg_ = 10;
+             monster_hp_ = 20;
+            monster_dmg_ = 6;
             monster_exp_drop_ = 8;
             Monster::decideMonsterItem();
         }
-        else if (monster_type_ == "hungry mimic")
+        else if (monster_type_ == "sand golem")
         {
-             monster_hp_ = 12;
-            monster_dmg_ = 10;
+             monster_hp_ = 40;
+            monster_dmg_ = 2;
             monster_exp_drop_ = 1;
             Monster::decideMonsterItem();
         }
         else if (monster_type_ == "ghastly beholder")
         {
-             monster_hp_ = 25;
-            monster_dmg_ = 5;
+             monster_hp_ = 10;
+            monster_dmg_ = 2;
             monster_exp_drop_ = 1;
             Monster::decideMonsterItem();
         }
-        else if (monster_type_ == "clawed abomination")
+        else if (monster_type_ == "unholy skull")
         {
-             monster_hp_ = 20;
-            monster_dmg_ = 15;
+             monster_hp_ = 10;
+            monster_dmg_ = 4;
+            monster_exp_drop_ = 1;
+            Monster::decideMonsterItem();
+        }
+        else if (monster_type_ == "virulent wight")
+        {
+             monster_hp_ = 13;
+            monster_dmg_ = 5;
             monster_exp_drop_ = 1;
             Monster::decideMonsterItem();
         }
@@ -57,7 +64,7 @@
       //  heroi.modify_hero_hp(monster_dmg_);
     }
 
-    void Monster::monsterGetDamaged(int dano) 
+    void Monster::set_monster_hp(int dano) 
     {
         monster_hp_ += dano;
     }
@@ -80,7 +87,27 @@
         }
     }
 
-    int Monster::returnExpDrop() 
+    int Monster::get_exp_drop() 
     {
         return monster_exp_drop_;
+    }
+
+    int Monster::get_monster_position_x()
+    {
+        return monster_position_x_;
+    }
+
+     int Monster::get_monster_position_y()
+    {
+        return monster_position_y_;
+    }
+
+    void Monster::set_monster_position_x(int xi)
+    {
+        monster_position_x_ = xi;
+    }
+ 
+    void Monster::set_monster_position_y(int yi)
+    {
+        monster_position_y_ = yi;
     }
