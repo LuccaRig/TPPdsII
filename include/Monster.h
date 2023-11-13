@@ -26,7 +26,7 @@ class Monster {
 
     /// @brief  adiciona o valor recebido em pontos de vida para o monstro. PRECONDIÇÃO: parâmetro deve ser valor negativo 
     /// @param  attack_ do herói
-    void monsterGetDamaged(int);
+    void set_monster_hp(int);
 
     /// @brief determina se um item será deixado pelo monstro e qual.
     void decideMonsterItem();
@@ -35,7 +35,20 @@ class Monster {
     bool monsterIsDead();
 
     /// @return retorna o número de experiência que o monstro dará quando for derrotado
-    int returnExpDrop();
+    int get_exp_drop();
+
+    /// @return retorna a coordenada x do monstro
+    int get_monster_position_x();
+
+    /// @return retorna a coordenada y do monstro
+    int get_monster_position_y();
+
+    /// @brief substitui a coordenada x do monstro pelo valor do parâmetro
+    void set_monster_position_x(int xi);
+
+    /// @brief substitui a coordenada y do monstro pelo valor do parâmetro
+    void set_monster_position_y(int yi);
+
 
 
     // aqui será construído um item e monster_item_drop_ será igualado à função returns_random_item
@@ -45,6 +58,8 @@ class Monster {
     int monster_dmg_;
     int monster_exp_drop_;
     std::string monster_item_;
+    int monster_position_x_;
+    int monster_position_y_;
 
 
 };

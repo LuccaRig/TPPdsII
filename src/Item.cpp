@@ -8,6 +8,10 @@ using std::string;
 using std::vector;
 using std::map;
 
+Item::Item() 
+{
+}
+
 string Item::returnsRandomItem() 
 {
     map<int, string> item_n;
