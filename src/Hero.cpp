@@ -56,7 +56,7 @@ int Hero::get_hero_hp(){
 }
 
 void Hero::set_hero_hp(int changed_hp){
-    hero_hp_ - changed_hp;
+    hero_hp_ -= changed_hp;
 }
 
 int Hero::get_hero_attack(){
@@ -71,7 +71,7 @@ void Hero::UseSkill(){
     Skill skill(hero_type_, hero_special_attack_);
     hero_hp_ += skill.skill_heal();
     hero_attack_ += skill.skill_buff();
-    
+
 }
 
 Hero::~Hero(){
