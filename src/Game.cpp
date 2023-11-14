@@ -40,7 +40,7 @@ void Game::update(){
 
 }
 
-void Game::boardRender(sf::Time delta_time){
+void Game::boardRender(float delta_time){
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
             Tile* currentTile = this->gameBoard->getTileAt(i, j);
@@ -100,7 +100,7 @@ void Game::boardRender(sf::Time delta_time){
     }
 }
 
-void Game::render(sf::Time delta_time){
+void Game::render(float delta_time){
     this->GameWindow->clear();
     this->boardRender(delta_time);
     this->GameWindow->display();  
@@ -109,7 +109,7 @@ void Game::render(sf::Time delta_time){
 void Game::run(sf::Clock clock){
     while(this->GameWindow->isOpen()){
         //Conta a passagem de tempo desde a ultima vez que o clock.restart() foi chamado
-        sf::Time delta_time = clock.restart();
+        float delta_time = clock.restart().asSeconds();
         this->update();
         this->render(delta_time);
     }

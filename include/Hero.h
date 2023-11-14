@@ -74,7 +74,7 @@ class Hero{
     /// @brief Define um corte ou sprite específico do heroi
     void setHeroSprite(sf::Sprite defined_sprite);
 
-    void updateAnimation(sf::Time deltaTime);    
+    void updateAnimation(float deltaTime);    
 
   private:
     //Características
