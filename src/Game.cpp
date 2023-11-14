@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Hero.h"
+#include "GameState.h"
 
 #include <iostream>
 
@@ -16,11 +17,13 @@ void Game::initWindow(){
 
 Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue"){
     this->initWindow();
+    this->current_game_state_ = new GameState();
 }
 
 Game::~Game(){
     delete this->GameWindow;
     delete this->gameBoard;
+    delete this->current_game_state_;
 }
 
 
@@ -110,8 +113,16 @@ void Game::run(sf::Clock clock){
     while(this->GameWindow->isOpen()){
         //Conta a passagem de tempo desde a ultima vez que o clock.restart() foi chamado
         float delta_time = clock.restart().asSeconds();
-        this->update();
-        this->render(delta_time);
+
+        if(this->current_game_state_->HeroTurn() == "rogue"){
+            rogue_.set_hero_position_x(4);
+            this->update();
+            this->render(delta_time);
+        }else{
+            rogue_.set_hero_position_x(3);
+            this->update();
+            this->render(delta_time);
+        }
     }
 
 }

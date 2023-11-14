@@ -11,6 +11,7 @@
 
 #include "Board.h"
 #include "Hero.h"
+#include "GameState.h"
 
 class Game{
 private:
@@ -18,6 +19,7 @@ private:
     sf::RenderWindow *GameWindow;
     sf::Event SFML_event;
     Board *gameBoard;
+    GameState *current_game_state_;
 
     //Personagens dos jogadores:
     Hero mage_;
