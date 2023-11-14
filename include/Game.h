@@ -11,6 +11,7 @@
 
 #include "Board.h"
 #include "Hero.h"
+#include "GameState.h"
 
 class Game{
 private:
@@ -20,7 +21,9 @@ private:
     sf::Texture background_;
     sf::Sprite background_sprite_;
     Board *gameBoard;
+    GameState *current_game_state_;
 
+    //Personagens dos jogadores:
     Hero mage_;
     Hero knight_;
     Hero rogue_;
@@ -47,7 +50,7 @@ public:
 
     /// @brief Limpa a tela que foi renderizada e em seguida renderiza novas imagens
     /// @param delta_time = tempo decorrido desde o ultimo clock/renderização
-    void render(sf::Time delta_time);
+    void render(float delta_time);
 
     /// @brief Essa função garante que enquanto o jogo estiver aberto ele continue
     /// funcionando como deveria
@@ -55,7 +58,9 @@ public:
 
     /// @brief Renderiza o tabuleiro com os personagens nele
     /// @param delta_time = tempo decorrido desde o ultimo clock/renderização
-    void boardRender(sf::Time delta_time);
+    void boardRender(float delta_time);
+
+    void PlayerTurnControl(float delta_time, sf::Clock clock);
 
 };
 
