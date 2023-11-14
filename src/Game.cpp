@@ -53,8 +53,8 @@ void Game::boardRender(sf::Time delta_time){
             int board_height_pixels = currentTile->getTileSize() * 5;
 
             //Calcula as coordenadas para posicionar o tabuleiro no centro da janela
-            int board_positionX = (this->GameWindow->getSize().x - board_width_pixels) / 2;
-            int board_positionY = (this->GameWindow->getSize().y - board_height_pixels) / 4.5;
+            int board_positionX = (this->GameWindow->getSize().x - board_width_pixels) / 1.98;
+            int board_positionY = (this->GameWindow->getSize().y - board_height_pixels) / 6;
 
             sf::RectangleShape tileShape(sf::Vector2f(currentTile->getTileSize(), currentTile->getTileSize()));
             tileShape.setPosition(board_positionX + i * currentTile->getTileSize(), 
