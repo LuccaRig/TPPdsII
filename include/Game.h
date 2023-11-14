@@ -58,6 +58,8 @@ public:
     /// @param delta_time = tempo decorrido desde o ultimo clock/renderização
     void boardRender(float delta_time);
 
+    void PlayerTurnControl(float delta_time, sf::Clock clock);
+
 };
 
 #endif

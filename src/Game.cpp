@@ -70,7 +70,6 @@ void Game::boardRender(float delta_time){
             //Desenha o quadrado na janela
             this->GameWindow->draw(tileShape);
 
-            /// TODO: Modificar os valores i e j dos quadrados para as posições específicas dos herois
             if (i == mage_.get_hero_position_x() && j == mage_.get_hero_position_y()) {
                 // Cria o herói e configura sua posição para o centro do quadrado
                 mage_.getHeroSprite().setScale(3.f, 3.f);
@@ -109,38 +108,113 @@ void Game::render(float delta_time){
     this->GameWindow->display();  
 }
 
-void Game::run(sf::Clock clock){
-    float delta_time = clock.restart().asSeconds();
-    while(this->GameWindow->isOpen()){
-        //Conta a passagem de tempo desde a ultima vez que o clock.restart() foi chamado
-        delta_time = clock.restart().asSeconds();
-        
-        //As duas linhas de código seguinte renderiazam o tabuleiro e todas as imagens inclusas nela
-        this->update();
-        this->render(delta_time);
-        
-        
-        if(this->current_game_state_->IsPlayerTurn()){
-            if(this->current_game_state_->WhichHeroTurn() == "rogue"){
-                delta_time = clock.restart().asSeconds();
+void Game::PlayerTurnControl(float delta_time, sf::Clock clock){
+        if(this->current_game_state_->WhichHeroTurn() == "knight"){
+            this->update();
+            this->render(delta_time);
+
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+                int pos = knight_.get_hero_position_y();
+                knight_.set_hero_position_y(pos-1);
+                this->current_game_state_->HeroTurnPass();
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+                int pos = knight_.get_hero_position_y();
+                knight_.set_hero_position_y(pos+1);
+                this->current_game_state_->HeroTurnPass();
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+                int pos = knight_.get_hero_position_x();
+                knight_.set_hero_position_x(pos-1);
+                this->current_game_state_->HeroTurnPass();
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+                int pos = knight_.get_hero_position_x();
+                knight_.set_hero_position_x(pos+1);
+                this->current_game_state_->HeroTurnPass();
+            }
+            
+        }
+
+        else if(this->current_game_state_->WhichHeroTurn() == "mage"){
+            this->update();
+            this->render(delta_time);
+            
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+                int pos = mage_.get_hero_position_y();
+                mage_.set_hero_position_y(pos-1);
+                this->current_game_state_->HeroTurnPass();
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+                int pos = mage_.get_hero_position_y();
+                mage_.set_hero_position_y(pos+1);
+                this->current_game_state_->HeroTurnPass();
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+                int pos = mage_.get_hero_position_x();
+                mage_.set_hero_position_x(pos-1);
+                this->current_game_state_->HeroTurnPass();
+            }
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+                int pos = mage_.get_hero_position_x();
+                mage_.set_hero_position_x(pos+1);
+                this->current_game_state_->HeroTurnPass();
+            }
+        }
+
+        else if(this->current_game_state_->WhichHeroTurn() == "rogue"){
+            while(true){
                 this->update();
                 this->render(delta_time);
-
+                
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
                     int pos = rogue_.get_hero_position_y();
                     rogue_.set_hero_position_y(pos-1);
-                    this->current_game_state_->HeroTurnPass();
+                    break;
+                }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
+                    int pos = rogue_.get_hero_position_y();
+                    rogue_.set_hero_position_y(pos+1);
+                    break;
+                    //this->current_game_state_->HeroTurnPass();
+                }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
+                    int pos = rogue_.get_hero_position_x();
+                    rogue_.set_hero_position_x(pos-1);
+                    break;
+                    //this->current_game_state_->HeroTurnPass();
+                }
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
+                    int pos = rogue_.get_hero_position_x();
+                    rogue_.set_hero_position_x(pos+1);
+                    break;
+                    //this->current_game_state_->HeroTurnPass();
                 }
             }
-            if(this->current_game_state_->WhichHeroTurn() == "mage"){
-                this->update();
-                this->render(delta_time);
-            }
-            if(this->current_game_state_->WhichHeroTurn() == "knight"){
-                this->update();
-                this->render(delta_time);
-            }
+            this->update();
+            this->render(delta_time);
+            //this->current_game_state_->HeroTurnPass();      
         }
+}
+
+void Game::run(sf::Clock clock){
+    float delta_time = clock.restart().asSeconds();
+    while(this->GameWindow->isOpen()){
+        
+        //Conta a passagem de tempo desde a ultima vez que o clock.restart() foi chamado
+        delta_time = clock.restart().asSeconds();
+        
+        //Essa linha atualiza a tela enquanto o x não for apertado
+        this->update();
+
+        //Essa linha de código renderiza o tabuleiro e todas as imagens inclusas nela
+        this->render(delta_time);
+
+        //O PlayerTurnControl garante a movimentação e ataques dos herois
+        if(this->current_game_state_->IsPlayerTurn()){
+            this->PlayerTurnControl(delta_time, clock);
+        }
+        
     }
 
 }
