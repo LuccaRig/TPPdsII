@@ -27,16 +27,20 @@ class GameState{
     /// @brief Inicializa o jogo e coloca os herois no tabuleiro;
     void GameStart();
 
+    void HeroTurnPass();
+
+    bool IsPlayerTurn();
+
     /// @brief Serve para o jogo controlar a passagem de turnos dos herois
     /// @return Uma string dizendo o turno de qual heroi está ocorrendo no presente momento 
-    std::string HeroTurn();
+    std::string WhichHeroTurn();
 
     void MonsterTurn();
 
   private:
     std::vector<Monster> enemies_;
     int horde_number_;
-    int hero_turn_count_[3] = {0,1,2};
+    int hero_turn_count_;
     ///TODO:Verificar a alocação dinâmica do turno dos monstros
     int monster_turn_count_;
 };

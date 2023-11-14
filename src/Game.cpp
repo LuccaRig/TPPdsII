@@ -110,18 +110,36 @@ void Game::render(float delta_time){
 }
 
 void Game::run(sf::Clock clock){
+    float delta_time = clock.restart().asSeconds();
     while(this->GameWindow->isOpen()){
         //Conta a passagem de tempo desde a ultima vez que o clock.restart() foi chamado
-        float delta_time = clock.restart().asSeconds();
+        delta_time = clock.restart().asSeconds();
+        
+        //As duas linhas de código seguinte renderiazam o tabuleiro e todas as imagens inclusas nela
+        this->update();
+        this->render(delta_time);
+        
+        
+        if(this->current_game_state_->IsPlayerTurn()){
+            if(this->current_game_state_->WhichHeroTurn() == "rogue"){
+                delta_time = clock.restart().asSeconds();
+                this->update();
+                this->render(delta_time);
 
-        if(this->current_game_state_->HeroTurn() == "rogue"){
-            rogue_.set_hero_position_x(4);
-            this->update();
-            this->render(delta_time);
-        }else{
-            rogue_.set_hero_position_x(3);
-            this->update();
-            this->render(delta_time);
+                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
+                    int pos = rogue_.get_hero_position_y();
+                    rogue_.set_hero_position_y(pos-1);
+                    this->current_game_state_->HeroTurnPass();
+                }
+            }
+            if(this->current_game_state_->WhichHeroTurn() == "mage"){
+                this->update();
+                this->render(delta_time);
+            }
+            if(this->current_game_state_->WhichHeroTurn() == "knight"){
+                this->update();
+                this->render(delta_time);
+            }
         }
     }
 
