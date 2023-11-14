@@ -15,6 +15,9 @@ void Game::initWindow(){
 }
 
 Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue"){
+    background_.loadFromFile("Textures/Background.png");
+    background_sprite_.setTexture(background_);
+    background_sprite_.setScale(10, 10);
     this->initWindow();
 }
 
@@ -51,7 +54,7 @@ void Game::boardRender(sf::Time delta_time){
 
             //Calcula as coordenadas para posicionar o tabuleiro no centro da janela
             int board_positionX = (this->GameWindow->getSize().x - board_width_pixels) / 2;
-            int board_positionY = (this->GameWindow->getSize().y - board_height_pixels) / 2;
+            int board_positionY = (this->GameWindow->getSize().y - board_height_pixels) / 3;
 
             sf::RectangleShape tileShape(sf::Vector2f(currentTile->getTileSize(), currentTile->getTileSize()));
             tileShape.setPosition(board_positionX + i * currentTile->getTileSize(), 
@@ -101,7 +104,9 @@ void Game::boardRender(sf::Time delta_time){
 }
 
 void Game::render(sf::Time delta_time){
+
     this->GameWindow->clear();
+    this->GameWindow->draw(background_sprite_);
     this->boardRender(delta_time);
     this->GameWindow->display();  
 }

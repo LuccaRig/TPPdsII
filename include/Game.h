@@ -17,6 +17,8 @@ private:
     //Variables
     sf::RenderWindow *GameWindow;
     sf::Event SFML_event;
+    sf::Texture background_;
+    sf::Sprite background_sprite_;
     Board *gameBoard;
 
     Hero mage_;
