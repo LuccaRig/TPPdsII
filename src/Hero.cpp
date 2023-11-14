@@ -115,9 +115,9 @@ void Hero::setHeroSprite(sf::Sprite defined_sprite){
     hero_sprite_ = defined_sprite;
 }
 
-void Hero::updateAnimation(sf::Time delta_time){
+void Hero::updateAnimation(float delta_time){
     float animation_interval = 0.5f;
-    animation_timer_ += delta_time.asSeconds();
+    animation_timer_ += delta_time;
 
     if(animation_timer_ > animation_interval){
         current_frame_ = (current_frame_ + 1)%number_of_frames_;
