@@ -55,7 +55,7 @@ void Game::boardRender(float delta_time){
             int board_width_pixels = currentTile->getTileSize() * 5;
             int board_height_pixels = currentTile->getTileSize() * 5;
 
-            //Calcula as coordenadas para posicionar o tabuleiro no centro da janela
+            //Calcula as coordenadas para posicionar o tabuleiro junto ao background
             int board_positionX = (this->GameWindow->getSize().x - board_width_pixels) / 1.98;
             int board_positionY = (this->GameWindow->getSize().y - board_height_pixels) / 6;
 
@@ -63,12 +63,8 @@ void Game::boardRender(float delta_time){
             tileShape.setPosition(board_positionX + i * currentTile->getTileSize(), 
                                   board_positionY + j * currentTile->getTileSize());
 
-            //Define a cor do quadrado como preto
-            tileShape.setFillColor(sf::Color::Black);
-
-            //Define a cor da borda como branca
-            tileShape.setOutlineThickness(currentTile->getTileBorderSize());
-            tileShape.setOutlineColor(sf::Color::White);
+            //Define a cor do quadrado como transparente
+            tileShape.setFillColor(sf::Color::Transparent);
 
             //Desenha o quadrado na janela
             this->GameWindow->draw(tileShape);
