@@ -17,7 +17,7 @@ class Game{
 private:
     //Variables
     sf::RenderWindow *GameWindow;
-    sf::Event SFML_event;
+    sf::Event SFML_event_;
     sf::Texture background_;
     sf::Sprite background_sprite_;
     Board *gameBoard;
