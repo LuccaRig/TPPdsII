@@ -33,8 +33,8 @@ Game::~Game(){
     //Methods
 
 void Game::testIsClosed(){
-    while(this->GameWindow->pollEvent(this->SFML_event)){
-        if(this->SFML_event.type == sf::Event::Closed){
+    while(this->GameWindow->pollEvent(this->SFML_event_)){
+        if(this->SFML_event_.type == sf::Event::Closed){
             this->GameWindow->close();
         }
     }
@@ -108,98 +108,155 @@ void Game::render(float delta_time){
 }
 
 void Game::PlayerTurnControl(float delta_time, sf::Clock clock){
-        while(this->current_game_state_->IsPlayerTurn()){
-            if(this->current_game_state_->WhichHeroTurn() == "knight"){
-                
+    while(this->current_game_state_->IsPlayerTurn()){
+        this->update();
+        this->render(delta_time);
+        delta_time = clock.restart().asSeconds();
+
+        if(current_game_state_->WhichHeroTurn() == "rogue"){
+            while(this->GameWindow->pollEvent(this->SFML_event_)){
+                int pos = 0;
                 this->update();
                 this->render(delta_time);
+                delta_time = clock.restart().asSeconds();
 
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-                    int pos = knight_.get_hero_position_y();
-                    knight_.set_hero_position_y(pos-1);
-                    this->current_game_state_->HeroTurnPass();
-                }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-                    int pos = knight_.get_hero_position_y();
-                    knight_.set_hero_position_y(pos+1);
-                    this->current_game_state_->HeroTurnPass();
-                }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-                    int pos = knight_.get_hero_position_x();
-                    knight_.set_hero_position_x(pos-1);
-                    this->current_game_state_->HeroTurnPass();
-                }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-                    int pos = knight_.get_hero_position_x();
-                    knight_.set_hero_position_x(pos+1);
-                    this->current_game_state_->HeroTurnPass();
-                }
-            
-            }
+                if(this->SFML_event_.type == sf::Event::Closed){
+                    this->GameWindow->close();
+                }   
 
-            else if(this->current_game_state_->WhichHeroTurn() == "mage"){
-                
-                this->update();
-                this->render(delta_time);
-                
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-                    int pos = mage_.get_hero_position_y();
-                    mage_.set_hero_position_y(pos-1);
-                    this->current_game_state_->HeroTurnPass();
-                }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-                    int pos = mage_.get_hero_position_y();
-                    mage_.set_hero_position_y(pos+1);
-                    this->current_game_state_->HeroTurnPass();
-                }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-                    int pos = mage_.get_hero_position_x();
-                    mage_.set_hero_position_x(pos-1);
-                    this->current_game_state_->HeroTurnPass();
-                }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-                    int pos = mage_.get_hero_position_x();
-                    mage_.set_hero_position_x(pos+1);
-                    this->current_game_state_->HeroTurnPass();
-                }
-        }
+                if(this->SFML_event_.type == sf::Event::KeyPressed){
+                    switch (this->SFML_event_.key.code){
+                        case sf::Keyboard::Up:
+                            pos = rogue_.get_hero_position_y();
+                            rogue_.set_hero_position_y(pos-1);
+                            this->current_game_state_->HeroTurnPass();
+                            break;
 
-        else if(this->current_game_state_->WhichHeroTurn() == "rogue"){
-                while(true){
-                this->update();
-                this->render(delta_time);
-                
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
-                    int pos = rogue_.get_hero_position_y();
-                    rogue_.set_hero_position_y(pos-1);
-                    break;
-                }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
-                    int pos = rogue_.get_hero_position_y();
-                    rogue_.set_hero_position_y(pos+1);
-                    break;
-                    //this->current_game_state_->HeroTurnPass();
-                }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){
-                    int pos = rogue_.get_hero_position_x();
-                    rogue_.set_hero_position_x(pos-1);
-                    break;
-                    //this->current_game_state_->HeroTurnPass();
-                }
-                if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
-                    int pos = rogue_.get_hero_position_x();
-                    rogue_.set_hero_position_x(pos+1);
-                    break;
-                    //this->current_game_state_->HeroTurnPass();
+                        case sf::Keyboard::Down:
+                            pos = rogue_.get_hero_position_y();
+                            rogue_.set_hero_position_y(pos+1);
+                            this->current_game_state_->HeroTurnPass();
+                            break;
+
+                        case sf::Keyboard::Left:
+                            pos = rogue_.get_hero_position_x();
+                            rogue_.set_hero_position_x(pos-1);
+                            this->current_game_state_->HeroTurnPass();
+                            break;
+
+                        case sf::Keyboard::Right:
+                            pos = rogue_.get_hero_position_x();
+                            rogue_.set_hero_position_x(pos+1);
+                            this->current_game_state_->HeroTurnPass();
+                            break;
+
+                        default:
+                            this->update();
+                            this->render(delta_time);
+                            delta_time = clock.restart().asSeconds();
+                            break;
+
+                    }
                 }
             }
-            this->update();
-            this->render(delta_time);
-
-            this->current_game_state_->HeroTurnPass(); 
         }
 
+        else if(current_game_state_->WhichHeroTurn() == "mage"){
+            while(this->GameWindow->pollEvent(this->SFML_event_)){
+                int pos = 0;
+                this->update();
+                this->render(delta_time);
+                delta_time = clock.restart().asSeconds();
+
+                if(this->SFML_event_.type == sf::Event::Closed){
+                    this->GameWindow->close();
+                }   
+
+                if(this->SFML_event_.type == sf::Event::KeyPressed){
+                    switch (this->SFML_event_.key.code){
+                        case sf::Keyboard::Up:
+                            pos = mage_.get_hero_position_y();
+                            mage_.set_hero_position_y(pos-1);
+                            this->current_game_state_->HeroTurnPass();
+                            break;
+
+                        case sf::Keyboard::Down:
+                            pos = mage_.get_hero_position_y();
+                            mage_.set_hero_position_y(pos+1);
+                            this->current_game_state_->HeroTurnPass();
+                            break;
+
+                        case sf::Keyboard::Left:
+                            pos = mage_.get_hero_position_x();
+                            mage_.set_hero_position_x(pos-1);
+                            this->current_game_state_->HeroTurnPass();
+                            break;
+
+                        case sf::Keyboard::Right:
+                            pos = mage_.get_hero_position_x();
+                            mage_.set_hero_position_x(pos+1);
+                            this->current_game_state_->HeroTurnPass();
+                            break;
+
+                        default:
+                            this->update();
+                            this->render(delta_time);
+                            delta_time = clock.restart().asSeconds();
+                            break;
+
+                    }
+                }
+            }
         }
+
+        else if(current_game_state_->WhichHeroTurn() == "knight"){
+            while(this->GameWindow->pollEvent(this->SFML_event_)){
+                int pos = 0;
+                this->update();
+                this->render(delta_time);
+                delta_time = clock.restart().asSeconds();
+
+                if(this->SFML_event_.type == sf::Event::Closed){
+                    this->GameWindow->close();
+                }   
+
+                if(this->SFML_event_.type == sf::Event::KeyPressed){
+                    switch (this->SFML_event_.key.code){
+                        case sf::Keyboard::Up:
+                            pos = knight_.get_hero_position_y();
+                            knight_.set_hero_position_y(pos-1);
+                            this->current_game_state_->HeroTurnPass();
+                            break;
+
+                        case sf::Keyboard::Down:
+                            pos = knight_.get_hero_position_y();
+                            knight_.set_hero_position_y(pos+1);
+                            this->current_game_state_->HeroTurnPass();
+                            break;
+
+                        case sf::Keyboard::Left:
+                            pos = knight_.get_hero_position_x();
+                            knight_.set_hero_position_x(pos-1);
+                            this->current_game_state_->HeroTurnPass();
+                            break;
+
+                        case sf::Keyboard::Right:
+                            pos = knight_.get_hero_position_x();
+                            knight_.set_hero_position_x(pos+1);
+                            this->current_game_state_->HeroTurnPass();
+                            break;
+
+                        default:
+                            this->update();
+                            this->render(delta_time);
+                            delta_time = clock.restart().asSeconds();
+                            break;
+
+                    }
+                }
+            }
+        }
+    }
 }
 
 void Game::run(sf::Clock clock){
