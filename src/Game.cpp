@@ -129,6 +129,7 @@ void Game::PlayerTurnControl(float delta_time, sf::Clock clock){
                     switch (this->SFML_event_.key.code){
                         case sf::Keyboard::Up:
                             pos = rogue_.get_hero_position_y();
+                            if ((pos-1) < 0) continue; //Fazer isso pra todas direções e pra todos heróis
                             rogue_.set_hero_position_y(pos-1);
                             this->current_game_state_->HeroTurnPass();
                             break;

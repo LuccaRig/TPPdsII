@@ -3,21 +3,23 @@
 #include <iostream>
 
 Tile::Tile(){
-    this->content_ = "vazio";
-    this->tile_size_ = 80;
-    this->tile_border_size_ = 5; 
+    content_ = "vazio";
+    tile_size_ = 80;
+    tile_border_size_ = 5; 
 }
 
 Tile::~Tile()
 {
 }
 
-void Tile::setObjectInTile()
+void Tile::setObjectInTile(std::string content)
 {
+    content_ = content;
 }
 
-void Tile::getObjectInTile()
+std::string Tile::getObjectInTile()
 {
+    return content_;
 }
 
 int Tile::getTileSize(){
@@ -31,20 +33,24 @@ int Tile::getTileBorderSize(){
 
 bool Tile::isEmpty()
 {
+    if (content_ == "vazio") return true;
     return false;
 }
 
 bool Tile::heroIsInTile()
 {
+    if (content_ == "hero") return true;
     return false;
 }
 
 bool Tile::monsterIsInTile()
 {
+    if (content_ == "monster") return true;
     return false;
 }
 
 bool Tile::itemIsInTile()
 {
+    if (content_ == "item") return true;
     return false;
 }
