@@ -50,13 +50,13 @@ void Game::putHeroInBoard(int position_x, int position_y, Hero &hero, float delt
     if (position_x == hero.get_hero_position_x() && position_y == hero.get_hero_position_y()) {
     //Modifica o tamanho do sprite do heroi para ficar um tamanho proporcional ao tabuleiro
     game_board_->get_tile_at(position_x, position_y)->setObjectInTile("hero");
-    hero.getHeroSprite().setScale(3.f, 3.f);
-    hero.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - hero.getHeroSprite().getLocalBounds().width*3) / 2,
-                                              tileShape.getPosition().y + (tileShape.getSize().y - hero.getHeroSprite().getLocalBounds().height*3) / 2);
+    hero.get_hero_sprite().setScale(3.f, 3.f);
+    hero.get_hero_sprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - hero.get_hero_sprite().getLocalBounds().width*3) / 2,
+                                              tileShape.getPosition().y + (tileShape.getSize().y - hero.get_hero_sprite().getLocalBounds().height*3) / 2);
     hero.updateAnimation(delta_time);
     
     // Desenha o herói na janela
-    this->game_window_->draw(hero.getHeroSprite());
+    this->game_window_->draw(hero.get_hero_sprite());
     }
 }
 
