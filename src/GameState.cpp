@@ -1,6 +1,7 @@
 #include "GameState.h"
 
 GameState::GameState(){
+    hero_turn_count_ = 0;
     monster_turn_count_ = 0;
 }
 
