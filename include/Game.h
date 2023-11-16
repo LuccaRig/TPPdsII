@@ -56,12 +56,21 @@ public:
     /// funcionando como deveria
     void run(sf::Clock clock);
 
+    void PutHeroInBoard(Hero &hero, float delta_time,sf::RectangleShape &tileShape);
+
     /// @brief Renderiza o tabuleiro com os personagens nele
     /// @param delta_time = tempo decorrido desde o ultimo clock/renderização
     void boardRender(float delta_time);
 
+    /// @brief Garante o cotrole dos herois pelo jogador durante seu turno
+    /// @param delta_time: Tempo decorrido desde o ultimo clock 
+    /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
     void PlayerTurnControl(float delta_time, sf::Clock clock);
 
+    /// @brief Movimenta os herois no tabuleiro
+    /// @param hero: Heroi selecionado para andar no seu devido turno
+    /// @param delta_time: Tempo decorrido desde o ultimo clock 
+    /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
     void HeroWalk(Hero &hero, float delta_time, sf::Clock clock);
 
 };

@@ -46,6 +46,16 @@ void Game::update(){
     this->testIsClosed();
 }
 
+void Game::PutHeroInBoard(Hero &hero, float delta_time,sf::RectangleShape &tileShape){
+    hero.getHeroSprite().setScale(3.f, 3.f);
+    hero.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - hero.getHeroSprite().getLocalBounds().width*3) / 2,
+                                              tileShape.getPosition().y + (tileShape.getSize().y - hero.getHeroSprite().getLocalBounds().height*3) / 2);
+
+    hero.updateAnimation(delta_time);
+    // Desenha o herói na janela
+    this->GameWindow->draw(hero.getHeroSprite());
+}
+
 void Game::boardRender(float delta_time){
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
@@ -70,32 +80,14 @@ void Game::boardRender(float delta_time){
             this->GameWindow->draw(tileShape);
 
             if (i == mage_.get_hero_position_x() && j == mage_.get_hero_position_y()) {
-                // Cria o herói e configura sua posição para o centro do quadrado
-                mage_.getHeroSprite().setScale(3.f, 3.f);
-                mage_.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - mage_.getHeroSprite().getLocalBounds().width*3) / 2,
-                                              tileShape.getPosition().y + (tileShape.getSize().y - mage_.getHeroSprite().getLocalBounds().height*3) / 2);
-
-                mage_.updateAnimation(delta_time);
-                // Desenha o herói na janela
-                this->GameWindow->draw(mage_.getHeroSprite());
+                PutHeroInBoard(mage_, delta_time, tileShape);
             }
             if (i == knight_.get_hero_position_x() && j == knight_.get_hero_position_y()) {
-                // Cria o herói e configura sua posição para o centro do quadrado
-                knight_.getHeroSprite().setScale(3.f, 3.f);
-                knight_.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - knight_.getHeroSprite().getLocalBounds().width*3) / 2,
-                                                tileShape.getPosition().y + (tileShape.getSize().y - knight_.getHeroSprite().getLocalBounds().height*3) / 2);
-                knight_.updateAnimation(delta_time);
-                // Desenha o herói na janela
-                this->GameWindow->draw(knight_.getHeroSprite());
+                
+                PutHeroInBoard(knight_, delta_time, tileShape);
             }
             if (i == rogue_.get_hero_position_x() && j == rogue_.get_hero_position_y()) {
-                // Cria o herói e configura sua posição para o centro do quadrado
-                rogue_.getHeroSprite().setScale(3.f, 3.f);
-                rogue_.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - rogue_.getHeroSprite().getLocalBounds().width*3) / 2,
-                                                tileShape.getPosition().y + (tileShape.getSize().y - rogue_.getHeroSprite().getLocalBounds().height*3) / 2);
-                rogue_.updateAnimation(delta_time);
-                // Desenha o herói na janela
-                this->GameWindow->draw(rogue_.getHeroSprite());
+                PutHeroInBoard(rogue_, delta_time, tileShape);
             }
         }
     }
@@ -186,7 +178,7 @@ void Game::run(sf::Clock clock){
         //Essa linha de código renderiza o tabuleiro e todas as imagens inclusas nela
         this->render(delta_time);
 
-        //O PlayerTurnControl garante a movimentação e ataques dos herois
+        //O PlayerTurnControl garante a movimentação e ataques dos herois durante o turno do jogador
         this->PlayerTurnControl(delta_time, clock);   
     }
 
