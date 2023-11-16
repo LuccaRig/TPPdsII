@@ -19,6 +19,9 @@
             monster_dmg_ = 8;
             monster_exp_drop_ = 5;
 
+            monster_position_x_ = 0;
+            monster_position_y_ = 0;
+
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/BloodyAbominationIdleSide.png");
             monster_sprite_.setTexture(monster_texture_);
@@ -26,6 +29,9 @@
         }
             monster_dmg_ = 6;
             monster_exp_drop_ = 8;
+
+            monster_position_x_ = 0;
+            monster_position_y_ = 0;
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/DeathKnightIdleSide.png");
@@ -36,6 +42,9 @@
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
 
+            monster_position_x_ = 0;
+            monster_position_y_ = 0;
+
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/SandGolemIdleSide.png");
             monster_sprite_.setTexture(monster_texture_);
@@ -45,6 +54,9 @@
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
 
+            monster_position_x_ = 0;
+            monster_position_y_ = 0;
+
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/GhastlyBeholderIdleSide.png");
             monster_sprite_.setTexture(monster_texture_);
@@ -52,6 +64,9 @@
             monster_hp_ = 10;
             monster_dmg_ = 4;
             monster_exp_drop_ = 1;
+
+            monster_position_x_ = 0;
+            monster_position_y_ = 0;
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/UnholySkullIdleSide.png");
@@ -62,6 +77,9 @@
             monster_dmg_ = 5;
             monster_exp_drop_ = 1;
 
+            monster_position_x_ = 0;
+            monster_position_y_ = 0;
+            
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/VirulentWightIdleSide.png");
             monster_sprite_.setTexture(monster_texture_);

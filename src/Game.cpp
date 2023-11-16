@@ -56,7 +56,21 @@ void Game::putHeroInBoard(int position_x, int position_y, Hero &hero, float delt
     hero.updateAnimation(delta_time);
     
     // Desenha o herói na janela
-    this->game_window_->draw(hero.get_hero_sprite());
+    this->game_window->draw(hero.get_hero_sprite());
+    }
+}
+
+void Game::PutMonsterInBoard(int position_x, int position_y, Monster &monster, float delta_time, sf::RectangleShape &tileShape) {
+    if (position_x == monster.get_monster_position_x() && position_y == monster.get_monster_position_y()) {
+    //Modifica o tamanho do sprite do monstro para ficar um tamanho proporcional ao tabuleiro
+    gameBoard->get_tile_at(position_x, position_y)->setObjectInTile("monster");
+    monster.get_monster_sprite().setScale(3.f, 3.f);
+    monster.get_monster_sprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - monster.get_monster_sprite().getLocalBounds().width*3) / 2,
+                                              tileShape.getPosition().y + (tileShape.getSize().y - monster.get_monster_sprite().getLocalBounds().height*3) / 2);
+    monster.updateAnimation(delta_time);
+    
+    // Desenha o monstro na janela
+    this->GameWindow->draw(monster.get_monster_sprite());
     }
 }
 
