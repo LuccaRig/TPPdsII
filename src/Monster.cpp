@@ -27,8 +27,6 @@
             monster_sprite_.setTexture(monster_texture_);
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
-        else if (monster_type_ == "death knight") {
-             monster_hp_ = 20;
             monster_dmg_ = 6;
             monster_exp_drop_ = 8;
 
@@ -40,7 +38,6 @@
             monster_sprite_.setTexture(monster_texture_);
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
-        else if (monster_type_ == "sand golem") {
             monster_hp_ = 40;
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
@@ -53,7 +50,6 @@
             monster_sprite_.setTexture(monster_texture_);
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
-        else if (monster_type_ == "ghastly beholder") {
             monster_hp_ = 10;
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
@@ -65,8 +61,6 @@
             monster_texture_.loadFromFile("Textures/GhastlyBeholderIdleSide.png");
             monster_sprite_.setTexture(monster_texture_);
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
-        }
-        else if (monster_type_ == "unholy skull") {
             monster_hp_ = 10;
             monster_dmg_ = 4;
             monster_exp_drop_ = 1;
@@ -79,7 +73,6 @@
             monster_sprite_.setTexture(monster_texture_);
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
-        else if (monster_type_ == "virulent wight") {
             monster_hp_ = 13;
             monster_dmg_ = 5;
             monster_exp_drop_ = 1;
@@ -94,56 +87,44 @@
         }
     }
 
-    void Monster::attackHero(Hero hero) 
-    {
+    void Monster::attackHero(Hero hero) {
        hero.set_hero_hp(monster_dmg_);
     }
 
-    void Monster::set_monster_hp(int dmg) 
-    {
+    void Monster::set_monster_hp(int dmg) {
         monster_hp_ -= dmg;
-          if (monster_hp_ <= 0)
-          {
+          if (monster_hp_ <= 0) {
             Item m_item(monster_position_x_, monster_position_y_);
             // Board::registerItem(m_item);
             this->~Monster();
           }
     }
 
-    bool Monster::monsterIsDead()
-    {
-        if (monster_hp_ > 0) 
-        {
+    bool Monster::monsterIsDead() {
+        if (monster_hp_ > 0) {
             return false;
-        }
-        else
-        {
+        } else {
             return true;
         }
     }
 
-    int Monster::get_exp_drop() 
-    {
+    int Monster::get_exp_drop() {
         return monster_exp_drop_;
     }
 
-    int Monster::get_monster_position_x()
-    {
+    int Monster::get_monster_position_x() {
         return monster_position_x_;
     }
 
-     int Monster::get_monster_position_y()
-    {
+     int Monster::get_monster_position_y() {
         return monster_position_y_;
     }
 
-    void Monster::set_monster_position_x(int xi)
-    {
+    void Monster::set_monster_position_x(int xi) {
         monster_position_x_ = xi;
     }
  
-    void Monster::set_monster_position_y(int yi)
-    {
+    void Monster::set_monster_position_y(int yi) {
         monster_position_y_ = yi;
     }
 
@@ -174,6 +155,5 @@
         }
     }
 
-    Monster::~Monster()
-    {    
+    Monster::~Monster() {    
     }
