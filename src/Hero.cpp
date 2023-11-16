@@ -9,9 +9,9 @@
 #include <SFML/Network.hpp>
 
 
-Hero::Hero(std::string type){
+Hero::Hero(std::string hero_type) {
     exp_ = 0;
-    hero_type_ = type;
+    hero_type_ = hero_type;
     hero_sprite_ = sf::Sprite();
     
     number_of_frames_ = 4;
@@ -60,66 +60,62 @@ Hero::Hero(std::string type){
 
 }
 
-int Hero::get_hero_hp(){
+int Hero::get_hero_hp() {
     return hero_hp_;
 }
 
-void Hero::set_hero_hp(int changed_hp){
+void Hero::set_hero_hp(int changed_hp) {
     hero_hp_ -= changed_hp;
 }
 
-int Hero::get_hero_attack(){
+int Hero::get_hero_attack() {
     return hero_attack_;
 }
 
-int Hero::get_hero_special_attack(){
+int Hero::get_hero_special_attack() {
     return hero_special_attack_;
 }
 
-void Hero::UseSkill(){
+void Hero::UseSkill() {
     Skill skill(hero_type_, hero_special_attack_);
     hero_hp_ += skill.skill_heal();
     hero_attack_ += skill.skill_buff();
     //Dar dano nos monstros
 }
 
-Hero::~Hero(){
-
-}
-
-int Hero::get_hero_position_x(){
+int Hero::get_hero_position_x() {
     return hero_position_x_;
 }
 
-void Hero::set_hero_position_x(int current_position){
+void Hero::set_hero_position_x(int current_position) {
     hero_position_x_ = current_position;
 }
 
-int Hero::get_hero_position_y(){
+int Hero::get_hero_position_y() {
     return hero_position_y_;
 }
 
-void Hero::set_hero_position_y(int current_position){
+void Hero::set_hero_position_y(int current_position) {
     hero_position_y_ = current_position;
 }
 
-sf::Texture Hero::getHeroTexture(){
+sf::Texture Hero::get_hero_texture() {
     return hero_texture_;
 }
 
-sf::Sprite& Hero::getHeroSprite(){
+sf::Sprite& Hero::get_hero_sprite() {
     return hero_sprite_;
 }
 
-void Hero::setHeroSprite(sf::Sprite defined_sprite){
+void Hero::set_hero_sprite(sf::Sprite defined_sprite) {
     hero_sprite_ = defined_sprite;
 }
 
-void Hero::updateAnimation(float delta_time){
+void Hero::updateAnimation(float delta_time) {
     float animation_interval = 0.5f;
     animation_timer_ += delta_time;
 
-    if(animation_timer_ > animation_interval){
+    if(animation_timer_ > animation_interval) {
         current_frame_ = (current_frame_ + 1)%number_of_frames_;
 
         int frame_width = hero_texture_.getSize().x / number_of_frames_;
@@ -128,4 +124,8 @@ void Hero::updateAnimation(float delta_time){
 
         animation_timer_ = 0.0f;
     }
+}
+
+Hero::~Hero() {
+
 }
