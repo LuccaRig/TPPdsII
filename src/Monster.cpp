@@ -50,18 +50,17 @@
     {
         std::vector<int> position = tabuleiro.findHeroPosition();
         tabuleiro.monsterMoveInBoard(monster_type_, position);
-
     }
 
-    void Monster::attackHero(Hero heroi) 
+    void Monster::attackHero(Hero hero) 
     {
-      //  heroi.modify_hero_hp(monster_dmg_);
+       hero.set_hero_hp(monster_dmg_);
     }
 
-    void Monster::set_monster_hp(int dano) 
+    void Monster::set_monster_hp(int dmg) 
     {
-        monster_hp_ -= dano;
-          if (monster_hp_ < 0)
+        monster_hp_ -= dmg;
+          if (monster_hp_ <= 0)
           {
             Item m_item(monster_position_x_, monster_position_y_);
             // Board::registerItem(m_item);
@@ -107,6 +106,5 @@
     }
 
     Monster::~Monster()
-    {
-        
+    {    
     }
