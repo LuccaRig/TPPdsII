@@ -38,8 +38,6 @@ class GameState{
     void MonsterTurn();
 
   private:
-    std::vector<Monster> enemies_;
-    int horde_number_;
     int hero_turn_count_;
     ///TODO:Verificar a alocação dinâmica do turno dos monstros
     int monster_turn_count_;

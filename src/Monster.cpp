@@ -16,31 +16,31 @@
         }
         else if (monster_type_ == "death knight")
         {
-             monster_hp_ = 20;
+            monster_hp_ = 20;
             monster_dmg_ = 6;
             monster_exp_drop_ = 8;
         }
         else if (monster_type_ == "sand golem")
         {
-             monster_hp_ = 40;
+            monster_hp_ = 40;
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
         }
         else if (monster_type_ == "ghastly beholder")
         {
-             monster_hp_ = 10;
+            monster_hp_ = 10;
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
         }
         else if (monster_type_ == "unholy skull")
         {
-             monster_hp_ = 10;
+            monster_hp_ = 10;
             monster_dmg_ = 4;
             monster_exp_drop_ = 1;
         }
         else if (monster_type_ == "virulent wight")
         {
-             monster_hp_ = 13;
+            monster_hp_ = 13;
             monster_dmg_ = 5;
             monster_exp_drop_ = 1;
         }

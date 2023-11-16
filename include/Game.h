@@ -12,6 +12,7 @@
 #include "Board.h"
 #include "Hero.h"
 #include "GameState.h"
+#include "Hordes.h"
 
 class Game{
 private:
@@ -27,6 +28,7 @@ private:
     Hero mage_;
     Hero knight_;
     Hero rogue_;
+    Hordes my_hordes_;
 
     /// @brief Cria um novo objeto do tipo RenderWindow
     void initWindow();
