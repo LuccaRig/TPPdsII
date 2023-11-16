@@ -56,7 +56,7 @@ public:
     /// funcionando como deveria
     void run(sf::Clock clock);
 
-    void PutHeroInBoard(Hero &hero, float delta_time,sf::RectangleShape &tileShape);
+    void PutHeroInBoard(int position_y, int position_x, Hero &hero, float delta_time,sf::RectangleShape &tileShape);
 
     /// @brief Renderiza o tabuleiro com os personagens nele
     /// @param delta_time = tempo decorrido desde o ultimo clock/renderização
