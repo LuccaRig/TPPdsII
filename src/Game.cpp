@@ -108,6 +108,51 @@ void Game::render(float delta_time){
     this->GameWindow->display();  
 }
 
+void Game::HeroWalk(Hero &hero, float delta_time, sf::Clock clock){
+    while(this->GameWindow->pollEvent(this->SFML_event_)){
+        int pos = 0;
+        this->update();
+        this->render(delta_time);
+        delta_time = clock.restart().asSeconds();
+
+        if(this->SFML_event_.type == sf::Event::KeyPressed){ 
+            switch (this->SFML_event_.key.code){
+                case sf::Keyboard::Up:
+                    pos = hero.get_hero_position_y();
+                    hero.set_hero_position_y(pos-1);
+                    this->current_game_state_->HeroTurnPass();
+                    break;
+
+                case sf::Keyboard::Down:
+                    pos = hero.get_hero_position_y();
+                    hero.set_hero_position_y(pos+1);
+                    this->current_game_state_->HeroTurnPass();
+                    break;
+
+                case sf::Keyboard::Left:
+                    pos = hero.get_hero_position_x();
+                    hero.set_hero_position_x(pos-1);
+                    this->current_game_state_->HeroTurnPass();
+                    break;
+
+                case sf::Keyboard::Right:
+                    pos = hero.get_hero_position_x();
+                    hero.set_hero_position_x(pos+1);
+                    this->current_game_state_->HeroTurnPass();
+                    break;
+
+                default:
+                    this->update();
+                    this->render(delta_time);
+                    delta_time = clock.restart().asSeconds();
+                    break;
+
+            }
+        }
+    }
+}
+
+
 void Game::PlayerTurnControl(float delta_time, sf::Clock clock){
     while(this->current_game_state_->IsPlayerTurn()){
         this->update();
@@ -115,148 +160,15 @@ void Game::PlayerTurnControl(float delta_time, sf::Clock clock){
         delta_time = clock.restart().asSeconds();
 
         if(current_game_state_->WhichHeroTurn() == "rogue"){
-            while(this->GameWindow->pollEvent(this->SFML_event_)){
-                int pos = 0;
-                this->update();
-                this->render(delta_time);
-                delta_time = clock.restart().asSeconds();
-
-                if(this->SFML_event_.type == sf::Event::Closed){
-                    this->GameWindow->close();
-                }   
-
-                if(this->SFML_event_.type == sf::Event::KeyPressed){
-                    switch (this->SFML_event_.key.code){
-                        case sf::Keyboard::Up:
-                            pos = rogue_.get_hero_position_y();
-                            if ((pos-1) < 0) continue; //Fazer isso pra todas direções e pra todos heróis
-                            rogue_.set_hero_position_y(pos-1);
-                            this->current_game_state_->HeroTurnPass();
-                            break;
-
-                        case sf::Keyboard::Down:
-                            pos = rogue_.get_hero_position_y();
-                            rogue_.set_hero_position_y(pos+1);
-                            this->current_game_state_->HeroTurnPass();
-                            break;
-
-                        case sf::Keyboard::Left:
-                            pos = rogue_.get_hero_position_x();
-                            rogue_.set_hero_position_x(pos-1);
-                            this->current_game_state_->HeroTurnPass();
-                            break;
-
-                        case sf::Keyboard::Right:
-                            pos = rogue_.get_hero_position_x();
-                            rogue_.set_hero_position_x(pos+1);
-                            this->current_game_state_->HeroTurnPass();
-                            break;
-
-                        default:
-                            this->update();
-                            this->render(delta_time);
-                            delta_time = clock.restart().asSeconds();
-                            break;
-
-                    }
-                }
-            }
+            HeroWalk(rogue_, delta_time, clock);
         }
-
+        
         else if(current_game_state_->WhichHeroTurn() == "mage"){
-            while(this->GameWindow->pollEvent(this->SFML_event_)){
-                int pos = 0;
-                this->update();
-                this->render(delta_time);
-                delta_time = clock.restart().asSeconds();
-
-                if(this->SFML_event_.type == sf::Event::Closed){
-                    this->GameWindow->close();
-                }   
-
-                if(this->SFML_event_.type == sf::Event::KeyPressed){
-                    switch (this->SFML_event_.key.code){
-                        case sf::Keyboard::Up:
-                            pos = mage_.get_hero_position_y();
-                            mage_.set_hero_position_y(pos-1);
-                            this->current_game_state_->HeroTurnPass();
-                            break;
-
-                        case sf::Keyboard::Down:
-                            pos = mage_.get_hero_position_y();
-                            mage_.set_hero_position_y(pos+1);
-                            this->current_game_state_->HeroTurnPass();
-                            break;
-
-                        case sf::Keyboard::Left:
-                            pos = mage_.get_hero_position_x();
-                            mage_.set_hero_position_x(pos-1);
-                            this->current_game_state_->HeroTurnPass();
-                            break;
-
-                        case sf::Keyboard::Right:
-                            pos = mage_.get_hero_position_x();
-                            mage_.set_hero_position_x(pos+1);
-                            this->current_game_state_->HeroTurnPass();
-                            break;
-
-                        default:
-                            this->update();
-                            this->render(delta_time);
-                            delta_time = clock.restart().asSeconds();
-                            break;
-
-                    }
-                }
-            }
+            HeroWalk(mage_, delta_time, clock);
         }
 
         else if(current_game_state_->WhichHeroTurn() == "knight"){
-            while(this->GameWindow->pollEvent(this->SFML_event_)){
-                int pos = 0;
-                this->update();
-                this->render(delta_time);
-                delta_time = clock.restart().asSeconds();
-
-                if(this->SFML_event_.type == sf::Event::Closed){
-                    this->GameWindow->close();
-                }   
-
-                if(this->SFML_event_.type == sf::Event::KeyPressed){
-                    switch (this->SFML_event_.key.code){
-                        case sf::Keyboard::Up:
-                            pos = knight_.get_hero_position_y();
-                            knight_.set_hero_position_y(pos-1);
-                            this->current_game_state_->HeroTurnPass();
-                            break;
-
-                        case sf::Keyboard::Down:
-                            pos = knight_.get_hero_position_y();
-                            knight_.set_hero_position_y(pos+1);
-                            this->current_game_state_->HeroTurnPass();
-                            break;
-
-                        case sf::Keyboard::Left:
-                            pos = knight_.get_hero_position_x();
-                            knight_.set_hero_position_x(pos-1);
-                            this->current_game_state_->HeroTurnPass();
-                            break;
-
-                        case sf::Keyboard::Right:
-                            pos = knight_.get_hero_position_x();
-                            knight_.set_hero_position_x(pos+1);
-                            this->current_game_state_->HeroTurnPass();
-                            break;
-
-                        default:
-                            this->update();
-                            this->render(delta_time);
-                            delta_time = clock.restart().asSeconds();
-                            break;
-
-                    }
-                }
-            }
+            HeroWalk(knight_,delta_time,clock);
         }
     }
 }
