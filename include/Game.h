@@ -12,6 +12,7 @@
 #include "Board.h"
 #include "Hero.h"
 #include "GameState.h"
+#include "Hordes.h"
 
 class Game {
 
@@ -70,6 +71,7 @@ class Game {
     Hero mage_;
     Hero knight_;
     Hero rogue_;
+    Hordes my_hordes_;
 
     /// @brief Cria um novo objeto do tipo RenderWindow
     void initWindow();

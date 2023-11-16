@@ -1,7 +1,6 @@
 #include "GameState.h"
 
-GameState::GameState() {
-    horde_number_ = 0;
+GameState::GameState(){
     monster_turn_count_ = 0;
 }
 
