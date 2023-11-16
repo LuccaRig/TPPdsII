@@ -12,6 +12,7 @@
 
 void Game::initWindow(){
     this->GameWindow = new sf::RenderWindow(sf::VideoMode(1200, 800), "My Game",sf::Style::Close);
+    this->GameWindow->setPosition(sf::Vector2i(0, 0));
     this->gameBoard = new Board();
 }
 
