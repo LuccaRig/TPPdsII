@@ -46,12 +46,6 @@
         }
     }
 
-    void Monster::moveThisMonster(Board tabuleiro)
-    {
-        std::vector<int> position = tabuleiro.findHeroPosition();
-        tabuleiro.monsterMoveInBoard(monster_type_, position);
-    }
-
     void Monster::attackHero(Hero hero) 
     {
        hero.set_hero_hp(monster_dmg_);

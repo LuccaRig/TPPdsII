@@ -17,9 +17,6 @@ class Monster {
 
     /// @brief destrutor
     ~Monster();
-    
-    /// @brief movimenta o monstro para uma posição mais próxima de um herói. PRECONDIÇÃO: nenhum herói está a alcance de ataque
-    void moveThisMonster(Board);
 
     /// @brief ataca o herói. PRECONDIÇÃO: algum herói está a alcance de ataque 
     void attackHero(Hero);

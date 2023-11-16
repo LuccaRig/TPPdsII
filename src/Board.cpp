@@ -4,10 +4,10 @@
 #include <iostream>
 
 Board::Board() {
-    MyBoard.resize(5, std::vector<Tile*>(5, nullptr));
+   my_board_.resize(5, std::vector<Tile*>(5, nullptr));
     for (int i = 0;i < 5;i++) {
         for (int j = 0;j < 5;j++) {
-            MyBoard[i][j] = new Tile();
+           my_board_[i][j] = new Tile();
         }
     }
 }
@@ -15,26 +15,11 @@ Board::Board() {
 Board::~Board(){
     for (int i = 0;i < 5;i++) {
         for (int j = 0;j < 5;j++) {
-            delete MyBoard[i][j];
+            delete my_board_[i][j];
         }
     }
 }
 
-void Board::heroPutInBoard(std::string Hero, int linha, int coluna)
-{
-}
-
-void Board::heroMoveInBoard(std::string Hero, int linha, int coluna)
-{
-}
-
-void Board::monsterPutInBoard(std::string Hero, int linha, int coluna)
-{
-}
-
-void Board::monsterMoveInBoard(std::string MonsterType, std::vector<int> hero_position)
-{
-}
 
 void Board::itemPutInBoard(std::string Item, int linha, int coluna)
 {
@@ -50,9 +35,9 @@ std::vector<int> Board::findHeroPosition()
     return std::vector<int>();
 }
 
-Tile* Board::getTileAt(int selected_line, int selected_column) {
+Tile* Board::get_tile_at(int selected_line, int selected_column) {
     if ((selected_line >= 0) && (selected_line < 5) && (selected_column >= 0) && (selected_column < 5)) {
-        return MyBoard[selected_line][selected_column];
+        return my_board_[selected_line][selected_column];
     }
     //Caso um valor fora do Board tenha sido selecionado:
     return nullptr;
