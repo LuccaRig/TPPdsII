@@ -14,26 +14,9 @@
 #include "GameState.h"
 #include "Hordes.h"
 
-class Game{
-private:
-    //Variables
-    sf::RenderWindow *GameWindow;
-    sf::Event SFML_event_;
-    sf::Texture background_;
-    sf::Sprite background_sprite_;
-    Board *gameBoard;
-    GameState *current_game_state_;
+class Game {
 
-    //Personagens dos jogadores:
-    Hero mage_;
-    Hero knight_;
-    Hero rogue_;
-    Hordes my_hordes_;
-
-    /// @brief Cria um novo objeto do tipo RenderWindow
-    void initWindow();
-
-public:
+  public:
     
     /// @brief Constructor
     Game();
@@ -58,7 +41,7 @@ public:
     /// funcionando como deveria
     void run(sf::Clock clock);
 
-    void PutHeroInBoard(int position_y, int position_x, Hero &hero, float delta_time,sf::RectangleShape &tileShape);
+    void putHeroInBoard(int position_y, int position_x, Hero &hero, float delta_time,sf::RectangleShape &tileShape);
 
     /// @brief Renderiza o tabuleiro com os personagens nele
     /// @param delta_time = tempo decorrido desde o ultimo clock/renderização
@@ -67,14 +50,31 @@ public:
     /// @brief Garante o cotrole dos herois pelo jogador durante seu turno
     /// @param delta_time: Tempo decorrido desde o ultimo clock 
     /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
-    void PlayerTurnControl(float delta_time, sf::Clock clock);
+    void playerTurnControl(float delta_time, sf::Clock clock);
 
     /// @brief Movimenta os herois no tabuleiro
     /// @param hero: Heroi selecionado para andar no seu devido turno
     /// @param delta_time: Tempo decorrido desde o ultimo clock 
     /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
-    void HeroWalk(Hero &hero, float delta_time, sf::Clock clock);
+    void heroWalk(Hero &hero, float delta_time, sf::Clock clock);
 
+  private:
+    //Variables
+    sf::RenderWindow *game_window_;
+    sf::Event SFML_event_;
+    sf::Texture background_;
+    sf::Sprite background_sprite_;
+    Board *game_board_;
+    GameState *current_game_state_;
+
+    //Personagens dos jogadores:
+    Hero mage_;
+    Hero knight_;
+    Hero rogue_;
+    Hordes my_hordes_;
+
+    /// @brief Cria um novo objeto do tipo RenderWindow
+    void initWindow();
 };
 
-#endif
+#endif // GAME_H_

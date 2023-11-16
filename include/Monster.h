@@ -13,13 +13,10 @@ class Monster {
   public:
 
     /// @brief contrói monstros com diferentes características dependendo do tipo de monstro recebido
-    Monster(std::string monster_type_);
+    Monster(std::string monster_type);
 
     /// @brief destrutor
     ~Monster();
-    
-    /// @brief movimenta o monstro para uma posição mais próxima de um herói. PRECONDIÇÃO: nenhum herói está a alcance de ataque
-    void moveThisMonster(Board);
 
     /// @brief ataca o herói. PRECONDIÇÃO: algum herói está a alcance de ataque 
     void attackHero(Hero);
@@ -46,18 +43,36 @@ class Monster {
     /// @brief substitui a coordenada y do monstro pelo valor do parâmetro
     void set_monster_position_y(int yi);
 
+    /// @return Textura do monstro/SpriteSheet
+    sf::Texture get_monster_texture();
 
+    /// @return Corte específico da SpriteSheet do monstro(Sprite)
+    sf::Sprite& get_monster_sprite();
+
+    /// @brief Define um corte ou sprite específico do monstro
+    void set_monster_sprite(sf::Sprite defined_sprite);
+
+    void updateAnimation(float deltaTime);
 
     // aqui será construído um item e monster_item_drop_ será igualado à função returns_random_item
   private:
+    //Características
     std::string monster_type_;
     int monster_hp_;
     int monster_dmg_;
     int monster_exp_drop_;
     std::string monster_item_;
+
     int monster_position_x_;
     int monster_position_y_;
 
+    //Animações
+    sf::Texture monster_texture_;
+    sf::Sprite monster_sprite_;
+
+    int number_of_frames_;
+    int current_frame_;
+    float animation_timer_;
 
 };
 

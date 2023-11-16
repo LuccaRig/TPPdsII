@@ -15,22 +15,6 @@ class Board{
     /// @brief Destructor
     ~Board();
 
-    /// @brief Coloca um heroi no tabuleiro PRECONDIÇÃO:lugar que esteja vazio
-    void heroPutInBoard(std::string hero_type, int linha, int coluna);
-
-    /// @brief Move o heroi no tabuleiro PRECONDIÇÃO:lugar que esteja vazio
-    void heroMoveInBoard(std::string hero_type, int linha, int coluna);
-
-    /// @brief Coloca um monstro no tabuleiro PRECONDIÇÃO:lugar que esteja vazio
-    void monsterPutInBoard(std::string monster_type, int linha, int coluna);
-
-    /// @param monster_type_code Esse é o tipo e o número do monstro para diferenciarmos diferentes monstros
-    /// e suas posições no tabuleiro
-    /// @param hero_position Esse valor é o local para onde o monstro deve se mover, esse valor é encontrado
-    /// por meio da função findHeroPosition() 
-    /// @brief Move um monstro no tabuleiro PRECONDIÇÃO: lugar que esteja vazio e não fora do tabuleiro
-    void monsterMoveInBoard(std::string monster_type_code, std::vector<int> hero_position);
-
     /// @brief Coloca um item no tabuleiro PRECONDIÇÃO:lugar que esteja vazio 
     void itemPutInBoard(std::string item_type, int linha, int coluna);
 
@@ -42,13 +26,13 @@ class Board{
     std::vector<int> findHeroPosition();
 
     /// @return Retorna o estado de algum Tile em uma posição específica 
-    Tile* getTileAt(int selected_line, int selected_column);
+    Tile* get_tile_at(int selected_line, int selected_column);
 
   private:
 
     /// @brief Matriz que armazena os Tiles, cada Tile tem um conteúdo para distinguir
     /// qual objeto está em cima dele
-    std::vector<std::vector<Tile*>> MyBoard;
+    std::vector<std::vector<Tile*>> my_board_;
 };
 
 #endif
