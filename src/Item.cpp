@@ -8,15 +8,13 @@ using std::string;
 using std::vector;
 using std::map;
 
-Item::Item(int x, int y)  
-{
+Item::Item(int x, int y) {
     item_type_ = returnsRandomItem();
     item_position_x_ = x;
     item_position_y_ = y;
 }
 
-string Item::returnsRandomItem() 
-{
+string Item::returnsRandomItem() {
     map<int, string> item_n;
     item_n[1] = "heal";
     item_n[2] = "heal";
@@ -26,28 +24,22 @@ string Item::returnsRandomItem()
     srand((unsigned) time(NULL));
 	int random = 1 + rand()%10;
 
-    if (random <= 4) 
-    {
+    if (random <= 4) {
         return item_n[random];
-    }
-    else 
-    {
+    } else {
         return "empty";
     }
 }
 
-int Item::returns_item_position_x()
-{
+int Item::returns_item_position_x() {
     return item_position_x_;
 }
 
-int Item::returns_item_position_y()
-{
+int Item::returns_item_position_y() {
     return item_position_y_;
 }
 
-string Item::returns_item_type()
-{
+string Item::returns_item_type() {
   return item_type_;
 }
 

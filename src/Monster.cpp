@@ -76,56 +76,44 @@
         }
     }
 
-    void Monster::attackHero(Hero hero) 
-    {
+    void Monster::attackHero(Hero hero) {
        hero.set_hero_hp(monster_dmg_);
     }
 
-    void Monster::set_monster_hp(int dmg) 
-    {
+    void Monster::set_monster_hp(int dmg) {
         monster_hp_ -= dmg;
-          if (monster_hp_ <= 0)
-          {
+          if (monster_hp_ <= 0) {
             Item m_item(monster_position_x_, monster_position_y_);
             // Board::registerItem(m_item);
             this->~Monster();
           }
     }
 
-    bool Monster::monsterIsDead()
-    {
-        if (monster_hp_ > 0) 
-        {
+    bool Monster::monsterIsDead() {
+        if (monster_hp_ > 0) {
             return false;
-        }
-        else
-        {
+        } else {
             return true;
         }
     }
 
-    int Monster::get_exp_drop() 
-    {
+    int Monster::get_exp_drop() {
         return monster_exp_drop_;
     }
 
-    int Monster::get_monster_position_x()
-    {
+    int Monster::get_monster_position_x() {
         return monster_position_x_;
     }
 
-     int Monster::get_monster_position_y()
-    {
+     int Monster::get_monster_position_y() {
         return monster_position_y_;
     }
 
-    void Monster::set_monster_position_x(int xi)
-    {
+    void Monster::set_monster_position_x(int xi) {
         monster_position_x_ = xi;
     }
  
-    void Monster::set_monster_position_y(int yi)
-    {
+    void Monster::set_monster_position_y(int yi) {
         monster_position_y_ = yi;
     }
 
@@ -156,6 +144,5 @@
         }
     }
 
-    Monster::~Monster()
-    {    
+    Monster::~Monster() {    
     }
