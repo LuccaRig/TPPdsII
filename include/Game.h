@@ -62,6 +62,8 @@ public:
 
     void PlayerTurnControl(float delta_time, sf::Clock clock);
 
+    void HeroWalk(Hero &hero, float delta_time, sf::Clock clock);
+
 };
 
 #endif
