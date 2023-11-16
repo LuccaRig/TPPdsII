@@ -49,7 +49,7 @@ void Game::update(){
 void Game::PutHeroInBoard(int position_x, int position_y, Hero &hero, float delta_time, sf::RectangleShape &tileShape){
     if (position_x == hero.get_hero_position_x() && position_y == hero.get_hero_position_y()) {
     //Modifica o tamanho do sprite do heroi para ficar um tamanho proporcional ao tabuleiro
-    currentTile->setObjectInTile("hero");
+    gameBoard->getTileAt(position_x, position_y)->setObjectInTile("hero");
     hero.getHeroSprite().setScale(3.f, 3.f);
     hero.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - hero.getHeroSprite().getLocalBounds().width*3) / 2,
                                               tileShape.getPosition().y + (tileShape.getSize().y - hero.getHeroSprite().getLocalBounds().height*3) / 2);
