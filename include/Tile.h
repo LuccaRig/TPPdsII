@@ -13,10 +13,10 @@ class Tile{
     ~Tile();
 
     /// @brief Modifica o valor do conteúdo do Tile
-    void setObjectInTile();
+    void setObjectInTile(std::string content);
 
     /// @brief Retorna qual o conteúdo do Tile Atual
-    void getObjectInTile();
+    std::string getObjectInTile();
 
     /// @brief Retorna o tamanho do lado do Tile
     int getTileSize();
@@ -41,7 +41,7 @@ class Tile{
     std::string content_;
     int tile_size_;
     int tile_border_size_;
-};
+}; 
 
 #endif // TILE_H_
 
