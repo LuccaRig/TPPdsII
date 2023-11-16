@@ -46,14 +46,17 @@ void Game::update(){
     this->testIsClosed();
 }
 
-void Game::PutHeroInBoard(Hero &hero, float delta_time,sf::RectangleShape &tileShape){
+void Game::PutHeroInBoard(int position_x, int position_y, Hero &hero, float delta_time,sf::RectangleShape &tileShape){
+    if (position_x == hero.get_hero_position_x() && position_y == hero.get_hero_position_y()) {
+    //Modifica o tamanho do sprite do heroi para ficar um tamanho proporcional ao tabuleiro
     hero.getHeroSprite().setScale(3.f, 3.f);
     hero.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - hero.getHeroSprite().getLocalBounds().width*3) / 2,
                                               tileShape.getPosition().y + (tileShape.getSize().y - hero.getHeroSprite().getLocalBounds().height*3) / 2);
-
     hero.updateAnimation(delta_time);
+    
     // Desenha o herói na janela
     this->GameWindow->draw(hero.getHeroSprite());
+    }
 }
 
 void Game::boardRender(float delta_time){
@@ -72,23 +75,14 @@ void Game::boardRender(float delta_time){
             sf::RectangleShape tileShape(sf::Vector2f(currentTile->getTileSize(), currentTile->getTileSize()));
             tileShape.setPosition(board_positionX + i * currentTile->getTileSize(), 
                                   board_positionY + j * currentTile->getTileSize());
-
             //Define a cor do quadrado como transparente
             tileShape.setFillColor(sf::Color::Transparent);
-
             //Desenha o quadrado na janela
             this->GameWindow->draw(tileShape);
 
-            if (i == mage_.get_hero_position_x() && j == mage_.get_hero_position_y()) {
-                PutHeroInBoard(mage_, delta_time, tileShape);
-            }
-            if (i == knight_.get_hero_position_x() && j == knight_.get_hero_position_y()) {
-                
-                PutHeroInBoard(knight_, delta_time, tileShape);
-            }
-            if (i == rogue_.get_hero_position_x() && j == rogue_.get_hero_position_y()) {
-                PutHeroInBoard(rogue_, delta_time, tileShape);
-            }
+            PutHeroInBoard(i, j, mage_, delta_time, tileShape);
+            PutHeroInBoard(i, j, knight_, delta_time, tileShape);
+            PutHeroInBoard(i, j, rogue_, delta_time, tileShape);        
         }
     }
 }
