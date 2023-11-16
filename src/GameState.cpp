@@ -1,22 +1,21 @@
 #include "GameState.h"
 
-GameState::GameState(){
+GameState::GameState() {
     horde_number_ = 0;
     monster_turn_count_ = 0;
 }
 
-GameState::~GameState()
-{
+GameState::~GameState() {
 }
 
-void GameState::GameStart(){
+void GameState::gameStart() {
 }
 
-void GameState::HeroTurnPass(){
+void GameState::heroTurnPass() {
     hero_turn_count_++;
 }
 
-bool GameState::IsPlayerTurn(){
+bool GameState::isPlayerTurn() {
     if(hero_turn_count_ < 9){
         return true;
     }
@@ -26,7 +25,7 @@ bool GameState::IsPlayerTurn(){
     
 }
 
-std::string GameState::WhichHeroTurn(){
+std::string GameState::whichHeroTurn(){
     if(hero_turn_count_ == 0 || hero_turn_count_ == 3 || hero_turn_count_ == 6){
         return "rogue";
     }
@@ -40,6 +39,5 @@ std::string GameState::WhichHeroTurn(){
     
 }
 
-void GameState::MonsterTurn()
-{
+void GameState::monsterTurn() {
 }
