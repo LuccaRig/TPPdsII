@@ -46,24 +46,38 @@ void Game::update(){
     this->testIsClosed();
 }
 
-void Game::PutHeroInBoard(int position_x, int position_y, Hero &hero, float delta_time, sf::RectangleShape &tileShape){
+void Game::PutHeroInBoard(int position_x, int position_y, Hero &hero, float delta_time, sf::RectangleShape &tileShape) {
     if (position_x == hero.get_hero_position_x() && position_y == hero.get_hero_position_y()) {
     //Modifica o tamanho do sprite do heroi para ficar um tamanho proporcional ao tabuleiro
-    gameBoard->getTileAt(position_x, position_y)->setObjectInTile("hero");
-    hero.getHeroSprite().setScale(3.f, 3.f);
-    hero.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - hero.getHeroSprite().getLocalBounds().width*3) / 2,
-                                              tileShape.getPosition().y + (tileShape.getSize().y - hero.getHeroSprite().getLocalBounds().height*3) / 2);
+    gameBoard->get_tile_at(position_x, position_y)->setObjectInTile("hero");
+    hero.get_hero_sprite().setScale(3.f, 3.f);
+    hero.get_hero_sprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - hero.get_hero_sprite().getLocalBounds().width*3) / 2,
+                                              tileShape.getPosition().y + (tileShape.getSize().y - hero.get_hero_sprite().getLocalBounds().height*3) / 2);
     hero.updateAnimation(delta_time);
     
     // Desenha o herói na janela
-    this->GameWindow->draw(hero.getHeroSprite());
+    this->GameWindow->draw(hero.get_hero_sprite());
+    }
+}
+
+void Game::PutMonsterInBoard(int position_x, int position_y, Monster &monster, float delta_time, sf::RectangleShape &tileShape) {
+    if (position_x == monster.get_monster_position_x() && position_y == monster.get_monster_position_y()) {
+    //Modifica o tamanho do sprite do monstro para ficar um tamanho proporcional ao tabuleiro
+    gameBoard->get_tile_at(position_x, position_y)->setObjectInTile("monster");
+    monster.get_monster_sprite().setScale(3.f, 3.f);
+    monster.get_monster_sprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - monster.get_monster_sprite().getLocalBounds().width*3) / 2,
+                                              tileShape.getPosition().y + (tileShape.getSize().y - monster.get_monster_sprite().getLocalBounds().height*3) / 2);
+    monster.updateAnimation(delta_time);
+    
+    // Desenha o monstro na janela
+    this->GameWindow->draw(monster.get_monster_sprite());
     }
 }
 
 void Game::boardRender(float delta_time){
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
-            Tile* currentTile = this->gameBoard->getTileAt(i, j);
+            Tile* currentTile = this->gameBoard->get_tile_at(i, j);
 
             //Transformar o tamanho do tabuleiro em pixels
             int board_width_pixels = currentTile->getTileSize() * 5;
@@ -83,7 +97,8 @@ void Game::boardRender(float delta_time){
 
             PutHeroInBoard(i, j, mage_, delta_time, tileShape);
             PutHeroInBoard(i, j, knight_, delta_time, tileShape);
-            PutHeroInBoard(i, j, rogue_, delta_time, tileShape);        
+            PutHeroInBoard(i, j, rogue_, delta_time, tileShape); 
+                 
         }
     }
 }
@@ -107,40 +122,40 @@ void Game::HeroWalk(Hero &hero, float delta_time, sf::Clock clock){
                 case sf::Keyboard::Up:
                     pos_y = hero.get_hero_position_y();
                     pos_x = hero.get_hero_position_x();
-                    if ((pos_y-1) < 0 || !gameBoard->getTileAt(pos_x, (pos_y-1))->moveableTile()) continue;
+                    if ((pos_y-1) < 0 || !gameBoard->get_tile_at(pos_x, (pos_y-1))->moveableTile()) continue;
                     hero.set_hero_position_y(pos_y-1);
-                    gameBoard->getTileAt(pos_x, pos_y)->deleteObjectInTile();
-                    gameBoard->getTileAt(pos_x, (pos_y-1))->setObjectInTile("hero");
+                    gameBoard->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
+                    gameBoard->get_tile_at(pos_x, (pos_y-1))->setObjectInTile("hero");
                     this->current_game_state_->HeroTurnPass();
                     break;
 
                 case sf::Keyboard::Down:
                     pos_y = hero.get_hero_position_y();
                     pos_x = hero.get_hero_position_x();
-                    if ((pos_y+1) > 4 || !gameBoard->getTileAt(pos_x, (pos_y+1))->moveableTile()) continue;
+                    if ((pos_y+1) > 4 || !gameBoard->get_tile_at(pos_x, (pos_y+1))->moveableTile()) continue;
                     hero.set_hero_position_y(pos_y+1);
-                    gameBoard->getTileAt(pos_x, pos_y)->deleteObjectInTile();
-                    gameBoard->getTileAt(pos_x, (pos_y+1))->setObjectInTile("hero");
+                    gameBoard->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
+                    gameBoard->get_tile_at(pos_x, (pos_y+1))->setObjectInTile("hero");
                     this->current_game_state_->HeroTurnPass();
                     break;
 
                 case sf::Keyboard::Left:
                     pos_x = hero.get_hero_position_x();
                     pos_y = hero.get_hero_position_y();
-                    if ((pos_x-1) < 0 || !gameBoard->getTileAt((pos_x-1), pos_y)->moveableTile()) continue;
+                    if ((pos_x-1) < 0 || !gameBoard->get_tile_at((pos_x-1), pos_y)->moveableTile()) continue;
                     hero.set_hero_position_x(pos_x-1);
-                    gameBoard->getTileAt(pos_x, pos_y)->deleteObjectInTile();
-                    gameBoard->getTileAt((pos_x-1), pos_y)->setObjectInTile("hero");
+                    gameBoard->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
+                    gameBoard->get_tile_at((pos_x-1), pos_y)->setObjectInTile("hero");
                     this->current_game_state_->HeroTurnPass();
                     break;
 
                 case sf::Keyboard::Right:
                     pos_x = hero.get_hero_position_x();
                     pos_y = hero.get_hero_position_y();
-                    if ((pos_x+1) > 4 || !gameBoard->getTileAt((pos_x+1), pos_y)->moveableTile()) continue;
+                    if ((pos_x+1) > 4 || !gameBoard->get_tile_at((pos_x+1), pos_y)->moveableTile()) continue;
                     hero.set_hero_position_x(pos_x+1);
-                    gameBoard->getTileAt(pos_x, pos_y)->deleteObjectInTile();
-                    gameBoard->getTileAt((pos_x+1), pos_y)->setObjectInTile("hero");
+                    gameBoard->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
+                    gameBoard->get_tile_at((pos_x+1), pos_y)->setObjectInTile("hero");
                     this->current_game_state_->HeroTurnPass();
                     break;
 
