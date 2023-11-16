@@ -71,6 +71,7 @@ void Game::boardRender(float delta_time){
 
             if (i == mage_.get_hero_position_x() && j == mage_.get_hero_position_y()) {
                 // Cria o herói e configura sua posição para o centro do quadrado
+                currentTile->setObjectInTile("hero");
                 mage_.getHeroSprite().setScale(3.f, 3.f);
                 mage_.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - mage_.getHeroSprite().getLocalBounds().width*3) / 2,
                                               tileShape.getPosition().y + (tileShape.getSize().y - mage_.getHeroSprite().getLocalBounds().height*3) / 2);
@@ -81,6 +82,7 @@ void Game::boardRender(float delta_time){
             }
             if (i == knight_.get_hero_position_x() && j == knight_.get_hero_position_y()) {
                 // Cria o herói e configura sua posição para o centro do quadrado
+                currentTile->setObjectInTile("hero");
                 knight_.getHeroSprite().setScale(3.f, 3.f);
                 knight_.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - knight_.getHeroSprite().getLocalBounds().width*3) / 2,
                                                 tileShape.getPosition().y + (tileShape.getSize().y - knight_.getHeroSprite().getLocalBounds().height*3) / 2);
@@ -90,6 +92,7 @@ void Game::boardRender(float delta_time){
             }
             if (i == rogue_.get_hero_position_x() && j == rogue_.get_hero_position_y()) {
                 // Cria o herói e configura sua posição para o centro do quadrado
+                currentTile->setObjectInTile("hero");
                 rogue_.getHeroSprite().setScale(3.f, 3.f);
                 rogue_.getHeroSprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - rogue_.getHeroSprite().getLocalBounds().width*3) / 2,
                                                 tileShape.getPosition().y + (tileShape.getSize().y - rogue_.getHeroSprite().getLocalBounds().height*3) / 2);
@@ -110,7 +113,7 @@ void Game::render(float delta_time){
 
 void Game::HeroWalk(Hero &hero, float delta_time, sf::Clock clock){
     while(this->GameWindow->pollEvent(this->SFML_event_)){
-        int pos = 0;
+        int pos_x = 0, pos_y = 0;
         this->update();
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();
@@ -118,26 +121,42 @@ void Game::HeroWalk(Hero &hero, float delta_time, sf::Clock clock){
         if(this->SFML_event_.type == sf::Event::KeyPressed){ 
             switch (this->SFML_event_.key.code){
                 case sf::Keyboard::Up:
-                    pos = hero.get_hero_position_y();
-                    hero.set_hero_position_y(pos-1);
+                    pos_y = hero.get_hero_position_y();
+                    pos_x = hero.get_hero_position_x();
+                    if ((pos_y-1) < 0 || !gameBoard->getTileAt(pos_x, (pos_y-1))->moveableTile()) continue;
+                    hero.set_hero_position_y(pos_y-1);
+                    gameBoard->getTileAt(pos_x, pos_y)->deleteObjectInTile();
+                    gameBoard->getTileAt(pos_x, (pos_y-1))->setObjectInTile("hero");
                     this->current_game_state_->HeroTurnPass();
                     break;
 
                 case sf::Keyboard::Down:
-                    pos = hero.get_hero_position_y();
-                    hero.set_hero_position_y(pos+1);
+                    pos_y = hero.get_hero_position_y();
+                    pos_x = hero.get_hero_position_x();
+                    if ((pos_y+1) > 4 || !gameBoard->getTileAt(pos_x, (pos_y+1))->moveableTile()) continue;
+                    hero.set_hero_position_y(pos_y+1);
+                    gameBoard->getTileAt(pos_x, pos_y)->deleteObjectInTile();
+                    gameBoard->getTileAt(pos_x, (pos_y+1))->setObjectInTile("hero");
                     this->current_game_state_->HeroTurnPass();
                     break;
 
                 case sf::Keyboard::Left:
-                    pos = hero.get_hero_position_x();
-                    hero.set_hero_position_x(pos-1);
+                    pos_x = hero.get_hero_position_x();
+                    pos_y = hero.get_hero_position_y();
+                    if ((pos_x-1) < 0 || !gameBoard->getTileAt((pos_x-1), pos_y)->moveableTile()) continue;
+                    hero.set_hero_position_x(pos_x-1);
+                    gameBoard->getTileAt(pos_x, pos_y)->deleteObjectInTile();
+                    gameBoard->getTileAt((pos_x-1), pos_y)->setObjectInTile("hero");
                     this->current_game_state_->HeroTurnPass();
                     break;
 
                 case sf::Keyboard::Right:
-                    pos = hero.get_hero_position_x();
-                    hero.set_hero_position_x(pos+1);
+                    pos_x = hero.get_hero_position_x();
+                    pos_y = hero.get_hero_position_y();
+                    if ((pos_x+1) > 4 || !gameBoard->getTileAt((pos_x+1), pos_y)->moveableTile()) continue;
+                    hero.set_hero_position_x(pos_x+1);
+                    gameBoard->getTileAt(pos_x, pos_y)->deleteObjectInTile();
+                    gameBoard->getTileAt((pos_x+1), pos_y)->setObjectInTile("hero");
                     this->current_game_state_->HeroTurnPass();
                     break;
 
@@ -168,7 +187,7 @@ void Game::PlayerTurnControl(float delta_time, sf::Clock clock){
         }
 
         else if(current_game_state_->WhichHeroTurn() == "knight"){
-            HeroWalk(knight_,delta_time,clock);
+            HeroWalk(knight_, delta_time, clock);
         }
     }
 }

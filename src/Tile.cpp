@@ -17,6 +17,11 @@ void Tile::setObjectInTile(std::string content)
     content_ = content;
 }
 
+void Tile::deleteObjectInTile()
+{
+    content_ = "vazio";
+}
+
 std::string Tile::getObjectInTile()
 {
     return content_;
@@ -53,4 +58,10 @@ bool Tile::itemIsInTile()
 {
     if (content_ == "item") return true;
     return false;
+}
+
+bool Tile::moveableTile()
+{
+    if (content_ == "hero" || content_ == "monster") return false;
+    return true;
 }

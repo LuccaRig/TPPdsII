@@ -15,6 +15,9 @@ class Tile{
     /// @brief Modifica o valor do conteúdo do Tile
     void setObjectInTile(std::string content);
 
+    /// @brief Volta o valor do conteúdo do Tile para "vazio"
+    void deleteObjectInTile();
+
     /// @brief Retorna qual o conteúdo do Tile Atual
     std::string getObjectInTile();
 
@@ -36,6 +39,8 @@ class Tile{
     /// @brief Checa se o quadrado tem um item
     bool itemIsInTile();
 
+    /// @brief Checa se o quadrado tem um heroi ou um monstro 
+    bool moveableTile();
 
   private:
     std::string content_;
