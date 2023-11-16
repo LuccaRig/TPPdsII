@@ -43,7 +43,7 @@ class Game {
 
     void putHeroInBoard(int position_y, int position_x, Hero &hero, float delta_time,sf::RectangleShape &tileShape);
 
-    void PutMonsterInBoard(int position_y, int position_x, Monster &monster, float delta_time,sf::RectangleShape &tileShape);
+    void putMonsterInBoard(int position_y, int position_x, Monster &monster, float delta_time,sf::RectangleShape &tileShape);
 
     /// @brief Renderiza o tabuleiro com os personagens nele
     /// @param delta_time = tempo decorrido desde o ultimo clock/renderização

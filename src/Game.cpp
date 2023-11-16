@@ -60,7 +60,7 @@ void Game::putHeroInBoard(int position_x, int position_y, Hero &hero, float delt
     }
 }
 
-void Game::PutMonsterInBoard(int position_x, int position_y, Monster &monster, float delta_time, sf::RectangleShape &tileShape) {
+void Game::putMonsterInBoard(int position_x, int position_y, Monster &monster, float delta_time, sf::RectangleShape &tileShape) {
     if (position_x == monster.get_monster_position_x() && position_y == monster.get_monster_position_y()) {
     //Modifica o tamanho do sprite do monstro para ficar um tamanho proporcional ao tabuleiro
     game_board_->get_tile_at(position_x, position_y)->setObjectInTile("monster");
