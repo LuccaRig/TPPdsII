@@ -12,7 +12,10 @@
 
 void Game::initWindow(){
     this->game_window_ = new sf::RenderWindow(sf::VideoMode(1200, 800), "My Game",sf::Style::Close);
-    this->game_window_->setPosition(sf::Vector2i(0, 0));
+    sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+    int centro_x = (desktop.width - 1200) / 2;
+    int centro_y = (desktop.height - 800) / 2;
+    this->game_window_->setPosition(sf::Vector2i(centro_x, centro_y));
     this->game_board_ = new Board();
 }
 
