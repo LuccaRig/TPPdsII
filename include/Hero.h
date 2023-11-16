@@ -18,7 +18,7 @@ class Hero{
   public:
 
     /// @brief Constructor TODO: Atribui os status para cada hero_type_, assim como o spell_type_
-    Hero(std::string type);
+    Hero(std::string hero_type);
 
     /// @brief Destructor
     ~Hero();
@@ -35,9 +35,6 @@ class Hero{
     /// @return Retorna o ataque especial do herói
     int get_hero_special_attack();
 
-    // /// @brief Move o herói para um número determinado de casas adjacentes
-    // void HeroMove();
-
     // /// @brief Ataca uma das 4 casas adjacentes ao herói
     // void HeroAttack();
 
@@ -47,11 +44,11 @@ class Hero{
     // /// @brief Utiliza um item dropado por um monstro
     // void UseItem(Item dropped_item);
 
-    // /// @return Retorna o nível do herói
-    // int current_lvl(int experience);
+    // /// @return Retorna a experiência do herói
+    // int current_exp();
 
     // /// @brief Aumenta o nível do herói
-    // void LvlUp(int lvl);
+    // void LvlUp(int exp);
 
     /// @return Posição x do herói no tabuleiro
     int get_hero_position_x();
@@ -66,13 +63,13 @@ class Hero{
     void set_hero_position_y(int current_position);
 
     /// @return Textura do heroi/SpriteSheet
-    sf::Texture getHeroTexture();
+    sf::Texture get_hero_texture();
 
     /// @return Corte específico da SpriteSheet do heroi(Sprite)
-    sf::Sprite& getHeroSprite();
+    sf::Sprite& get_hero_sprite();
 
     /// @brief Define um corte ou sprite específico do heroi
-    void setHeroSprite(sf::Sprite defined_sprite);
+    void set_hero_sprite(sf::Sprite defined_sprite);
 
     void updateAnimation(float deltaTime);    
 
