@@ -274,34 +274,41 @@ void Game::monsterTakeAction(std::vector<Monster> &monster, int number_of_monste
         // tem que virar else if quando o if acima funcionar
         if (fabs(nearest_hero.distance_x) >= fabs(nearest_hero.distance_y)) { 
             if (nearest_hero.distance_x > 0) {
-                monster[n].set_monster_position_x(monster_pos_x-1);
-                game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
-                game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->setObjectInTile("monster");
+                 if (game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->moveableTile()) {
+                    monster[n].set_monster_position_x(monster_pos_x-1);
+                    game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
+                    game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->setObjectInTile("monster");
+                }
             } 
             else if (nearest_hero.distance_x < 0) {
-                monster[n].set_monster_position_x(monster_pos_x+1);
-                game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
-                game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->setObjectInTile("monster");
-
+                if (game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->moveableTile()) {
+                    monster[n].set_monster_position_x(monster_pos_x+1);
+                    game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
+                    game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->setObjectInTile("monster");
+                }
             }
         }
 
         else if (fabs(nearest_hero.distance_x) < fabs(nearest_hero.distance_y)){
             if (nearest_hero.distance_y > 0) {
-                monster[n].set_monster_position_y(monster_pos_y-1);
-                game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
-                game_board_->get_tile_at(monster_pos_x, (monster_pos_y-1))->setObjectInTile("monster");
+                if (game_board_->get_tile_at(monster_pos_x, (monster_pos_y-1))->moveableTile()) {
+                    monster[n].set_monster_position_y(monster_pos_y-1);
+                    game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
+                    game_board_->get_tile_at(monster_pos_x, (monster_pos_y-1))->setObjectInTile("monster");
+                }
             } else if (nearest_hero.distance_y < 0) {
-                monster[n].set_monster_position_y(monster_pos_y+1);
-                game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
-                game_board_->get_tile_at(monster_pos_x, (monster_pos_y+1))->setObjectInTile("monster");
+                if (game_board_->get_tile_at(monster_pos_x, (monster_pos_y+1))->moveableTile())
+                    monster[n].set_monster_position_y(monster_pos_y+1);
+                    game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
+                    game_board_->get_tile_at(monster_pos_x, (monster_pos_y+1))->setObjectInTile("monster");
             }
         }
 
         else {
-
+            // nada deve acontecer 
         }
     }
+    // turno deve ser dado aos heróis
 }
 
 
