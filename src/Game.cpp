@@ -20,13 +20,29 @@ void Game::initWindow(){
     this->game_board_ = new Board();
 }
 
-Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue"){
+Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue"), test_monster_("death knight"){
     //Construindo background
     background_.loadFromFile("Textures/Background.png");
     background_sprite_.setTexture(background_);
     background_sprite_.setScale(10, 10);
 
     //Construindo os nomes dos heróis e suas características
+    herosNameInicialization();
+
+    this->initWindow();
+    this->current_game_state_ = new GameState();
+}
+
+Game::~Game(){
+    delete this->game_window_;
+    delete this->game_board_;
+    delete this->current_game_state_;
+}
+
+
+    //Methods
+
+void Game::herosNameInicialization() {
     font_.loadFromFile("Resources/Retro Gaming.ttf");
     heros_.resize(3);
     hero_names_ = {"Knight", "Mage", "Rogue"};
@@ -47,19 +63,7 @@ Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue"){
         health_bars_[i].setFillColor(sf::Color(128, 0, 0));
         health_bars_[i].setPosition(health_bars_position_[i]);
     }
-
-    this->initWindow();
-    this->current_game_state_ = new GameState();
 }
-
-Game::~Game(){
-    delete this->game_window_;
-    delete this->game_board_;
-    delete this->current_game_state_;
-}
-
-
-    //Methods
 
 void Game::testIsClosed() {
     while(this->game_window_->pollEvent(this->SFML_event_)){
@@ -125,7 +129,8 @@ void Game::boardRender(float delta_time) {
 
             putHeroInBoard(i, j, mage_, delta_time, tileShape);
             putHeroInBoard(i, j, knight_, delta_time, tileShape);
-            putHeroInBoard(i, j, rogue_, delta_time, tileShape);        
+            putHeroInBoard(i, j, rogue_, delta_time, tileShape);
+            putMonsterInBoard(i, j, test_monster_, delta_time, tileShape);        
         }
     }
 }

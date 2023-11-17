@@ -31,6 +31,8 @@ class Game {
     /// testa se um dos eventos é do tipo Closed(Apertar no x da janela)
     void testIsClosed();
 
+    void herosNameInicialization();
+
     /// @brief Atualiza a janela para cada evento que deve ocorrer
     void update();
 
@@ -95,6 +97,8 @@ class Game {
     Hero knight_;
     Hero rogue_;
     Hordes my_hordes_;
+
+    Monster test_monster_;
 
     /// @brief Cria um novo objeto do tipo RenderWindow
     void initWindow();
