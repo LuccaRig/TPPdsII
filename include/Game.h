@@ -45,9 +45,6 @@ class Game {
 
     void putMonsterInBoard(int position_y, int position_x, Monster &monster, float delta_time,sf::RectangleShape &tileShape);
 
-    /// @brief Coloca as barras de vida dos heróis na tela
-    void putHeroHealthBars();
-
     /// @brief Muda o tamanho das barras de vida dos heróis
     /// TODO: Implementar essa função quando os ataques já estiverem funcionando
     void setHeroHealthBars();
@@ -71,12 +68,18 @@ class Game {
     //Variables
     sf::RenderWindow *game_window_;
     sf::Event SFML_event_;
+
     sf::Texture background_;
     sf::Sprite background_sprite_;
+
     sf::Font font_;
     std::vector<sf::Text> heros_;
     std::vector<sf::Vector2f> hero_names_position_;
     std::vector<std::string> hero_names_;
+
+    std::vector<sf::RectangleShape> health_bars_;
+    std::vector<sf::Vector2f> health_bars_position_;
+
     Board *game_board_;
     GameState *current_game_state_;
 

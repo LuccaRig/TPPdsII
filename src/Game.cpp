@@ -25,7 +25,7 @@ Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue"){
     background_sprite_.setTexture(background_);
     background_sprite_.setScale(10, 10);
 
-    //Definindo a fonte dos textos escritos na interface
+    //Construindo os nomes dos heróis e suas características
     font_.loadFromFile("Resources/Retro Gaming.ttf");
     heros_.resize(3);
     hero_names_ = {"Knight", "Mage", "Rogue"};
@@ -36,6 +36,15 @@ Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue"){
         heros_[i].setCharacterSize(30);
         heros_[i].setFillColor(sf::Color::White);
         heros_[i].setPosition(hero_names_position_[i]);
+    }
+
+    //Construindo as barras de vida dos heróis e suas características
+    health_bars_.resize(3);
+    health_bars_position_ = {{20, 70}, {20, 190}, {20, 310}};
+    for (unsigned int i = 0; i < health_bars_.size(); i++) {
+        health_bars_[i].setSize(sf::Vector2f(190, 30));
+        health_bars_[i].setFillColor(sf::Color(128, 0, 0));
+        health_bars_[i].setPosition(health_bars_position_[i]);
     }
 
     this->initWindow();
@@ -92,26 +101,6 @@ void Game::putMonsterInBoard(int position_x, int position_y, Monster &monster, f
     }
 }
 
-void Game::putHeroHealthBars() {
-    //Coloca a barra de vida do knight
-    sf::RectangleShape knight_hp(sf::Vector2f(190, 30));
-    knight_hp.setFillColor(sf::Color(128, 0, 0));
-    knight_hp.setPosition(sf::Vector2f(20, 70));
-    this->game_window_->draw(knight_hp);
-
-    //Coloca a barra de vida do mage
-    sf::RectangleShape mage_hp(sf::Vector2f(190, 30));
-    mage_hp.setFillColor(sf::Color(128, 0, 0));
-    mage_hp.setPosition(sf::Vector2f(20, 190));
-    this->game_window_->draw(mage_hp);
-
-    //Coloca a barra de vida do rogue
-    sf::RectangleShape rogue_hp(sf::Vector2f(190, 30));
-    rogue_hp.setFillColor(sf::Color(128, 0, 0));
-    rogue_hp.setPosition(sf::Vector2f(20, 310));
-    this->game_window_->draw(rogue_hp);
-}
-
 void Game::boardRender(float delta_time) {
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
@@ -146,8 +135,9 @@ void Game::render(float delta_time) {
     for (auto it : heros_) {
         this->game_window_->draw(it);
     }
-  //  putHeroNames();
-    putHeroHealthBars();
+    for (auto it : health_bars_) {
+        this->game_window_->draw(it);
+    }
     this->boardRender(delta_time);
     this->game_window_->display();  
 }
