@@ -45,9 +45,6 @@ class Game {
 
     void putMonsterInBoard(int position_y, int position_x, Monster &monster, float delta_time,sf::RectangleShape &tileShape);
 
-    /// @brief Escreva os nomes dos heróis acimas de suas barras de vida
-    void putHeroNames();
-
     /// @brief Coloca as barras de vida dos heróis na tela
     void putHeroHealthBars();
 
@@ -77,6 +74,9 @@ class Game {
     sf::Texture background_;
     sf::Sprite background_sprite_;
     sf::Font font_;
+    std::vector<sf::Text> heros_;
+    std::vector<sf::Vector2f> hero_names_position_;
+    std::vector<std::string> hero_names_;
     Board *game_board_;
     GameState *current_game_state_;
 

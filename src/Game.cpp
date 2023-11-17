@@ -11,7 +11,7 @@
 #include <SFML/Network.hpp>
 
 void Game::initWindow(){
-    this->game_window_ = new sf::RenderWindow(sf::VideoMode(1200, 800), "My Game",sf::Style::Close);
+    this->game_window_ = new sf::RenderWindow(sf::VideoMode(1200, 800), "My Game", sf::Style::Close);
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     int centro_x = (desktop.width - 1200) / 2;
     int centro_y = (desktop.height - 800) / 2;
@@ -27,6 +27,16 @@ Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue"){
 
     //Definindo a fonte dos textos escritos na interface
     font_.loadFromFile("Resources/Retro Gaming.ttf");
+    heros_.resize(3);
+    hero_names_ = {"Knight", "Mage", "Rogue"};
+    hero_names_position_ = {{20, 20}, {20, 140}, {20, 260}};
+    for (unsigned int i = 0; i < heros_.size(); i++) {
+        heros_[i].setFont(font_);
+        heros_[i].setString(hero_names_[i]);
+        heros_[i].setCharacterSize(30);
+        heros_[i].setFillColor(sf::Color::White);
+        heros_[i].setPosition(hero_names_position_[i]);
+    }
 
     this->initWindow();
     this->current_game_state_ = new GameState();
@@ -82,35 +92,6 @@ void Game::putMonsterInBoard(int position_x, int position_y, Monster &monster, f
     }
 }
 
-void Game::putHeroNames() {
-    //Define a fonte usada
-    sf::Text knight_name, mage_name, rogue_name;
-    knight_name.setFont(font_);
-    mage_name.setFont(font_);
-    rogue_name.setFont(font_);
-
-    //Características do nome do knight
-    knight_name.setString("Knight");
-    knight_name.setCharacterSize(30);
-    knight_name.setFillColor(sf::Color::White);
-    knight_name.setPosition(sf::Vector2f(20, 20));
-    this->game_window_->draw(knight_name);
-
-    //Características do nome do mage
-    mage_name.setString("Mage");
-    mage_name.setCharacterSize(30);
-    mage_name.setFillColor(sf::Color::White);
-    mage_name.setPosition(sf::Vector2f(20, 140));
-    this->game_window_->draw(mage_name);
-
-    //Características do nome do rogue
-    rogue_name.setString("Rogue");
-    rogue_name.setCharacterSize(30);
-    rogue_name.setFillColor(sf::Color::White);
-    rogue_name.setPosition(sf::Vector2f(20, 260));
-    this->game_window_->draw(rogue_name);
-}
-
 void Game::putHeroHealthBars() {
     //Coloca a barra de vida do knight
     sf::RectangleShape knight_hp(sf::Vector2f(190, 30));
@@ -162,7 +143,10 @@ void Game::boardRender(float delta_time) {
 void Game::render(float delta_time) {
     this->game_window_->clear();
     this->game_window_->draw(background_sprite_);
-    putHeroNames();
+    for (auto it : heros_) {
+        this->game_window_->draw(it);
+    }
+  //  putHeroNames();
     putHeroHealthBars();
     this->boardRender(delta_time);
     this->game_window_->display();  
