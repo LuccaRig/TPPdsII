@@ -2,6 +2,7 @@
 #define GAME_H_
 
 #include <iostream>
+#include <vector>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -69,6 +70,12 @@ class Game {
     /// @param delta_time: Tempo decorrido desde o ultimo clock 
     /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
     void heroWalk(Hero &hero, float delta_time, sf::Clock clock);
+
+    /// @brief Determina a ação de cada monstro 
+    /// @param monster: vetor dos monstros que serão movimentados
+    /// @param delta_time: Tempo decorrido desde o ultimo clock 
+    /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
+    void monsterTakeAction(std::vector<Monster> &monster, int number_of_monsters, float delta_time, sf::Clock clock);
 
   private:
     //Variables
