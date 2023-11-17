@@ -20,9 +20,15 @@ void Game::initWindow(){
 }
 
 Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue"){
+    //Construindo background
     background_.loadFromFile("Textures/Background.png");
     background_sprite_.setTexture(background_);
     background_sprite_.setScale(10, 10);
+
+    //Construindo os nomes dos heróis para escrever na tela
+    font_.loadFromFile("Resources/Retro Gaming.ttf");
+    text_.setFont(font_);
+
     this->initWindow();
     this->current_game_state_ = new GameState();
 }
