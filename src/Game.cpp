@@ -3,6 +3,7 @@
 #include "GameState.h"
 
 #include <iostream>
+#include <math.h>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -198,6 +199,66 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                     break;
 
             }
+        }
+    }
+}
+
+void Game::monsterTakeAction(std::vector<Monster> &monster, int number_of_monsters, float delta_time, sf::Clock clock) {
+    struct heroes {
+        int pos_x;
+        int pos_y;
+        double distance;
+        int distance_x;
+        int distance_y;
+    };
+    heroes hero[3];
+
+    int current_hero = 0;
+        for (int i = 0; i < 5 && current_hero < 3; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (game_board_->get_tile_at(i, j)->heroIsInTile()) {
+                    hero[current_hero].pos_x = i;
+                    hero[current_hero].pos_y = j;
+                    current_hero++;
+                }
+            }   
+        }
+
+    for(int n = 0; n < number_of_monsters; n++) {
+        int monster_pos_x = monster[n].get_monster_position_x();
+        int monster_pos_y = monster[n].get_monster_position_y();
+        heroes nearest_hero = hero[0];
+
+        for (int m = 0; m < 3; m++) {
+            hero[m].distance_x = monster_pos_x - hero[m].pos_x;
+            hero[m].distance_y = monster_pos_y - hero[m].pos_y;
+            hero[m].distance = std::sqrt(std::pow(hero[m].distance_x, 2) + 
+            std::pow(hero[m].distance_y, 2));
+            if (hero[m].distance < nearest_hero.distance) nearest_hero = hero[m];
+        }
+
+       // if (nearest_hero.distance == 1) monster[n].attackHero(game_board_->get_tile_at
+       // (nearest_hero.pos_x, nearest_hero.pos_y)->)
+
+        if (fabs(nearest_hero.distance_x) >= fabs(nearest_hero.distance_y)) {
+            if (nearest_hero.distance_x > 0) {
+                monster[n].set_monster_position_x(-1);
+            } 
+            else if (nearest_hero.distance_x < 0) {
+                monster[n].set_monster_position_x(1);
+            }
+        }
+
+        else if (fabs(nearest_hero.distance_x) < fabs(nearest_hero.distance_y)){
+            if (nearest_hero.distance_y > 0) {
+                monster[n].set_monster_position_y(-1);
+            } else if (nearest_hero.distance_y > 0) {
+                monster[n].set_monster_position_y(1);
+            }
+        }
+
+        else {
+
         }
     }
 }

@@ -37,10 +37,10 @@ class Monster {
     /// @return retorna a coordenada y do monstro
     int get_monster_position_y();
 
-    /// @brief substitui a coordenada x do monstro pelo valor do parâmetro
+    /// @brief adiciona à coordenada do monstro x o valor do parâmetro
     void set_monster_position_x(int xi);
 
-    /// @brief substitui a coordenada y do monstro pelo valor do parâmetro
+    /// @brief adiciona à coordenada do monstro y o valor do parâmetro
     void set_monster_position_y(int yi);
 
     /// @return Textura do monstro/SpriteSheet
