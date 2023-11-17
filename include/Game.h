@@ -45,6 +45,9 @@ class Game {
 
     void putMonsterInBoard(int position_y, int position_x, Monster &monster, float delta_time,sf::RectangleShape &tileShape);
 
+    /// @brief Escreva os nomes dos heróis acimas de suas barras de vida
+    void putHeroNames();
+
     /// @brief Renderiza o tabuleiro com os personagens nele
     /// @param delta_time = tempo decorrido desde o ultimo clock/renderização
     void boardRender(float delta_time);
@@ -66,6 +69,8 @@ class Game {
     sf::Event SFML_event_;
     sf::Texture background_;
     sf::Sprite background_sprite_;
+    sf::Font font_;
+    sf::Text text_;
     Board *game_board_;
     GameState *current_game_state_;
 
