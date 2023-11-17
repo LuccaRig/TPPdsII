@@ -111,6 +111,26 @@ void Game::putHeroNames() {
     this->game_window_->draw(rogue_name);
 }
 
+void Game::putHeroHealthBars() {
+    //Coloca a barra de vida do knight
+    sf::RectangleShape knight_hp(sf::Vector2f(190, 30));
+    knight_hp.setFillColor(sf::Color(128, 0, 0));
+    knight_hp.setPosition(sf::Vector2f(20, 70));
+    this->game_window_->draw(knight_hp);
+
+    //Coloca a barra de vida do mage
+    sf::RectangleShape mage_hp(sf::Vector2f(190, 30));
+    mage_hp.setFillColor(sf::Color(128, 0, 0));
+    mage_hp.setPosition(sf::Vector2f(20, 190));
+    this->game_window_->draw(mage_hp);
+
+    //Coloca a barra de vida do rogue
+    sf::RectangleShape rogue_hp(sf::Vector2f(190, 30));
+    rogue_hp.setFillColor(sf::Color(128, 0, 0));
+    rogue_hp.setPosition(sf::Vector2f(20, 310));
+    this->game_window_->draw(rogue_hp);
+}
+
 void Game::boardRender(float delta_time) {
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
@@ -143,6 +163,7 @@ void Game::render(float delta_time) {
     this->game_window_->clear();
     this->game_window_->draw(background_sprite_);
     putHeroNames();
+    putHeroHealthBars();
     this->boardRender(delta_time);
     this->game_window_->display();  
 }

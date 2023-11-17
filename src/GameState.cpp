@@ -26,13 +26,13 @@ bool GameState::isPlayerTurn() {
 }
 
 std::string GameState::whichHeroTurn(){
-    if(hero_turn_count_ == 0 || hero_turn_count_ == 3 || hero_turn_count_ == 6){
+    if(hero_turn_count_%3 == 0){
         return "rogue";
     }
-    else if(hero_turn_count_ == 1 || hero_turn_count_ == 4 || hero_turn_count_ == 7){
+    else if(hero_turn_count_%3 == 1){
         return "mage";
     }
-    else if(hero_turn_count_ == 2 || hero_turn_count_ == 5 || hero_turn_count_ == 8){
+    else if(hero_turn_count_%3 == 2){
         return "knight";
     }
     else return "turno_indefinido";
