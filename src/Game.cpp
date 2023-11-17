@@ -229,6 +229,7 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
     }
 }
 
+
 void Game::monsterTakeAction(std::vector<Monster> &monster, int number_of_monsters, float delta_time, sf::Clock clock) {
     struct heroes {
         int pos_x;
@@ -239,6 +240,7 @@ void Game::monsterTakeAction(std::vector<Monster> &monster, int number_of_monste
     };
     heroes hero[3];
 
+    // armazena as coordenadas dos heróis no board
     int current_hero = 0;
         for (int i = 0; i < 5 && current_hero < 3; i++) {
             for (int j = 0; j < 5; j++) {
@@ -255,6 +257,7 @@ void Game::monsterTakeAction(std::vector<Monster> &monster, int number_of_monste
         int monster_pos_y = monster[n].get_monster_position_y();
         heroes nearest_hero = hero[0];
 
+        // descobre e armazena qual o herói mais próximo ao monstro 
         for (int m = 0; m < 3; m++) {
             hero[m].distance_x = monster_pos_x - hero[m].pos_x;
             hero[m].distance_y = monster_pos_y - hero[m].pos_y;
@@ -263,23 +266,35 @@ void Game::monsterTakeAction(std::vector<Monster> &monster, int number_of_monste
             if (hero[m].distance < nearest_hero.distance) nearest_hero = hero[m];
         }
 
+        // decide qual será a ação do monstro sabendo qual o herói mais próximo a ele
+
        // if (nearest_hero.distance == 1) monster[n].attackHero(game_board_->get_tile_at
        // (nearest_hero.pos_x, nearest_hero.pos_y)->)
 
-        if (fabs(nearest_hero.distance_x) >= fabs(nearest_hero.distance_y)) {
+        // tem que virar else if quando o if acima funcionar
+        if (fabs(nearest_hero.distance_x) >= fabs(nearest_hero.distance_y)) { 
             if (nearest_hero.distance_x > 0) {
-                monster[n].set_monster_position_x(-1);
+                monster[n].set_monster_position_x(monster_pos_x-1);
+                game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
+                game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->setObjectInTile("monster");
             } 
             else if (nearest_hero.distance_x < 0) {
-                monster[n].set_monster_position_x(1);
+                monster[n].set_monster_position_x(monster_pos_x+1);
+                game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
+                game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->setObjectInTile("monster");
+
             }
         }
 
         else if (fabs(nearest_hero.distance_x) < fabs(nearest_hero.distance_y)){
             if (nearest_hero.distance_y > 0) {
-                monster[n].set_monster_position_y(-1);
-            } else if (nearest_hero.distance_y > 0) {
-                monster[n].set_monster_position_y(1);
+                monster[n].set_monster_position_y(monster_pos_y-1);
+                game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
+                game_board_->get_tile_at(monster_pos_x, (monster_pos_y-1))->setObjectInTile("monster");
+            } else if (nearest_hero.distance_y < 0) {
+                monster[n].set_monster_position_y(monster_pos_y+1);
+                game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
+                game_board_->get_tile_at(monster_pos_x, (monster_pos_y+1))->setObjectInTile("monster");
             }
         }
 
@@ -288,6 +303,7 @@ void Game::monsterTakeAction(std::vector<Monster> &monster, int number_of_monste
         }
     }
 }
+
 
 
 void Game::playerTurnControl(float delta_time, sf::Clock clock) {

@@ -111,11 +111,13 @@
     }
 
     void Monster::set_monster_position_x(int xi) {
-        monster_position_x_ += xi;
+        monster_position_x_ = xi;
+        monster_sprite_.setPosition(monster_position_x_, monster_position_y_);
     }
  
     void Monster::set_monster_position_y(int yi) {
-        monster_position_y_ += yi;
+        monster_position_y_ = yi;
+        monster_sprite_.setPosition(monster_position_x_, monster_position_y_);
     }
 
     sf::Texture Monster::get_monster_texture() {
