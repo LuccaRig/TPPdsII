@@ -48,6 +48,13 @@ class Game {
     /// @brief Escreva os nomes dos heróis acimas de suas barras de vida
     void putHeroNames();
 
+    /// @brief Coloca as barras de vida dos heróis na tela
+    void putHeroHealthBars();
+
+    /// @brief Muda o tamanho das barras de vida dos heróis
+    /// TODO: Implementar essa função quando os ataques já estiverem funcionando
+    void setHeroHealthBars();
+
     /// @brief Renderiza o tabuleiro com os personagens nele
     /// @param delta_time = tempo decorrido desde o ultimo clock/renderização
     void boardRender(float delta_time);
