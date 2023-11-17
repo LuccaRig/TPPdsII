@@ -70,7 +70,6 @@ class Game {
     sf::Texture background_;
     sf::Sprite background_sprite_;
     sf::Font font_;
-    sf::Text text_;
     Board *game_board_;
     GameState *current_game_state_;
 
