@@ -16,6 +16,17 @@ Menu::Menu() {
 
   //Construindo textos das opções do menu
   menu_font_.loadFromFile("Resources/Retro Gaming.ttf");
+  menu_texts_.resize(4);
+  printed_texts_ = {"Trinity", "Dungeon", "Jogar", "Sair"};
+  texts_position_ = {{160, 20}, {260, 180}, {497, 418}, {534, 583}};
+  texts_size_ = {140, 140, 60, 60};
+  for (unsigned int i = 0; i < menu_texts_.size(); i++) {
+    menu_texts_[i].setFont(menu_font_);
+    menu_texts_[i].setString(printed_texts_[i]);
+    menu_texts_[i].setCharacterSize(texts_size_[i]);
+    menu_texts_[i].setFillColor(sf::Color::White);
+    menu_texts_[i].setPosition(texts_position_[i]);
+  }
 
   this->initMenuWindow();
   this->menu_close_ = new sf::RectangleShape();
@@ -43,6 +54,9 @@ void Menu::loopEvents() {
 void Menu::drawMenu() {
   menu_window_->clear();
   menu_window_->draw(menu_background_);
+  for (auto it : menu_texts_) {
+    this->menu_window_->draw(it);
+  }
   menu_window_->display();
 }
 
