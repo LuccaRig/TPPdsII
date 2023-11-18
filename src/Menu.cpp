@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "Game.h"
 
 void Menu::initMenuWindow() {
   this->menu_window_ = new sf::RenderWindow(sf::VideoMode(1200, 800), "Menu", sf::Style::Close);
@@ -57,6 +58,7 @@ void Menu::loopEvents() {
         menu_texts_[position_-1].setFillColor(sf::Color::White);
       }
       keyboard_pressed_ = false;
+      enter_pressed_ = false;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !keyboard_pressed_) {
@@ -67,6 +69,22 @@ void Menu::loopEvents() {
         menu_texts_[position_+1].setFillColor(sf::Color::White);
       }
       keyboard_pressed_ = false;
+      enter_pressed_ = false;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !enter_pressed_) {
+      enter_pressed_ = true;
+
+      if (position_ == 2) {
+        sf::Clock clock;
+        Game game;
+        menu_window_->close();
+        game.run(clock);
+      }
+
+      if (position_ == 3) {
+        menu_window_->close();
+      }
     }
   }
 }
@@ -82,7 +100,7 @@ void Menu::drawMenu() {
 
 void Menu::runMenu() {
   while(menu_window_->isOpen()) {
-    loopEvents();
     drawMenu();
+    loopEvents();
   }
 }
