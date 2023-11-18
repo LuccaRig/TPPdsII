@@ -17,8 +17,6 @@ class Menu {
 
     void initMenuWindow();
 
-    void set_values();
-
     void loopEvents();
 
     void drawMenu();
@@ -28,7 +26,7 @@ class Menu {
   private:
 
     int position_;
-    bool keyboard_pressed, enter_pressed_;
+    bool keyboard_pressed_, enter_pressed_;
 
     sf::RenderWindow *menu_window_;
     sf::RectangleShape *menu_close_;
@@ -40,6 +38,7 @@ class Menu {
     std::vector<std::string> printed_texts_;
     std::vector<sf::Vector2f> texts_position_;
     std::vector<int> texts_size_;
+    std::vector<sf::Color> texts_color_;
 };
 
 #endif // MENU_H_
