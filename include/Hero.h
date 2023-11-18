@@ -13,7 +13,7 @@
 #include "Skill.h"
 //#include "Item.h"
 
-class Hero{
+class Hero {
 
   public:
 
