@@ -45,7 +45,7 @@ Game::~Game(){
 void Game::herosNameInicialization() {
     font_.loadFromFile("Resources/Retro Gaming.ttf");
     heros_.resize(3);
-    hero_names_ = {"Knight", "Mage", "Rogue"};
+    hero_names_ = {"Cavaleiro", "Mago", "Ladino"};
     hero_names_position_ = {{20, 20}, {20, 140}, {20, 260}};
     for (unsigned int i = 0; i < heros_.size(); i++) {
         heros_[i].setFont(font_);
