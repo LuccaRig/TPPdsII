@@ -42,6 +42,7 @@ class Menu {
     std::vector<int> texts_size_;
     std::vector<sf::Color> texts_color_;
 
+    sf::Clock clock_;
 };
 
 #endif // MENU_H_
