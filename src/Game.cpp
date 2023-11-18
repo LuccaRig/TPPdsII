@@ -26,7 +26,7 @@ Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue"), test_monster_(
     background_sprite_.setTexture(background_);
     background_sprite_.setScale(10, 10);
 
-    //Construindo os nomes dos heróis e suas características
+    //Construindo os nomes dos heróis e suas barras de vida
     herosNameInicialization();
 
     this->initWindow();

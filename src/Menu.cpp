@@ -33,6 +33,7 @@ Menu::Menu() {
   //Inicializando variáveis
   position_ = 2;
   keyboard_pressed_ = enter_pressed_ = false;
+  clock_ = sf::Clock();
 
   this->initMenuWindow();
   this->menu_close_ = new sf::RectangleShape();
@@ -74,12 +75,13 @@ void Menu::loopEvents() {
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !enter_pressed_) {
       enter_pressed_ = true;
+      float open_time = clock_.getElapsedTime().asMilliseconds();
 
-      if (position_ == 2) {
+      if (position_ == 2 && open_time > 50) {
         sf::Clock clock;
         Game game;
-        menu_window_->close();
         game.run(clock);
+        menu_window_->close();
       }
 
       if (position_ == 3) {
