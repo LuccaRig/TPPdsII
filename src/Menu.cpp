@@ -20,13 +20,18 @@ Menu::Menu() {
   printed_texts_ = {"Trinity", "Dungeon", "Jogar", "Sair"};
   texts_position_ = {{160, 20}, {260, 180}, {497, 418}, {534, 583}};
   texts_size_ = {140, 140, 60, 60};
+  texts_color_ = {sf::Color::White, sf::Color::White, sf::Color(153, 51, 153), sf::Color::White};
   for (unsigned int i = 0; i < menu_texts_.size(); i++) {
     menu_texts_[i].setFont(menu_font_);
     menu_texts_[i].setString(printed_texts_[i]);
     menu_texts_[i].setCharacterSize(texts_size_[i]);
-    menu_texts_[i].setFillColor(sf::Color::White);
+    menu_texts_[i].setFillColor(texts_color_[i]);
     menu_texts_[i].setPosition(texts_position_[i]);
   }
+
+  //Inicializando variáveis
+  position_ = 2;
+  keyboard_pressed_ = enter_pressed_ = false;
 
   this->initMenuWindow();
   this->menu_close_ = new sf::RectangleShape();
@@ -37,16 +42,31 @@ Menu::~Menu() {
   delete menu_close_;
 }
 
-void Menu::set_values() {
-  position_ = 0;
-  keyboard_pressed = enter_pressed_ = false;
-}
-
 void Menu::loopEvents() {
   sf::Event event;
   while (menu_window_->pollEvent(event)) {
     if (event.type == sf::Event::Closed) {
       menu_window_->close();
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !keyboard_pressed_) {
+      if (position_ < 3) {
+        position_++;
+        keyboard_pressed_ = true;
+        menu_texts_[position_].setFillColor(sf::Color(128, 128, 128));
+        menu_texts_[position_-1].setFillColor(sf::Color::White);
+      }
+      keyboard_pressed_ = false;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !keyboard_pressed_) {
+      if (position_ > 2) {
+        position_--;
+        keyboard_pressed_ = true;
+        menu_texts_[position_].setFillColor(sf::Color(153, 51, 153));
+        menu_texts_[position_+1].setFillColor(sf::Color::White);
+      }
+      keyboard_pressed_ = false;
     }
   }
 }
