@@ -80,8 +80,8 @@ void Menu::loopEvents() {
       if (position_ == 2 && open_time > 50) {
         sf::Clock clock;
         Game game;
-        game.run(clock);
         menu_window_->close();
+        game.run(clock);
       }
 
       if (position_ == 3) {
