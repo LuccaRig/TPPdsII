@@ -25,6 +25,8 @@ class Enemies{
 
     void createHordeEnemies();
 
+    void putAllMonsterInStartPosition();
+
     int hordeSize();
 
     Monster* enemy(int enemy_number);
