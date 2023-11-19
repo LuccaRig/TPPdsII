@@ -71,7 +71,7 @@
             monster_dmg_ = 4;
             monster_exp_drop_ = 1;
 
-            monster_position_x_ = 0;
+            monster_position_x_ = 2;
             monster_position_y_ = 0;
 
             //Parte das texturas e animações
