@@ -44,13 +44,13 @@ class Monster {
     void set_monster_position_y(int yi);
 
     /// @return Textura do monstro/SpriteSheet
-    sf::Texture get_monster_texture();
+    sf::Texture& get_monster_texture();
 
     /// @return Corte específico da SpriteSheet do monstro(Sprite)
     sf::Sprite& get_monster_sprite();
 
     /// @brief Define um corte ou sprite específico do monstro
-    void set_monster_sprite(sf::Sprite defined_sprite);
+    void set_monster_sprite(sf::Sprite& defined_sprite);
 
     void updateAnimation(float deltaTime);
 

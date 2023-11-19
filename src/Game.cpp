@@ -127,10 +127,12 @@ void Game::boardRender(float delta_time) {
             //Desenha o quadrado na janela
             this->game_window_->draw(tileShape);
 
+            Monster& selected_monster = my_hordes_.enemy(1);
             putHeroInBoard(i, j, mage_, delta_time, tileShape);
             putHeroInBoard(i, j, knight_, delta_time, tileShape);
             putHeroInBoard(i, j, rogue_, delta_time, tileShape);
-            putMonsterInBoard(i, j, test_monster_, delta_time, tileShape);        
+            putMonsterInBoard(i, j, test_monster_, delta_time, tileShape);
+            putMonsterInBoard(i, j, selected_monster, delta_time, tileShape);        
         }
     }
 }
@@ -315,6 +317,7 @@ void Game::playerTurnControl(float delta_time, sf::Clock clock) {
 
 void Game::run(sf::Clock clock) {
     float delta_time = clock.restart().asSeconds();
+    my_hordes_.createHordeEnemies();
     while(this->game_window_->isOpen()) {
         
         //Conta a passagem de tempo desde a ultima vez que o clock.restart() foi chamado

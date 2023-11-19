@@ -1,5 +1,5 @@
-#ifndef HORDES_H_
-#define HORDES_H_
+#ifndef ENEMIES_H_
+#define ENEMIES_H_
 
 #include <iostream>
 #include <vector>
@@ -13,21 +13,21 @@
 #include "Monster.h"
 
 
-class Hordes{
+class Enemies{
   public:
-    Hordes();
+    Enemies();
 
-    ~Hordes();
+    ~Enemies();
 
     int get_horde_number();
 
     void hordePass();
 
-    void fillMonsterPool(Monster selected_enemy);
+    void fillMonsterPool(Monster& selected_enemy);
 
     void createHordeEnemies();
 
-    Monster enemy(int enemy_number);
+    Monster& enemy(int enemy_number);
 
     void deleteMonsterPool();
 
@@ -38,4 +38,4 @@ class Hordes{
 };
 
 
-#endif //HORDES_H_
+#endif //ENEMIES_H_

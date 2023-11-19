@@ -1,36 +1,36 @@
-#include "Hordes.h"
+#include "Enemies.h"
 
-Hordes::Hordes(){
+Enemies::Enemies(){
     horde_number_ = 0;
     enemy_count_ = 6;
 }
 
-Hordes::~Hordes()
+Enemies::~Enemies()
 {
 }
 
-int Hordes::get_horde_number()
+int Enemies::get_horde_number()
 {
     return horde_number_;
 }
 
-void Hordes::hordePass() {
+void Enemies::hordePass() {
     horde_number_++;
 }
 
-void Hordes::fillMonsterPool(Monster selected_enemy) {
+void Enemies::fillMonsterPool(Monster& selected_enemy) {
     enemies_.push_back(selected_enemy);
 }
 
-void Hordes::deleteMonsterPool() {
+void Enemies::deleteMonsterPool() {
     enemies_.clear();
 }
 
-Monster Hordes::enemy(int enemy_number) {
+Monster& Enemies::enemy(int enemy_number) {
     return enemies_[enemy_number];
 }
 
-void Hordes::createHordeEnemies() {
+void Enemies::createHordeEnemies() {
     if(horde_number_ == 0){
         Monster monster1("bloody abomination");
         monster1.set_monster_position_x(0);
