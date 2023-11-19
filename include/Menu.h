@@ -1,6 +1,8 @@
 #ifndef MENU_H_
 #define MENU_H_
 
+#include "Game.h"
+
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
@@ -39,6 +41,8 @@ class Menu {
     std::vector<sf::Vector2f> texts_position_;
     std::vector<int> texts_size_;
     std::vector<sf::Color> texts_color_;
+
+    sf::Clock clock_;
 };
 
 #endif // MENU_H_

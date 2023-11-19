@@ -1,4 +1,5 @@
 #include "Menu.h"
+#include "Game.h"
 
 void Menu::initMenuWindow() {
   this->menu_window_ = new sf::RenderWindow(sf::VideoMode(1200, 800), "Menu", sf::Style::Close);
@@ -32,6 +33,7 @@ Menu::Menu() {
   //Inicializando variáveis
   position_ = 2;
   keyboard_pressed_ = enter_pressed_ = false;
+  clock_ = sf::Clock();
 
   this->initMenuWindow();
   this->menu_close_ = new sf::RectangleShape();
@@ -57,6 +59,7 @@ void Menu::loopEvents() {
         menu_texts_[position_-1].setFillColor(sf::Color::White);
       }
       keyboard_pressed_ = false;
+      enter_pressed_ = false;
     }
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !keyboard_pressed_) {
@@ -67,6 +70,23 @@ void Menu::loopEvents() {
         menu_texts_[position_+1].setFillColor(sf::Color::White);
       }
       keyboard_pressed_ = false;
+      enter_pressed_ = false;
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter) && !enter_pressed_) {
+      enter_pressed_ = true;
+      float open_time = clock_.getElapsedTime().asMilliseconds();
+
+      if (position_ == 2 && open_time > 50) {
+        sf::Clock clock;
+        Game game;
+        menu_window_->close();
+        game.run(clock);
+      }
+
+      if (position_ == 3) {
+        menu_window_->close();
+      }
     }
   }
 }
@@ -82,7 +102,7 @@ void Menu::drawMenu() {
 
 void Menu::runMenu() {
   while(menu_window_->isOpen()) {
-    loopEvents();
     drawMenu();
+    loopEvents();
   }
 }
