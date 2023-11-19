@@ -30,12 +30,29 @@ Monster* Enemies::enemy(int enemy_number) {
     return enemies_[enemy_number].get();
 }
 
+void Enemies::putAllMonsterInStartPosition() {
+    for(int i=0; i < this->hordeSize();++i){
+        if(i < 2) this->enemy(i)->set_monster_position_x(i*2);
+        if(i == 2) this->enemy(i)->set_monster_position_x(4);
+        if(i > 2){
+            this->enemy(i)->set_monster_position_y(4);
+            if(i == 3) this->enemy(i)->set_monster_position_x(0);
+            if(i == 4) this->enemy(i)->set_monster_position_x(2);
+            if(i == 5) this->enemy(i)->set_monster_position_x(4);
+            
+        }
+    }
+}
+
 void Enemies::createHordeEnemies() {
     if(horde_number_ == 0){
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("unholy skull")));
-        this->enemy(0)->set_monster_position_x(4);
-        this->enemy(0)->set_monster_position_y(0);
-
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("virulent wight")));
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("sand golem")));
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("ghastly beholder")));
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("bloody abomination")));
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("death knight")));
+        putAllMonsterInStartPosition();
     }
     if(horde_number_ == 1){
         // deleteMonsterPool();
