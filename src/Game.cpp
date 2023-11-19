@@ -127,12 +127,12 @@ void Game::boardRender(float delta_time) {
             //Desenha o quadrado na janela
             this->game_window_->draw(tileShape);
 
-            Monster& selected_monster = my_hordes_.enemy(1);
+            Monster& selected_monster_ref = *(my_hordes_.enemy(0));
             putHeroInBoard(i, j, mage_, delta_time, tileShape);
             putHeroInBoard(i, j, knight_, delta_time, tileShape);
             putHeroInBoard(i, j, rogue_, delta_time, tileShape);
             putMonsterInBoard(i, j, test_monster_, delta_time, tileShape);
-            putMonsterInBoard(i, j, selected_monster, delta_time, tileShape);        
+            putMonsterInBoard(i, j, selected_monster_ref, delta_time, tileShape);        
         }
     }
 }

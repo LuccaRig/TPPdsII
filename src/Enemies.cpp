@@ -18,69 +18,40 @@ void Enemies::hordePass() {
     horde_number_++;
 }
 
-void Enemies::fillMonsterPool(Monster& selected_enemy) {
-    enemies_.push_back(selected_enemy);
+int Enemies::hordeSize() {
+    return enemy_count_;
 }
 
 void Enemies::deleteMonsterPool() {
     enemies_.clear();
 }
 
-Monster& Enemies::enemy(int enemy_number) {
-    return enemies_[enemy_number];
+Monster* Enemies::enemy(int enemy_number) {
+    return enemies_[enemy_number].get();
 }
 
 void Enemies::createHordeEnemies() {
     if(horde_number_ == 0){
-        Monster monster1("bloody abomination");
-        monster1.set_monster_position_x(0);
-        monster1.set_monster_position_y(0);
-        fillMonsterPool(monster1);
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("unholy skull")));
+        this->enemy(0)->set_monster_position_x(4);
+        this->enemy(0)->set_monster_position_y(0);
 
-        Monster monster2("ghastly beholder");
-        monster2.set_monster_position_x(2);
-        monster2.set_monster_position_y(0);
-        fillMonsterPool(monster2);
-
-
-        Monster monster3("unholy skull");
-        monster3.set_monster_position_x(4);
-        monster3.set_monster_position_y(0);
-        fillMonsterPool(monster3);
-
-
-        Monster monster4("virulent wight");
-        monster4.set_monster_position_x(0);
-        monster4.set_monster_position_y(4);
-        fillMonsterPool(monster4);
-
-
-        Monster monster5("unholy skull");
-        monster5.set_monster_position_x(2);
-        monster5.set_monster_position_y(4);
-        fillMonsterPool(monster5);
-
-
-        Monster monster6("virulent wight");
-        monster6.set_monster_position_x(4);
-        monster6.set_monster_position_y(4);
-        fillMonsterPool(monster6);
     }
     if(horde_number_ == 1){
-        deleteMonsterPool();
+        // deleteMonsterPool();
 
-        Monster monster1("sand golem");
-        fillMonsterPool(monster1);
-        Monster monster2("ghastly beholder");
-        fillMonsterPool(monster2);
-        Monster monster3("sand golem");
-        fillMonsterPool(monster3);
-        Monster monster4("virulent wight");
-        fillMonsterPool(monster4);
-        Monster monster5("unholy skull");
-        fillMonsterPool(monster5);
-        Monster monster6("virulent wight");
-        fillMonsterPool(monster6);
+        // Monster monster1("sand golem");
+        // fillMonsterPool(monster1);
+        // Monster monster2("ghastly beholder");
+        // fillMonsterPool(monster2);
+        // Monster monster3("sand golem");
+        // fillMonsterPool(monster3);
+        // Monster monster4("virulent wight");
+        // fillMonsterPool(monster4);
+        // Monster monster5("unholy skull");
+        // fillMonsterPool(monster5);
+        // Monster monster6("virulent wight");
+        // fillMonsterPool(monster6);
     }
     if(horde_number_ == 2){
         deleteMonsterPool();

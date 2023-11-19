@@ -23,18 +23,18 @@ class Enemies{
 
     void hordePass();
 
-    void fillMonsterPool(Monster& selected_enemy);
-
     void createHordeEnemies();
 
-    Monster& enemy(int enemy_number);
+    int hordeSize();
+
+    Monster* enemy(int enemy_number);
 
     void deleteMonsterPool();
 
   private:
     int horde_number_;
     int enemy_count_;
-    std::vector<Monster> enemies_;
+    std::vector<std::unique_ptr<Monster>> enemies_;
 };
 
 
