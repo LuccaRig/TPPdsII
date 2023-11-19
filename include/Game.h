@@ -13,7 +13,7 @@
 #include "Board.h"
 #include "Hero.h"
 #include "GameState.h"
-#include "Hordes.h"
+#include "Enemies.h"
 
 class Game {
 
@@ -96,7 +96,7 @@ class Game {
     Hero mage_;
     Hero knight_;
     Hero rogue_;
-    Hordes my_hordes_;
+    Enemies my_hordes_;
 
     Monster test_monster_;
 

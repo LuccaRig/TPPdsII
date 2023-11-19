@@ -136,7 +136,7 @@
         monster_position_y_ = yi;
     }
 
-    sf::Texture Monster::get_monster_texture() {
+    sf::Texture& Monster::get_monster_texture() {
         return monster_texture_;
     }
 
@@ -144,7 +144,7 @@
         return monster_sprite_;
     }
 
-    void Monster::set_monster_sprite(sf::Sprite defined_sprite) {
+    void Monster::set_monster_sprite(sf::Sprite& defined_sprite) {
         monster_sprite_ = defined_sprite;
     }
 
