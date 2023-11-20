@@ -8,9 +8,6 @@ GameState::GameState(){
 GameState::~GameState() {
 }
 
-void GameState::gameStart() {
-}
-
 void GameState::heroTurnPass() {
     hero_turn_count_++;
 }
@@ -37,7 +34,4 @@ std::string GameState::whichHeroTurn(){
     }
     else return "turno_indefinido";
     
-}
-
-void GameState::monsterTurn() {
 }

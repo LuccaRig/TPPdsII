@@ -24,22 +24,19 @@ class GameState{
     /// @brief Destructor/Desalocar a memoria dos vetores de alocação dinâmica
     ~GameState();
 
-    /// @brief Inicializa o jogo e coloca os herois no tabuleiro;
-    void gameStart();
-
+    /// @brief Aumenta o contador dos turnos dos herois
     void heroTurnPass();
 
+    /// @brief Enquanto o contador de turnos dos herois for menor que um valor definido
+    /// essa função retorna true 
     bool isPlayerTurn();
 
     /// @brief Serve para o jogo controlar a passagem de turnos dos herois
     /// @return Uma string dizendo o turno de qual heroi está ocorrendo no presente momento 
     std::string whichHeroTurn();
 
-    void monsterTurn();
-
   private:
     int hero_turn_count_;
-    ///TODO:Verificar a alocação dinâmica do turno dos monstros
     int monster_turn_count_;
 };
 

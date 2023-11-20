@@ -5,8 +5,10 @@ Enemies::Enemies(){
     enemy_count_ = 6;
 }
 
-Enemies::~Enemies()
-{
+Enemies::~Enemies() {
+    for(int i=0; i<this->hordeSize(); ++i) {
+        enemies_[i].reset();
+    }
 }
 
 int Enemies::get_horde_number()
