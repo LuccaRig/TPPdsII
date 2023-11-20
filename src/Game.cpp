@@ -161,6 +161,7 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
             this->game_window_->close();
         }
         if(this->SFML_event_.type == sf::Event::KeyPressed){ 
+
             switch (this->SFML_event_.key.code) {
                 case sf::Keyboard::Up:
                     pos_y = hero.get_hero_position_y();
@@ -201,6 +202,10 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                     game_board_->get_tile_at((pos_x+1), pos_y)->setObjectInTile("hero");
                     this->current_game_state_->heroTurnPass();
                     break;
+                
+                case sf::Keyboard::A:
+                    monsterTakeAction(6, delta_time, clock);
+                    break;
 
                 default:
                     this->update();
@@ -236,7 +241,6 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
     for(int n = 0; n < number_of_monsters; n++) {
         int monster_pos_x = my_hordes_.enemy(n)->get_monster_position_x();
         int monster_pos_y = my_hordes_.enemy(n)->get_monster_position_y();
-        heroes nearest_hero = hero[0];
 
         // descobre e armazena qual o herói mais próximo ao monstro 
         int nearest_hero_number = 0;
@@ -245,6 +249,11 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
             hero[m].distance_y = monster_pos_y - hero[m].pos_y;
             hero[m].distance = std::sqrt(std::pow(hero[m].distance_x, 2) + 
             std::pow(hero[m].distance_y, 2));
+        }
+
+        heroes nearest_hero = hero[0];
+
+        for (int m = 1; m < 3; m++) {
             if (hero[m].distance < nearest_hero.distance) {
                 nearest_hero = hero[m];
                 nearest_hero_number = m;
@@ -265,14 +274,15 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
         }
 
         // tem que virar else if quando o if acima funcionar
-        if (fabs(nearest_hero.distance_x) >= fabs(nearest_hero.distance_y)) { 
+        else if (fabs<int>(nearest_hero.distance_x) >= fabs<int>(nearest_hero.distance_y)) { 
             if (nearest_hero.distance_x > 0) {
                  if (game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->moveableTile()) {
-                    my_hordes_.enemy(n)->set_monster_position_x(monster_pos_x-1);
+                    my_hordes_.enemy(n)->set_monster_position_x((monster_pos_x-1));
                     game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->setObjectInTile("monster");
                 }
             } 
+
             else if (nearest_hero.distance_x < 0) {
                 if (game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->moveableTile()) {
                     my_hordes_.enemy(n)->set_monster_position_x(monster_pos_x+1);
@@ -280,7 +290,7 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
                     game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->setObjectInTile("monster");
                 }
             }
-        }
+       }
 
         else if (fabs(nearest_hero.distance_x) < fabs(nearest_hero.distance_y)){
             if (nearest_hero.distance_y > 0) {
@@ -301,6 +311,9 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
         else {
             // nada deve acontecer 
         }
+    
+        this->render(delta_time);
+        delta_time = clock.restart().asSeconds();
     }
     // turno deve ser dado aos heróis
 }

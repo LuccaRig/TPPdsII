@@ -13,7 +13,7 @@ void GameState::heroTurnPass() {
 }
 
 bool GameState::isPlayerTurn() {
-    if(hero_turn_count_ < 9){
+    if(hero_turn_count_ < 15){
         return true;
     }
     else{

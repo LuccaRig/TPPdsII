@@ -94,11 +94,6 @@
         }
 }
 
-
-    void Monster::attackHero(Hero hero) {
-       hero.set_hero_hp(monster_dmg_);
-    }
-
     void Monster::set_monster_hp(int dmg) {
         monster_hp_ -= dmg;
           if (monster_hp_ <= 0) {

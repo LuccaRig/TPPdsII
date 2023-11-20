@@ -66,6 +66,9 @@ int Hero::get_hero_hp() {
 
 void Hero::set_hero_hp(int changed_hp) {
     hero_hp_ -= changed_hp;
+    if (hero_hp_ <= 0) {
+        this->~Hero();
+    }
 }
 
 int Hero::get_hero_attack() {
