@@ -78,10 +78,10 @@ void Menu::loopEvents() {
       float open_time = clock_.getElapsedTime().asMilliseconds();
 
       if (position_ == 2 && open_time > 50) {
-        sf::Clock clock;
+        clock_.restart();
         Game game;
         menu_window_->close();
-        game.run(clock);
+        game.run(clock_);
       }
 
       if (position_ == 3) {
