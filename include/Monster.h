@@ -31,6 +31,10 @@ class Monster {
     /// @return retorna o número de experiência que o monstro dará quando for derrotado
     int get_exp_drop();
 
+
+    /// @return retorna a quantidade de dano que o monstro aplica
+    int get_dmg_output();
+
     /// @return retorna a coordenada x do monstro
     int get_monster_position_x();
 

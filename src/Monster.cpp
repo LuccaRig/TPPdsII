@@ -102,6 +102,10 @@
         return monster_exp_drop_;
     }
 
+    int Monster::get_dmg_output() {
+        return monster_dmg_;
+    }
+
     int Monster::get_monster_position_x() {
         return monster_position_x_;
     }
