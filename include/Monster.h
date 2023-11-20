@@ -18,9 +18,6 @@ class Monster {
     /// @brief destrutor
     ~Monster();
 
-    /// @brief ataca o herói. PRECONDIÇÃO: algum herói está a alcance de ataque 
-    void attackHero(Hero);
-
     /// @brief  adiciona o valor recebido em pontos de vida para o monstro. PRECONDIÇÃO: parâmetro deve ser valor negativo 
     /// @param  attack_ do herói
     void set_monster_hp(int);
