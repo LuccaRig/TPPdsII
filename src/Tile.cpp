@@ -2,66 +2,56 @@
 
 #include <iostream>
 
-Tile::Tile(){
+Tile::Tile() {
     content_ = "vazio";
     tile_size_ = 80;
     tile_border_size_ = 5; 
 }
 
-Tile::~Tile()
-{
+Tile::~Tile() {
 }
 
-void Tile::setObjectInTile(std::string content)
-{
+void Tile::setObjectInTile(std::string content) {
     content_ = content;
 }
 
-void Tile::deleteObjectInTile()
-{
+void Tile::deleteObjectInTile() {
     content_ = "vazio";
 }
 
-std::string Tile::getObjectInTile()
-{
+std::string Tile::getObjectInTile() {
     return content_;
 }
 
-int Tile::getTileSize(){
-    return this->tile_size_;
+int Tile::getTileSize() {
+  return this->tile_size_;
 }
 
-int Tile::getTileBorderSize(){
+int Tile::getTileBorderSize() {
     return this->tile_border_size_;
-
 }
 
-bool Tile::isEmpty()
-{
+bool Tile::isEmpty() {
     if (content_ == "vazio") return true;
     return false;
 }
 
-bool Tile::heroIsInTile()
-{
+bool Tile::heroIsInTile() {
     if (content_ == "hero") return true;
     return false;
 }
 
-bool Tile::monsterIsInTile()
-{
+bool Tile::monsterIsInTile() {
     if (content_ == "monster") return true;
     return false;
 }
 
-bool Tile::itemIsInTile()
-{
+bool Tile::itemIsInTile() {
     if (content_ == "item") return true;
     return false;
 }
 
-bool Tile::moveableTile()
-{
+bool Tile::moveableTile() {
     if (content_ == "hero" || content_ == "monster") return false;
     return true;
 }

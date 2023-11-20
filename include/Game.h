@@ -71,7 +71,12 @@ class Game {
     /// @param monster: vetor dos monstros que serão movimentados
     /// @param delta_time: Tempo decorrido desde o ultimo clock 
     /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
-    void monsterTakeAction(std::vector<Monster> &monster, int number_of_monsters, float delta_time, sf::Clock clock);
+    void monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock);
+
+    /// @brief função auxiliar a monsterTakeAction, 
+    /// @param nearest_hero_number identifica qual herói será atacado
+    /// @param monster_number identifica que monstro vai atacar
+    void monsterMove(int nearest_hero_number, int monster_number);
 
   private:
     //Variables
