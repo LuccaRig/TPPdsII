@@ -234,8 +234,8 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
 
 
     for(int n = 0; n < number_of_monsters; n++) {
-        int monster_pos_x = my_hordes_.enemy(n).get_monster_position_x();
-        int monster_pos_y = my_hordes_.enemy(n).get_monster_position_y();
+        int monster_pos_x = my_hordes_.enemy(n)->get_monster_position_x();
+        int monster_pos_y = my_hordes_.enemy(n)->get_monster_position_y();
         heroes nearest_hero = hero[0];
 
         // descobre e armazena qual o herói mais próximo ao monstro 
@@ -254,7 +254,7 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
         // decide qual será a ação do monstro sabendo qual o herói mais próximo a ele
 
         if (nearest_hero.distance == 1) {
-            int dmg = my_hordes_.enemy(n).get_dmg_output();
+            int dmg = my_hordes_.enemy(n)->get_dmg_output();
             if (nearest_hero_number == 0) {
                 mage_.set_hero_hp(dmg);
             } else if (nearest_hero_number == 1) {
@@ -268,14 +268,14 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
         if (fabs(nearest_hero.distance_x) >= fabs(nearest_hero.distance_y)) { 
             if (nearest_hero.distance_x > 0) {
                  if (game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->moveableTile()) {
-                    my_hordes_.enemy(n).set_monster_position_x(monster_pos_x-1);
+                    my_hordes_.enemy(n)->set_monster_position_x(monster_pos_x-1);
                     game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->setObjectInTile("monster");
                 }
             } 
             else if (nearest_hero.distance_x < 0) {
                 if (game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->moveableTile()) {
-                    my_hordes_.enemy(n).set_monster_position_x(monster_pos_x+1);
+                    my_hordes_.enemy(n)->set_monster_position_x(monster_pos_x+1);
                     game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->setObjectInTile("monster");
                 }
@@ -285,13 +285,13 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
         else if (fabs(nearest_hero.distance_x) < fabs(nearest_hero.distance_y)){
             if (nearest_hero.distance_y > 0) {
                 if (game_board_->get_tile_at(monster_pos_x, (monster_pos_y-1))->moveableTile()) {
-                    my_hordes_.enemy(n).set_monster_position_y(monster_pos_y-1);
+                    my_hordes_.enemy(n)->set_monster_position_y(monster_pos_y-1);
                     game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at(monster_pos_x, (monster_pos_y-1))->setObjectInTile("monster");
                 }
             } else if (nearest_hero.distance_y < 0) {
                 if (game_board_->get_tile_at(monster_pos_x, (monster_pos_y+1))->moveableTile()) {
-                    my_hordes_.enemy(n).set_monster_position_y(monster_pos_y+1);
+                    my_hordes_.enemy(n)->set_monster_position_y(monster_pos_y+1);
                     game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at(monster_pos_x, (monster_pos_y+1))->setObjectInTile("monster");
                 }
