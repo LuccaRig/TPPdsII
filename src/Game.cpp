@@ -153,10 +153,13 @@ void Game::render(float delta_time) {
 void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
     while(this->game_window_->pollEvent(this->SFML_event_)){
         int pos_x = 0, pos_y = 0;
-        this->update();
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();
 
+        
+        if(this->SFML_event_.type == sf::Event::Closed){
+            this->game_window_->close();
+        }
         if(this->SFML_event_.type == sf::Event::KeyPressed){ 
             switch (this->SFML_event_.key.code) {
                 case sf::Keyboard::Up:
