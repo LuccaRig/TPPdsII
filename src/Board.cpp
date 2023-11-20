@@ -20,21 +20,6 @@ Board::~Board(){
     }
 }
 
-
-void Board::itemPutInBoard(std::string Item, int linha, int coluna)
-{
-}
-
-bool Board::hordeIsDefeted()
-{
-    return false;
-}
-
-std::vector<int> Board::findHeroPosition()
-{
-    return std::vector<int>();
-}
-
 Tile* Board::get_tile_at(int selected_line, int selected_column) {
     if ((selected_line >= 0) && (selected_line < 5) && (selected_column >= 0) && (selected_column < 5)) {
         return my_board_[selected_line][selected_column];

@@ -15,16 +15,6 @@ class Board{
     /// @brief Destructor
     ~Board();
 
-    /// @brief Coloca um item no tabuleiro PRECONDIÇÃO:lugar que esteja vazio 
-    void itemPutInBoard(std::string item_type, int linha, int coluna);
-
-    /// @brief Checa se ainda existe algum inimigo no tabuleiro
-    bool hordeIsDefeted();
-
-    /// @brief acha um heroi no tabuleiro para o monstro seguir
-    /// @return retona as cordenadas no tabuleiro que está o heroi
-    std::vector<int> findHeroPosition();
-
     /// @return Retorna o estado de algum Tile em uma posição específica 
     Tile* get_tile_at(int selected_line, int selected_column);
 
