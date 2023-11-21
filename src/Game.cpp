@@ -79,6 +79,10 @@ void Game::update() {
 }
 
 void Game::putHeroInBoard(int position_x, int position_y, Hero &hero, float delta_time, sf::RectangleShape &tileShape) {
+    if(!hero.isAlive()){
+        game_board_->get_tile_at(position_x, position_y)->deleteObjectInTile();
+        return;
+    }
     if (position_x == hero.get_hero_position_x() && position_y == hero.get_hero_position_y()) {
     //Modifica o tamanho do sprite do heroi para ficar um tamanho proporcional ao tabuleiro
     game_board_->get_tile_at(position_x, position_y)->setObjectInTile("hero");
@@ -104,6 +108,10 @@ void Game::putMonsterInBoard(int position_x, int position_y, Monster &monster, f
     // Desenha o monstro na janela
     this->game_window_->draw(monster.get_monster_sprite());
     }
+}
+
+void Game::set_hero_health_bars(int hero, int full_hp, int current_hp) {
+    health_bars_[hero].setSize(sf::Vector2f(190*current_hp/full_hp, 30));
 }
 
 void Game::boardRender(float delta_time) {
@@ -202,10 +210,6 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                     game_board_->get_tile_at((pos_x+1), pos_y)->setObjectInTile("hero");
                     this->current_game_state_->heroTurnPass();
                     break;
-                
-                case sf::Keyboard::A:
-                    monsterTakeAction(6, delta_time, clock);
-                    break;
 
                 default:
                     this->update();
@@ -230,10 +234,10 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
     heroes hero[3];
 
     // armazena as coordenadas dos heróis no board
-    hero[0].pos_x = mage_.get_hero_position_x();
-    hero[0].pos_y = mage_.get_hero_position_y();
-    hero[1].pos_x = knight_.get_hero_position_x();
-    hero[1].pos_y = knight_.get_hero_position_y();
+    hero[0].pos_x = knight_.get_hero_position_x();
+    hero[0].pos_y = knight_.get_hero_position_y();
+    hero[1].pos_x = mage_.get_hero_position_x();
+    hero[1].pos_y = mage_.get_hero_position_y();
     hero[2].pos_x = rogue_.get_hero_position_x();
     hero[2].pos_y = rogue_.get_hero_position_y();
 
@@ -265,11 +269,14 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
         if (nearest_hero.distance == 1) {
             int dmg = my_hordes_.enemy(n)->get_dmg_output();
             if (nearest_hero_number == 0) {
-                mage_.set_hero_hp(dmg);
-            } else if (nearest_hero_number == 1) {
                 knight_.set_hero_hp(dmg);
+                set_hero_health_bars(0, knight_.get_hero_full_hp(), knight_.get_hero_hp());
+            } else if (nearest_hero_number == 1) {
+                mage_.set_hero_hp(dmg);
+                set_hero_health_bars(1, mage_.get_hero_full_hp(), mage_.get_hero_hp());
             } else if (nearest_hero_number == 2) {
                 rogue_.set_hero_hp(dmg);
+                set_hero_health_bars(2, rogue_.get_hero_full_hp(), rogue_.get_hero_hp());
             }; 
         }
 
@@ -277,6 +284,7 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
         else if (fabs<int>(nearest_hero.distance_x) >= fabs<int>(nearest_hero.distance_y)) { 
             if (nearest_hero.distance_x > 0) {
                  if (game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->moveableTile()) {
+                    sf::sleep(sf::seconds(0.5));
                     my_hordes_.enemy(n)->set_monster_position_x((monster_pos_x-1));
                     game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->setObjectInTile("monster");
@@ -285,6 +293,7 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
 
             else if (nearest_hero.distance_x < 0) {
                 if (game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->moveableTile()) {
+                    sf::sleep(sf::seconds(0.5));
                     my_hordes_.enemy(n)->set_monster_position_x(monster_pos_x+1);
                     game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->setObjectInTile("monster");
@@ -295,12 +304,14 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
         else if (fabs(nearest_hero.distance_x) < fabs(nearest_hero.distance_y)){
             if (nearest_hero.distance_y > 0) {
                 if (game_board_->get_tile_at(monster_pos_x, (monster_pos_y-1))->moveableTile()) {
+                    sf::sleep(sf::seconds(0.5));
                     my_hordes_.enemy(n)->set_monster_position_y(monster_pos_y-1);
                     game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at(monster_pos_x, (monster_pos_y-1))->setObjectInTile("monster");
                 }
             } else if (nearest_hero.distance_y < 0) {
                 if (game_board_->get_tile_at(monster_pos_x, (monster_pos_y+1))->moveableTile()) {
+                    sf::sleep(sf::seconds(0.5));
                     my_hordes_.enemy(n)->set_monster_position_y(monster_pos_y+1);
                     game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at(monster_pos_x, (monster_pos_y+1))->setObjectInTile("monster");
@@ -317,7 +328,6 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
     }
     
     current_game_state_->heroTurnRestart();
-    playerTurnControl(delta_time, clock);
 }
 
 
@@ -329,18 +339,20 @@ void Game::playerTurnControl(float delta_time, sf::Clock clock) {
         delta_time = clock.restart().asSeconds();
 
         if(current_game_state_->whichHeroTurn() == "rogue"){
-            heroWalk(rogue_, delta_time, clock);
+            if(rogue_.isAlive()) heroWalk(rogue_, delta_time, clock);
+            else this->current_game_state_->heroTurnPass();
         }
         
         else if(current_game_state_->whichHeroTurn() == "mage"){
-            heroWalk(mage_, delta_time, clock);
+            if(mage_.isAlive())heroWalk(mage_, delta_time, clock);
+            else this->current_game_state_->heroTurnPass();
         }
 
         else if(current_game_state_->whichHeroTurn() == "knight"){
-            heroWalk(knight_, delta_time, clock);
+            if(knight_.isAlive())heroWalk(knight_, delta_time, clock);
+            else this->current_game_state_->heroTurnPass();
         }
     }
-    monsterTakeAction(6, delta_time, clock);
 }
 
 void Game::run(sf::Clock clock) {
@@ -358,7 +370,13 @@ void Game::run(sf::Clock clock) {
         this->render(delta_time);
 
         //O playerTurnControl garante a movimentação e ataques dos herois durante o turno do jogador
-        this->playerTurnControl(delta_time, clock);   
+        this->playerTurnControl(delta_time, clock);
+
+        ///O monsterTakeAction movimenta o monstro para a direção dos herois e os ataca
+        this->monsterTakeAction(6, delta_time, clock);
+        if(this->current_game_state_->isGameOver(rogue_, mage_, knight_)){
+            continue;
+        }   
     }
 
 }

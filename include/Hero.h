@@ -23,7 +23,10 @@ class Hero {
     /// @brief Destructor
     ~Hero();
 
-    /// @return Retorna o hp do herói
+    /// @return Retorna o hp máximo do herói
+    int get_hero_full_hp();
+
+    /// @return Retorna o hp atual do herói
     int get_hero_hp();
 
     /// @brief Altera o hp atual do herói
@@ -49,6 +52,8 @@ class Hero {
 
     // /// @brief Aumenta o nível do herói
     // void LvlUp(int exp);
+    
+    bool isAlive();
 
     /// @return Posição x do herói no tabuleiro
     int get_hero_position_x();
@@ -75,6 +80,7 @@ class Hero {
 
   private:
     //Características
+    int hero_full_hp_;
     int hero_hp_;
     int hero_attack_;
     int hero_special_attack_;

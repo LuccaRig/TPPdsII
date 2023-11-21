@@ -19,7 +19,7 @@ Hero::Hero(std::string hero_type) {
     animation_timer_ = 0.0f;
 
     if (hero_type_ == "knight") {
-        hero_hp_ = 35;
+        hero_hp_ = hero_full_hp_ = 35;
         hero_attack_ = 5;
         hero_special_attack_ = 5;
         
@@ -32,7 +32,7 @@ Hero::Hero(std::string hero_type) {
         hero_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
     }
     else if (hero_type_ == "rogue"){
-        hero_hp_ = 25;
+        hero_hp_ = hero_full_hp_ = 25;
         hero_attack_ = 10;
         hero_special_attack_ = 1;
 
@@ -45,7 +45,7 @@ Hero::Hero(std::string hero_type) {
         hero_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
     }
     else if (hero_type_ == "mage"){
-        hero_hp_ = 30;
+        hero_hp_ = hero_full_hp_ = 30;
         hero_attack_ = 4;
         hero_special_attack_ = 15;
         
@@ -60,6 +60,19 @@ Hero::Hero(std::string hero_type) {
 
 }
 
+bool Hero::isAlive() {
+    if(hero_hp_ <= 0){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+
+int Hero::get_hero_full_hp() {
+    return hero_full_hp_;
+}
+
 int Hero::get_hero_hp() {
     return hero_hp_;
 }
@@ -67,7 +80,7 @@ int Hero::get_hero_hp() {
 void Hero::set_hero_hp(int changed_hp) {
     hero_hp_ -= changed_hp;
     if (hero_hp_ <= 0) {
-        this->~Hero();
+        hero_hp_ = 0;
     }
 }
 
