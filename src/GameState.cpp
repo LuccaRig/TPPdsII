@@ -12,8 +12,12 @@ void GameState::heroTurnPass() {
     hero_turn_count_++;
 }
 
+void GameState::heroTurnRestart() {
+    hero_turn_count_ = 0;
+} 
+
 bool GameState::isPlayerTurn() {
-    if(hero_turn_count_ < 15){
+    if(hero_turn_count_ < 3){
         return true;
     }
     else{

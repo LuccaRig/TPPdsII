@@ -315,7 +315,9 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();
     }
-    // turno deve ser dado aos heróis
+    
+    current_game_state_->restartHeroPass();
+    playerTurnControl(delta_time, clock);
 }
 
 
@@ -338,6 +340,7 @@ void Game::playerTurnControl(float delta_time, sf::Clock clock) {
             heroWalk(knight_, delta_time, clock);
         }
     }
+    monsterTakeAction(6, delta_time, clock);
 }
 
 void Game::run(sf::Clock clock) {
