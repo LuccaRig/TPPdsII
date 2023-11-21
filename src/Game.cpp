@@ -77,17 +77,32 @@ void Game::gameOverRender() {
     font.loadFromFile("Resources/Retro Gaming.ttf");
     sf::Text game_over_text("Game Over", font, 50);
     game_over_text.setFillColor(sf::Color::White);
+    sf::Text press_esc_quit("press esc to quit", font, 20);
+    press_esc_quit.setFillColor(sf::Color::White);
 
     sf::FloatRect textBounds = game_over_text.getLocalBounds();
     game_over_text.setPosition(rectangle.getPosition().x + (rectangle.getSize().x - textBounds.width) / 2,
-                             rectangle.getPosition().y + (rectangle.getSize().y - textBounds.height) / 2);
+                             rectangle.getPosition().y + (rectangle.getSize().y - textBounds.height) / 3);
+
+    sf::FloatRect textBounds2 = press_esc_quit.getLocalBounds();
+    press_esc_quit.setPosition(rectangle.getPosition().x + (rectangle.getSize().x - textBounds2.width) / 2,
+                             rectangle.getPosition().y + (rectangle.getSize().y - textBounds2.height) / 1.3);
 
     this->game_window_->draw(rectangle);
     this->game_window_->draw(game_over_text); 
+    this->game_window_->draw(press_esc_quit);
 }
 
-void Game::gameOverCloseWindow() {
+void Game::gameOverCloseWindow(float delta_time, sf::Clock clock) {
+    while(this->current_game_state_->isGameOver(rogue_, mage_, knight_) && 
+    this->game_window_->pollEvent(this->SFML_event_)) {
+        this->render(delta_time);
+        delta_time = clock.restart().asSeconds();
 
+        if(this->SFML_event_.type == sf::Event::Closed || this->SFML_event_.type == sf::Event::KeyPressed){
+            this->game_window_->close();
+        }
+    }
 }
 
 void Game::testIsClosed() {
@@ -237,6 +252,10 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                     hero.set_hero_position_x(pos_x+1);
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at((pos_x+1), pos_y)->setObjectInTile("hero");
+                    this->current_game_state_->heroTurnPass();
+                    break;
+
+                case sf::Keyboard::F:
                     this->current_game_state_->heroTurnPass();
                     break;
 
@@ -402,6 +421,8 @@ void Game::run(sf::Clock clock) {
 
         ///O monsterTakeAction movimenta o monstro para a direção dos herois e os ataca
         this->monsterTakeAction(6, delta_time, clock);
+        
+        this->gameOverCloseWindow(delta_time, clock);
 
     }  
 }

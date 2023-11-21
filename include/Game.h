@@ -80,7 +80,7 @@ class Game {
 
     void gameOverRender();
 
-    void gameOverCloseWindow();
+    void gameOverCloseWindow(float delta_time, sf::Clock clock);
 
   private:
     //Variables
