@@ -26,6 +26,11 @@ bool GameState::isPlayerTurn() {
     
 }
 
+bool GameState::isGameOver(Hero &rogue, Hero &mage, Hero &knight) {
+    if(rogue.isAlive() && mage.isAlive() && knight.isAlive()) return false;
+    else return true;
+}
+
 std::string GameState::whichHeroTurn(){
     if(hero_turn_count_%3 == 0){
         return "rogue";
