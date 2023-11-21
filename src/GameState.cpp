@@ -27,7 +27,7 @@ bool GameState::isPlayerTurn() {
 }
 
 bool GameState::isGameOver(Hero &rogue, Hero &mage, Hero &knight) {
-    if(rogue.isAlive() && mage.isAlive() && knight.isAlive()) return false;
+    if(rogue.isAlive() || mage.isAlive() || knight.isAlive()) return false;
     else return true;
 }
 

@@ -20,7 +20,7 @@ void Game::initWindow(){
     this->game_board_ = new Board();
 }
 
-Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue"), test_monster_("death knight"){
+Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue") {
     //Construindo background
     background_.loadFromFile("Textures/Background.png");
     background_sprite_.setTexture(background_);
@@ -63,6 +63,31 @@ void Game::herosNameInicialization() {
         health_bars_[i].setFillColor(sf::Color(128, 0, 0));
         health_bars_[i].setPosition(health_bars_position_[i]);
     }
+}
+
+void Game::gameOverRender() {
+    sf::RectangleShape rectangle(sf::Vector2f(490, 200));
+    rectangle.setFillColor(sf::Color::Black);
+    rectangle.setOutlineColor(sf::Color::White);
+    rectangle.setOutlineThickness(2); 
+
+    rectangle.setPosition(360, 540);
+
+    sf::Font font;
+    font.loadFromFile("Resources/Retro Gaming.ttf");
+    sf::Text game_over_text("Game Over", font, 50);
+    game_over_text.setFillColor(sf::Color::White);
+
+    sf::FloatRect textBounds = game_over_text.getLocalBounds();
+    game_over_text.setPosition(rectangle.getPosition().x + (rectangle.getSize().x - textBounds.width) / 2,
+                             rectangle.getPosition().y + (rectangle.getSize().y - textBounds.height) / 2);
+
+    this->game_window_->draw(rectangle);
+    this->game_window_->draw(game_over_text); 
+}
+
+void Game::gameOverCloseWindow() {
+
 }
 
 void Game::testIsClosed() {
@@ -155,6 +180,10 @@ void Game::render(float delta_time) {
         this->game_window_->draw(it);
     }
     this->boardRender(delta_time);
+    if(this->current_game_state_->isGameOver(rogue_, mage_, knight_)){
+        this->gameOverRender();
+    }
+        
     this->game_window_->display();  
 }
 
@@ -374,9 +403,6 @@ void Game::run(sf::Clock clock) {
 
         ///O monsterTakeAction movimenta o monstro para a direção dos herois e os ataca
         this->monsterTakeAction(6, delta_time, clock);
-        if(this->current_game_state_->isGameOver(rogue_, mage_, knight_)){
-            continue;
-        }   
     }
 
 }
