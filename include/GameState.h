@@ -27,6 +27,9 @@ class GameState{
     /// @brief Aumenta o contador dos turnos dos herois
     void heroTurnPass();
 
+    /// @brief zera o contador dos turnos dos heróis
+    void heroTurnRestart();
+
     /// @brief Enquanto o contador de turnos dos herois for menor que um valor definido
     /// essa função retorna true 
     bool isPlayerTurn();
