@@ -50,7 +50,7 @@ class Game {
 
     /// @brief Muda o tamanho das barras de vida dos heróis
     /// TODO: Implementar essa função quando os ataques já estiverem funcionando
-    void setHeroHealthBars();
+    void set_hero_health_bars(int damaged_hero, int full_hp, int current_hp);
 
     /// @brief Renderiza o tabuleiro com os personagens nele
     /// @param delta_time = tempo decorrido desde o ultimo clock/renderização

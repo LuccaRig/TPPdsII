@@ -106,6 +106,10 @@ void Game::putMonsterInBoard(int position_x, int position_y, Monster &monster, f
     }
 }
 
+void Game::set_hero_health_bars(int hero, int full_hp, int current_hp) {
+    health_bars_[hero].setSize(sf::Vector2f((190*(current_hp/full_hp)), 30));
+}
+
 void Game::boardRender(float delta_time) {
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 5; j++) {
@@ -266,10 +270,13 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
             int dmg = my_hordes_.enemy(n)->get_dmg_output();
             if (nearest_hero_number == 0) {
                 mage_.set_hero_hp(dmg);
+                set_hero_health_bars(1, mage_.get_hero_full_hp(), mage_.get_hero_hp());
             } else if (nearest_hero_number == 1) {
                 knight_.set_hero_hp(dmg);
+                set_hero_health_bars(0, knight_.get_hero_full_hp(), knight_.get_hero_hp());
             } else if (nearest_hero_number == 2) {
                 rogue_.set_hero_hp(dmg);
+                set_hero_health_bars(2, rogue_.get_hero_full_hp(), rogue_.get_hero_hp());
             }; 
         }
 
