@@ -78,6 +78,10 @@ class Game {
     /// @param monster_number identifica que monstro vai atacar
     void monsterMove(int nearest_hero_number, int monster_number);
 
+    void gameOverRender();
+
+    void gameOverCloseWindow(float delta_time, sf::Clock clock);
+
   private:
     //Variables
     sf::RenderWindow *game_window_;
@@ -103,8 +107,6 @@ class Game {
     Hero knight_;
     Hero rogue_;
     Enemies my_hordes_;
-
-    Monster test_monster_;
 
     /// @brief Cria um novo objeto do tipo RenderWindow
     void initWindow();
