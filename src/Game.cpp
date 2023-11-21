@@ -316,7 +316,7 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
         delta_time = clock.restart().asSeconds();
     }
     
-    current_game_state_->restartHeroPass();
+    current_game_state_->heroTurnRestart();
     playerTurnControl(delta_time, clock);
 }
 
