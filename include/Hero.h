@@ -52,6 +52,8 @@ class Hero {
 
     // /// @brief Aumenta o nível do herói
     // void LvlUp(int exp);
+    
+    bool isAlive();
 
     /// @return Posição x do herói no tabuleiro
     int get_hero_position_x();
