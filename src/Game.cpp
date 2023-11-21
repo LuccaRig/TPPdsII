@@ -107,7 +107,7 @@ void Game::putMonsterInBoard(int position_x, int position_y, Monster &monster, f
 }
 
 void Game::set_hero_health_bars(int hero, int full_hp, int current_hp) {
-    health_bars_[hero].setSize(sf::Vector2f((190*(current_hp/full_hp)), 30));
+    health_bars_[hero].setSize(sf::Vector2f(190*current_hp/full_hp, 30));
 }
 
 void Game::boardRender(float delta_time) {
@@ -234,10 +234,10 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
     heroes hero[3];
 
     // armazena as coordenadas dos heróis no board
-    hero[0].pos_x = mage_.get_hero_position_x();
-    hero[0].pos_y = mage_.get_hero_position_y();
-    hero[1].pos_x = knight_.get_hero_position_x();
-    hero[1].pos_y = knight_.get_hero_position_y();
+    hero[0].pos_x = knight_.get_hero_position_x();
+    hero[0].pos_y = knight_.get_hero_position_y();
+    hero[1].pos_x = mage_.get_hero_position_x();
+    hero[1].pos_y = mage_.get_hero_position_y();
     hero[2].pos_x = rogue_.get_hero_position_x();
     hero[2].pos_y = rogue_.get_hero_position_y();
 
@@ -269,11 +269,11 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
         if (nearest_hero.distance == 1) {
             int dmg = my_hordes_.enemy(n)->get_dmg_output();
             if (nearest_hero_number == 0) {
-                mage_.set_hero_hp(dmg);
-                set_hero_health_bars(1, mage_.get_hero_full_hp(), mage_.get_hero_hp());
-            } else if (nearest_hero_number == 1) {
                 knight_.set_hero_hp(dmg);
                 set_hero_health_bars(0, knight_.get_hero_full_hp(), knight_.get_hero_hp());
+            } else if (nearest_hero_number == 1) {
+                mage_.set_hero_hp(dmg);
+                set_hero_health_bars(1, mage_.get_hero_full_hp(), mage_.get_hero_hp());
             } else if (nearest_hero_number == 2) {
                 rogue_.set_hero_hp(dmg);
                 set_hero_health_bars(2, rogue_.get_hero_full_hp(), rogue_.get_hero_hp());
@@ -323,7 +323,7 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
         delta_time = clock.restart().asSeconds();
     }
     
-    current_game_state_->restartHeroPass();
+    current_game_state_->heroTurnRestart();
     playerTurnControl(delta_time, clock);
 }
 
