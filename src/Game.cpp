@@ -372,7 +372,11 @@ void Game::run(sf::Clock clock) {
         //O playerTurnControl garante a movimentação e ataques dos herois durante o turno do jogador
         this->playerTurnControl(delta_time, clock);
 
-        this->monsterTakeAction(6, delta_time, clock);   
+        ///O monsterTakeAction movimenta o monstro para a direção dos herois e os ataca
+        this->monsterTakeAction(6, delta_time, clock);
+        if(this->current_game_state_->isGameOver(rogue_, mage_, knight_)){
+            continue;
+        }   
     }
 
 }

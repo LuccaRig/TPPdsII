@@ -34,6 +34,8 @@ class GameState{
     /// essa função retorna true 
     bool isPlayerTurn();
 
+    bool isGameOver(Hero &rogue, Hero &mage, Hero &knight);
+
     /// @brief Serve para o jogo controlar a passagem de turnos dos herois
     /// @return Uma string dizendo o turno de qual heroi está ocorrendo no presente momento 
     std::string whichHeroTurn();
