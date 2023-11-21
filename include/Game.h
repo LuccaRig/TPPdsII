@@ -14,6 +14,7 @@
 #include "Hero.h"
 #include "GameState.h"
 #include "Enemies.h"
+#include "HeroMenu.h"
 
 class Game {
 
@@ -49,7 +50,6 @@ class Game {
     void putMonsterInBoard(int position_y, int position_x, Monster &monster, float delta_time,sf::RectangleShape &tileShape);
 
     /// @brief Muda o tamanho das barras de vida dos heróis
-    /// TODO: Implementar essa função quando os ataques já estiverem funcionando
     void set_hero_health_bars(int damaged_hero, int full_hp, int current_hp);
 
     /// @brief Renderiza o tabuleiro com os personagens nele
@@ -96,6 +96,7 @@ class Game {
 
     Board *game_board_;
     GameState *current_game_state_;
+    HeroMenu hero_menu_;
 
     //Personagens dos jogadores:
     Hero mage_;

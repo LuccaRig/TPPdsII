@@ -1,6 +1,8 @@
 #include "Game.h"
 #include "Hero.h"
 #include "GameState.h"
+#include "Enemies.h"
+#include "HeroMenu.h"
 
 #include <iostream>
 #include <math.h>
@@ -154,6 +156,7 @@ void Game::render(float delta_time) {
     for (auto it : health_bars_) {
         this->game_window_->draw(it);
     }
+    if (current_game_state_->isPlayerTurn()) hero_menu_.drawHeroMenu(game_window_);
     this->boardRender(delta_time);
     this->game_window_->display();  
 }
@@ -338,13 +341,18 @@ void Game::playerTurnControl(float delta_time, sf::Clock clock) {
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();
 
+        hero_menu_.loopChoicesEvents(game_window_);
         if(current_game_state_->whichHeroTurn() == "rogue"){
-            if(rogue_.isAlive()) heroWalk(rogue_, delta_time, clock);
+            if(rogue_.isAlive() && hero_menu_.get_selected_choice() == "move") {
+                heroWalk(rogue_, delta_time, clock);
+            }
             else this->current_game_state_->heroTurnPass();
         }
         
         else if(current_game_state_->whichHeroTurn() == "mage"){
-            if(mage_.isAlive())heroWalk(mage_, delta_time, clock);
+            if(mage_.isAlive() && hero_menu_.get_selected_choice() == "move") {
+                heroWalk(mage_, delta_time, clock);
+            }
             else this->current_game_state_->heroTurnPass();
         }
 
