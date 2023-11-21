@@ -188,7 +188,7 @@ void Game::render(float delta_time) {
 }
 
 void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
-    while(this->game_window_->pollEvent(this->SFML_event_)){
+    while(this->game_window_->pollEvent(this->SFML_event_) && this->game_window_->isOpen()){
         int pos_x = 0, pos_y = 0;
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();
@@ -362,7 +362,7 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
 
 
 void Game::playerTurnControl(float delta_time, sf::Clock clock) {
-    while(this->current_game_state_->isPlayerTurn()){
+    while(this->current_game_state_->isPlayerTurn() && this->game_window_->isOpen()){
         this->update();
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();
@@ -388,7 +388,6 @@ void Game::run(sf::Clock clock) {
     float delta_time = clock.restart().asSeconds();
     my_hordes_.createHordeEnemies();
     while(this->game_window_->isOpen()) {
-        
         //Conta a passagem de tempo desde a ultima vez que o clock.restart() foi chamado
         delta_time = clock.restart().asSeconds();
         
@@ -403,6 +402,6 @@ void Game::run(sf::Clock clock) {
 
         ///O monsterTakeAction movimenta o monstro para a direção dos herois e os ataca
         this->monsterTakeAction(6, delta_time, clock);
-    }
 
+    }  
 }
