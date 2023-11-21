@@ -60,6 +60,15 @@ Hero::Hero(std::string hero_type) {
 
 }
 
+bool Hero::isAlive() {
+    if(hero_hp_ <= 0){
+        return false;
+    }
+    else{
+        return true;
+    }
+}
+
 int Hero::get_hero_full_hp() {
     return hero_full_hp_;
 }
@@ -72,7 +81,6 @@ void Hero::set_hero_hp(int changed_hp) {
     hero_hp_ -= changed_hp;
     if (hero_hp_ <= 0) {
         hero_hp_ = 0;
-        this->~Hero();
     }
 }
 
