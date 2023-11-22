@@ -28,6 +28,15 @@ void Enemies::deleteMonsterPool() {
     enemies_.clear();
 }
 
+Monster* Enemies::getMonsterInPosition(int position_x, int position_y){
+    for(int i=0;i<6;++i){
+        if((this->enemy(i)->get_monster_position_x() == position_x) &&
+            this->enemy(i)->get_monster_position_y() == position_y){
+                return this->enemy(i);
+            }
+    }
+}
+
 Monster* Enemies::enemy(int enemy_number) {
     return enemies_[enemy_number].get();
 }

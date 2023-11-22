@@ -121,6 +121,8 @@ void Game::update() {
 void Game::putHeroInBoard(int position_x, int position_y, Hero &hero, float delta_time, sf::RectangleShape &tileShape) {
     if(!hero.isAlive()){
         game_board_->get_tile_at(position_x, position_y)->deleteObjectInTile();
+        hero.set_hero_position_x(60);
+        hero.set_hero_position_y(60);
         return;
     }
     if (position_x == hero.get_hero_position_x() && position_y == hero.get_hero_position_y()) {
@@ -204,7 +206,7 @@ void Game::render(float delta_time) {
 
 void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
     while(this->game_window_->pollEvent(this->SFML_event_) && this->game_window_->isOpen()){
-        int pos_x = 0, pos_y = 0;
+        int pos_x = 0, pos_y = 0, pos_attack_x = 0, pos_attack_y = 0;
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();
 
@@ -259,6 +261,22 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                     this->current_game_state_->heroTurnPass();
                     break;
 
+                case sf::Keyboard::W:
+                    pos_attack_x = hero.get_hero_position_x();
+                    pos_attack_y = hero.get_hero_position_y()-1;
+                    (my_hordes_.getMonsterInPosition(pos_attack_x, pos_attack_y))->set_monster_hp(50);
+                    break;
+
+                case sf::Keyboard::A:
+                    break;
+
+                case sf::Keyboard::S:
+                    break;
+
+                case sf::Keyboard::D:
+                    break;
+
+
                 default:
                     this->update();
                     this->render(delta_time);
@@ -272,6 +290,7 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
 
 
 void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock) {
+    if(rogue_.isAlive() || mage_.isAlive() || knight_.isAlive()){
     struct heroes {
         int pos_x;
         int pos_y;
@@ -376,6 +395,7 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
     }
     
     current_game_state_->heroTurnRestart();
+    }
 }
 
 
