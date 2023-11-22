@@ -104,11 +104,8 @@
     }
 
     bool Monster::monsterIsDead() {
-        if (monster_hp_ > 0) {
-            return false;
-        } else {
-            return true;
-        }
+        if (monster_hp_ > 0) return false;
+        return true;
     }
 
     int Monster::get_exp_drop() {
