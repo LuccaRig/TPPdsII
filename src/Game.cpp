@@ -2,7 +2,6 @@
 #include "Hero.h"
 #include "GameState.h"
 #include "Enemies.h"
-#include "HeroMenu.h"
 
 #include <iostream>
 #include <math.h>
@@ -75,11 +74,10 @@ void Game::gameOverRender() {
 
     rectangle.setPosition(360, 540);
 
-    sf::Font font;
-    font.loadFromFile("Resources/Retro Gaming.ttf");
-    sf::Text game_over_text("Game Over", font, 50);
+    font_.loadFromFile("Resources/Retro Gaming.ttf");
+    sf::Text game_over_text("Game Over", font_, 50);
     game_over_text.setFillColor(sf::Color::White);
-    sf::Text press_esc_quit("press esc to quit", font, 20);
+    sf::Text press_esc_quit("press esc to quit", font_, 20);
     press_esc_quit.setFillColor(sf::Color::White);
 
     sf::FloatRect textBounds = game_over_text.getLocalBounds();
@@ -100,7 +98,7 @@ void Game::gameOverCloseWindow(float delta_time, sf::Clock clock) {
     this->game_window_->pollEvent(this->SFML_event_)) {
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();
-
+std::cout << "aqui\n";
         if(this->SFML_event_.type == sf::Event::Closed || this->SFML_event_.type == sf::Event::KeyPressed){
             this->game_window_->close();
         }
@@ -196,7 +194,12 @@ void Game::render(float delta_time) {
     for (auto it : health_bars_) {
         this->game_window_->draw(it);
     }
-    if (current_game_state_->isPlayerTurn()) hero_menu_.drawHeroMenu(game_window_);
+    if (current_game_state_->isPlayerTurn() && !current_game_state_->isGameOver(rogue_, mage_, knight_)) {
+        this->game_window_->draw(background_hero_menu_);
+        for (auto it : hero_menu_texts_) {
+            this->game_window_->draw(it);
+        }
+    };
     this->boardRender(delta_time);
     if(this->current_game_state_->isGameOver(rogue_, mage_, knight_)){
         this->gameOverRender();
@@ -206,17 +209,15 @@ void Game::render(float delta_time) {
 }
 
 void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
-    while(this->game_window_->pollEvent(this->SFML_event_) && this->game_window_->isOpen()){
+    while((this->game_window_->pollEvent(this->SFML_event_) && this->game_window_->isOpen()) || is_hero_turn){
         int pos_x = 0, pos_y = 0;
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();
 
-        
         if(this->SFML_event_.type == sf::Event::Closed){
             this->game_window_->close();
         }
         if(this->SFML_event_.type == sf::Event::KeyPressed){ 
-
             switch (this->SFML_event_.key.code) {
                 case sf::Keyboard::Up:
                     pos_y = hero.get_hero_position_y();
@@ -226,6 +227,7 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at(pos_x, (pos_y-1))->setObjectInTile("hero");
                     this->current_game_state_->heroTurnPass();
+                    is_hero_turn = 0;
                     break;
 
                 case sf::Keyboard::Down:
@@ -236,6 +238,7 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at(pos_x, (pos_y+1))->setObjectInTile("hero");
                     this->current_game_state_->heroTurnPass();
+                    is_hero_turn = 0;
                     break;
 
                 case sf::Keyboard::Left:
@@ -246,6 +249,7 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at((pos_x-1), pos_y)->setObjectInTile("hero");
                     this->current_game_state_->heroTurnPass();
+                    is_hero_turn = 0;
                     break;
 
                 case sf::Keyboard::Right:
@@ -256,6 +260,7 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at((pos_x+1), pos_y)->setObjectInTile("hero");
                     this->current_game_state_->heroTurnPass();
+                    is_hero_turn = 0;
                     break;
 
                 case sf::Keyboard::F:
@@ -381,33 +386,129 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
     current_game_state_->heroTurnRestart();
 }
 
+void Game::setHeroMenu() {
+  //Construindo retângulo do menu dos heróis
+  background_hero_menu_.setSize(sf::Vector2f(1100, 100));
+  background_hero_menu_.setFillColor(sf::Color(70, 46, 64));
+  background_hero_menu_.setPosition(sf::Vector2f(50, 600));
+
+  //Construindo textos das opções do menu dos heróis
+  font_.loadFromFile("Resources/Retro Gaming.ttf");
+  hero_menu_texts_.resize(4);
+  hero_menu_printed_texts_ = {"Mover", "Atacar", "Habilidade", "Esperar"};
+  hero_menu_texts_position_ = {{70, 620}, {280, 620}, {516, 620}, {860, 620}};
+  hero_menu_texts_color_ = {sf::Color::Green, sf::Color(64, 64, 64), sf::Color(64, 64, 64), sf::Color(64, 64, 64)};
+  for (unsigned int i = 0; i < hero_menu_texts_.size(); i++) {
+    hero_menu_texts_[i].setFont(font_);
+    hero_menu_texts_[i].setString(hero_menu_printed_texts_[i]);
+    hero_menu_texts_[i].setCharacterSize(50);
+    hero_menu_texts_[i].setFillColor(hero_menu_texts_color_[i]);
+    hero_menu_texts_[i].setPosition(hero_menu_texts_position_[i]);
+  }
+
+  //Inicializando variáveis
+  hero_menu_position_ = is_hero_turn = 0;
+  keyboard_pressed_hero_menu_ = enter_pressed_hero_menu_ = false;
+}
+
+void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
+  sf::Event event;
+  while (game_window_->pollEvent(event)) {
+    if (event.type == sf::Event::Closed) {
+      game_window_->close();
+    }
+
+    if (event.type == sf::Event::KeyPressed) {
+      if (event.key.code == sf::Keyboard::Right && !keyboard_pressed_hero_menu_) {
+        if (hero_menu_position_ < 3) {
+          hero_menu_position_++;
+          keyboard_pressed_hero_menu_ = true;
+          if (hero_menu_position_ == 1) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Red);
+          if (hero_menu_position_ == 2) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Blue);
+          if (hero_menu_position_ == 3) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Black);
+          hero_menu_texts_[hero_menu_position_-1].setFillColor(sf::Color(64, 64, 64));
+        }
+        keyboard_pressed_hero_menu_ = false;
+        enter_pressed_hero_menu_ = false;
+      }
+
+      if (event.key.code == sf::Keyboard::Left && !keyboard_pressed_hero_menu_) {
+        if (hero_menu_position_ > 0) {
+          hero_menu_position_--;
+          keyboard_pressed_hero_menu_ = true;
+          if (hero_menu_position_ == 0) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Green);
+          if (hero_menu_position_ == 1) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Red);
+          if (hero_menu_position_ == 2) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Blue);
+          hero_menu_texts_[hero_menu_position_+1].setFillColor(sf::Color(64, 64, 64));
+        }
+        keyboard_pressed_hero_menu_ = false;
+        enter_pressed_hero_menu_ = false;
+      }
+
+      if (event.key.code == sf::Keyboard::Enter && !enter_pressed_hero_menu_) {
+        enter_pressed_hero_menu_ = true;
+
+        if (hero_menu_position_ == 0) {
+            if(current_game_state_->whichHeroTurn() == "rogue" && rogue_.isAlive()){
+                is_hero_turn = 1;
+                heroWalk(rogue_, delta_time, clock);
+            }
+            else if(current_game_state_->whichHeroTurn() == "mage" && mage_.isAlive()){
+                is_hero_turn = 1;
+                heroWalk(mage_, delta_time, clock);
+            }
+            else if(current_game_state_->whichHeroTurn() == "knight" && knight_.isAlive()){
+                is_hero_turn = 1;
+                heroWalk(knight_, delta_time, clock);
+            }
+            else current_game_state_->heroTurnPass();
+        } 
+
+        if (hero_menu_position_ == 1) {
+          selected_choice_ = "attack";
+        }
+
+        if (hero_menu_position_ == 2) {
+          selected_choice_ = "skill";
+        }
+
+        if (hero_menu_position_ == 3) {
+          selected_choice_ = "wait";
+        }
+      }
+    }
+  }
+}
 
 
 void Game::playerTurnControl(float delta_time, sf::Clock clock) {
+    setHeroMenu();
     while(this->current_game_state_->isPlayerTurn() && this->game_window_->isOpen()){
         this->update();
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();
 
-        hero_menu_.loopChoicesEvents(game_window_);
-        if(current_game_state_->whichHeroTurn() == "rogue"){
-            if(rogue_.isAlive() && hero_menu_.get_selected_choice() == "move") {
+        loopHeroMenu(delta_time, clock);
+     /*   if(current_game_state_->whichHeroTurn() == "rogue" && enter_pressed_hero_menu_){
+            if(rogue_.isAlive() && selected_choice_ == "move") {
                 heroWalk(rogue_, delta_time, clock);
             }
             else this->current_game_state_->heroTurnPass();
         }
         
-        else if(current_game_state_->whichHeroTurn() == "mage"){
-            if(mage_.isAlive() && hero_menu_.get_selected_choice() == "move") {
+        else if(current_game_state_->whichHeroTurn() == "mage" && enter_pressed_hero_menu_){
+            if(mage_.isAlive() && selected_choice_ == "move") {
                 heroWalk(mage_, delta_time, clock);
             }
             else this->current_game_state_->heroTurnPass();
         }
 
-        else if(current_game_state_->whichHeroTurn() == "knight"){
-            if(knight_.isAlive())heroWalk(knight_, delta_time, clock);
+        else if(current_game_state_->whichHeroTurn() == "knight" && enter_pressed_hero_menu_){
+            if(knight_.isAlive() && selected_choice_ == "move") {
+                heroWalk(knight_, delta_time, clock);
+            }
             else this->current_game_state_->heroTurnPass();
-        }
+        }*/
     }
 }
 
@@ -417,7 +518,7 @@ void Game::run(sf::Clock clock) {
     while(this->game_window_->isOpen()) {
         //Conta a passagem de tempo desde a ultima vez que o clock.restart() foi chamado
         delta_time = clock.restart().asSeconds();
-        
+
         //Essa linha atualiza a tela enquanto o x não for apertado
         this->update();
 
@@ -429,7 +530,7 @@ void Game::run(sf::Clock clock) {
 
         ///O monsterTakeAction movimenta o monstro para a direção dos herois e os ataca
         this->monsterTakeAction(6, delta_time, clock);
-        
+
         this->gameOverCloseWindow(delta_time, clock);
 
     }  

@@ -14,7 +14,6 @@
 #include "Hero.h"
 #include "GameState.h"
 #include "Enemies.h"
-#include "HeroMenu.h"
 
 class Game {
 
@@ -55,6 +54,14 @@ class Game {
     /// @brief Renderiza o tabuleiro com os personagens nele
     /// @param delta_time = tempo decorrido desde o ultimo clock/renderização
     void boardRender(float delta_time);
+
+    /// @brief Constrói o menu das opções do turno dos heróis
+    void setHeroMenu();
+
+    /// @brief Determina qual ação foi escolhida para o herói
+    /// @param delta_time: Tempo decorrido desde o ultimo clock 
+    /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
+    void loopHeroMenu(float delta_time, sf::Clock clock);
 
     /// @brief Garante o cotrole dos herois pelo jogador durante seu turno
     /// @param delta_time: Tempo decorrido desde o ultimo clock 
@@ -100,7 +107,18 @@ class Game {
 
     Board *game_board_;
     GameState *current_game_state_;
-    HeroMenu hero_menu_;
+
+    //Menu de opções dos jogadores
+    int hero_menu_position_, is_hero_turn;
+    bool keyboard_pressed_hero_menu_, enter_pressed_hero_menu_;
+    std::string selected_choice_;
+
+    sf::RectangleShape background_hero_menu_;
+
+    std::vector<sf::Text> hero_menu_texts_;
+    std::vector<std::string> hero_menu_printed_texts_;
+    std::vector<sf::Vector2f> hero_menu_texts_position_;
+    std::vector<sf::Color> hero_menu_texts_color_;
 
     //Personagens dos jogadores:
     Hero mage_;
