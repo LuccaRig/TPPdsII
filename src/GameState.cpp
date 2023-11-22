@@ -31,7 +31,8 @@ bool GameState::isGameOver(Hero &rogue, Hero &mage, Hero &knight) {
     else return true;
 }
 
-std::string GameState::whichHeroTurn(){
+std::string GameState::whichHeroTurn(Hero &rogue, Hero &mage, Hero &knight) {
+  if (rogue.isAlive() && mage.isAlive() && knight.isAlive()) {
     if(hero_turn_count_ == 0){
         return "rogue";
     }
@@ -41,6 +42,41 @@ std::string GameState::whichHeroTurn(){
     else if(hero_turn_count_ == 2){
         return "knight";
     }
-    else return "turno_indefinido";
-    
+  }
+  else if (!rogue.isAlive() && !mage.isAlive()) {
+    return "knight";
+  } 
+  else if (!rogue.isAlive() && !knight.isAlive()) {
+    return "mage";
+  }
+  else if (!mage.isAlive() && !knight.isAlive()) {
+    return "rogue";
+  }
+  else if (!rogue.isAlive()) {
+    if (hero_turn_count_ == 0) {
+        return "mage";
+    }
+    else if (hero_turn_count_ == 1) {
+        return "knight";
+    }
+  }
+  else if (!mage.isAlive()) {
+    if (hero_turn_count_ == 0) {
+        return "rogue";
+    }
+    else if (hero_turn_count_ == 1) {
+        return "knight";
+    }
+  }
+  else if (!knight.isAlive()) {
+    if (hero_turn_count_ == 0) {
+        return "rogue";
+    }
+    else if (hero_turn_count_ == 1) {
+        return "mage";
+    }
+  }
+  else {
+    return "turno_indefinido";
+  }
 }
