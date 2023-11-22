@@ -98,7 +98,6 @@ void Game::gameOverCloseWindow(float delta_time, sf::Clock clock) {
     this->game_window_->pollEvent(this->SFML_event_)) {
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();
-std::cout << "aqui\n";
         if(this->SFML_event_.type == sf::Event::Closed || this->SFML_event_.type == sf::Event::KeyPressed){
             this->game_window_->close();
         }
@@ -200,6 +199,8 @@ void Game::render(float delta_time) {
         for (auto it : hero_menu_texts_) {
             this->game_window_->draw(it);
         }
+        this->game_window_->draw(which_hero_);
+        this->game_window_->draw(which_direction_);
     };
     this->boardRender(delta_time);
     if(this->current_game_state_->isGameOver(rogue_, mage_, knight_)){
@@ -412,6 +413,44 @@ void Game::setHeroMenu() {
   keyboard_pressed_hero_menu_ = enter_pressed_hero_menu_ = false;
 }
 
+void Game::heroNameTurn(std::string hero_type) {
+  font_.loadFromFile("Resources/Retro Gaming.ttf");
+  which_hero_.setFont(font_);
+  if (hero_type == "delete") {
+    which_hero_.setString("");
+    which_hero_.setFillColor(sf::Color::Transparent);
+  }
+  if (hero_type == "knight") {
+    which_hero_.setString("Turno do Cavaleiro");
+    which_hero_.setPosition(sf::Vector2f(415, 550));
+  }
+  else if (hero_type == "mage") {
+    which_hero_.setString("Turno do Mago");
+    which_hero_.setPosition(sf::Vector2f(465, 550));
+  }
+  else if (hero_type == "rogue") {
+    which_hero_.setString("Turno do Ladino");
+    which_hero_.setPosition(sf::Vector2f(450, 550));
+  }
+  which_hero_.setCharacterSize(30);
+  which_hero_.setFillColor(sf::Color::White);
+}
+
+void Game::chooseDirection(int enter_is_pressed) {
+    font_.loadFromFile("Resources/Retro Gaming.ttf");
+    which_direction_.setFont(font_);
+    if (enter_is_pressed) {
+        which_direction_.setString("Cima Baixo Esquerda Direita");
+        which_direction_.setFillColor(sf::Color::White);
+    }
+    else if (!enter_is_pressed) {
+        which_direction_.setString("");
+        which_direction_.setFillColor(sf::Color::Transparent);
+    }
+    which_direction_.setCharacterSize(30);
+    which_direction_.setPosition(sf::Vector2f(345, 550));
+}
+
 void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
   sf::Event event;
   while (game_window_->pollEvent(event)) {
@@ -448,6 +487,8 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
 
       if (event.key.code == sf::Keyboard::Enter && !enter_pressed_hero_menu_) {
         enter_pressed_hero_menu_ = true;
+        heroNameTurn("delete");
+        chooseDirection(1);
 
         if (hero_menu_position_ == 0) {
             if(current_game_state_->whichHeroTurn() == "rogue" && rogue_.isAlive()){
@@ -482,6 +523,8 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
         if (hero_menu_position_ == 3) {
           selected_choice_ = "wait";
         }
+        
+        chooseDirection(0);
       }
     }
   }
@@ -492,31 +535,12 @@ void Game::playerTurnControl(float delta_time, sf::Clock clock) {
     setHeroMenu();
     while(this->current_game_state_->isPlayerTurn(rogue_.isAlive() + mage_.isAlive() + knight_.isAlive()) && 
                 this->game_window_->isOpen()){
+        this->heroNameTurn(current_game_state_->whichHeroTurn());
         this->update();
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();
 
         loopHeroMenu(delta_time, clock);
-     /*   if(current_game_state_->whichHeroTurn() == "rogue" && enter_pressed_hero_menu_){
-            if(rogue_.isAlive() && selected_choice_ == "move") {
-                heroWalk(rogue_, delta_time, clock);
-            }
-            else this->current_game_state_->heroTurnPass();
-        }
-        
-        else if(current_game_state_->whichHeroTurn() == "mage" && enter_pressed_hero_menu_){
-            if(mage_.isAlive() && selected_choice_ == "move") {
-                heroWalk(mage_, delta_time, clock);
-            }
-            else this->current_game_state_->heroTurnPass();
-        }
-
-        else if(current_game_state_->whichHeroTurn() == "knight" && enter_pressed_hero_menu_){
-            if(knight_.isAlive() && selected_choice_ == "move") {
-                heroWalk(knight_, delta_time, clock);
-            }
-            else this->current_game_state_->heroTurnPass();
-        }*/
     }
 }
 

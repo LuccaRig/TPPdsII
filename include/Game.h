@@ -58,6 +58,11 @@ class Game {
     /// @brief Constrói o menu das opções do turno dos heróis
     void setHeroMenu();
 
+    /// @brief Constrói o texto que diz de qual herói é o turno
+    void heroNameTurn(std::string hero_type);
+
+    void chooseDirection(int enter_is_pressed);
+
     /// @brief Determina qual ação foi escolhida para o herói
     /// @param delta_time: Tempo decorrido desde o ultimo clock 
     /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
@@ -119,6 +124,9 @@ class Game {
     std::vector<std::string> hero_menu_printed_texts_;
     std::vector<sf::Vector2f> hero_menu_texts_position_;
     std::vector<sf::Color> hero_menu_texts_color_;
+
+    sf::Text which_hero_;
+    sf::Text which_direction_;
 
     //Personagens dos jogadores:
     Hero mage_;
