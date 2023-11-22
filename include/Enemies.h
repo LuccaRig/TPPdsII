@@ -46,6 +46,10 @@ class Enemies{
     /// para a criação de uma nova horda
     void deleteMonsterPool();
 
+    /// @brief Compara se algum dos monstros possui a posição específicada e retorna um ponteiro para monstro
+    /// @return Ponteiro para o  monstro na posição especificada
+    Monster* getMonsterInPosition(int position_x, int position_y);
+
   private:
     int horde_number_;
     int enemy_count_;
