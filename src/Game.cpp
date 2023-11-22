@@ -12,7 +12,7 @@
 #include <SFML/Network.hpp>
 
 void Game::initWindow(){
-    this->game_window_ = new sf::RenderWindow(sf::VideoMode(1200, 800), "My Game", sf::Style::Close);
+    this->game_window_ = new sf::RenderWindow(sf::VideoMode(1200, 800), "Trinity Dungeon", sf::Style::Close);
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     int centro_x = (desktop.width - 1200) / 2;
     int centro_y = (desktop.height - 800) / 2;
@@ -237,6 +237,10 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                     hero.set_hero_position_x(pos_x+1);
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at((pos_x+1), pos_y)->setObjectInTile("hero");
+                    this->current_game_state_->heroTurnPass();
+                    break;
+
+                case sf::Keyboard::F:
                     this->current_game_state_->heroTurnPass();
                     break;
 
