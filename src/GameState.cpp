@@ -16,8 +16,8 @@ void GameState::heroTurnRestart() {
     hero_turn_count_ = 0;
 } 
 
-bool GameState::isPlayerTurn() {
-    if(hero_turn_count_ < 3){
+bool GameState::isPlayerTurn(int hero_greatest_turn) {
+    if(hero_turn_count_ < hero_greatest_turn){
         return true;
     }
     else{
@@ -32,13 +32,13 @@ bool GameState::isGameOver(Hero &rogue, Hero &mage, Hero &knight) {
 }
 
 std::string GameState::whichHeroTurn(){
-    if(hero_turn_count_%3 == 0){
+    if(hero_turn_count_ == 0){
         return "rogue";
     }
-    else if(hero_turn_count_%3 == 1){
+    else if(hero_turn_count_ == 1){
         return "mage";
     }
-    else if(hero_turn_count_%3 == 2){
+    else if(hero_turn_count_ == 2){
         return "knight";
     }
     else return "turno_indefinido";

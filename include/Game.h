@@ -49,12 +49,24 @@ class Game {
     void putMonsterInBoard(int position_y, int position_x, Monster &monster, float delta_time,sf::RectangleShape &tileShape);
 
     /// @brief Muda o tamanho das barras de vida dos heróis
-    /// TODO: Implementar essa função quando os ataques já estiverem funcionando
     void set_hero_health_bars(int damaged_hero, int full_hp, int current_hp);
 
     /// @brief Renderiza o tabuleiro com os personagens nele
     /// @param delta_time = tempo decorrido desde o ultimo clock/renderização
     void boardRender(float delta_time);
+
+    /// @brief Constrói o menu das opções do turno dos heróis
+    void setHeroMenu();
+
+    /// @brief Constrói o texto que diz de qual herói é o turno
+    void heroNameTurn(std::string hero_type);
+
+    void chooseDirection(int enter_is_pressed);
+
+    /// @brief Determina qual ação foi escolhida para o herói
+    /// @param delta_time: Tempo decorrido desde o ultimo clock 
+    /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
+    void loopHeroMenu(float delta_time, sf::Clock clock);
 
     /// @brief Garante o cotrole dos herois pelo jogador durante seu turno
     /// @param delta_time: Tempo decorrido desde o ultimo clock 
@@ -100,6 +112,21 @@ class Game {
 
     Board *game_board_;
     GameState *current_game_state_;
+
+    //Menu de opções dos jogadores
+    int hero_menu_position_, is_hero_turn;
+    bool keyboard_pressed_hero_menu_, enter_pressed_hero_menu_;
+    std::string selected_choice_;
+
+    sf::RectangleShape background_hero_menu_;
+
+    std::vector<sf::Text> hero_menu_texts_;
+    std::vector<std::string> hero_menu_printed_texts_;
+    std::vector<sf::Vector2f> hero_menu_texts_position_;
+    std::vector<sf::Color> hero_menu_texts_color_;
+
+    sf::Text which_hero_;
+    sf::Text which_direction_;
 
     //Personagens dos jogadores:
     Hero mage_;
