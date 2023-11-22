@@ -194,7 +194,8 @@ void Game::render(float delta_time) {
     for (auto it : health_bars_) {
         this->game_window_->draw(it);
     }
-    if (current_game_state_->isPlayerTurn() && !current_game_state_->isGameOver(rogue_, mage_, knight_)) {
+    if (current_game_state_->isPlayerTurn(rogue_.isAlive() + mage_.isAlive() + knight_.isAlive()) && 
+                !current_game_state_->isGameOver(rogue_, mage_, knight_)) {
         this->game_window_->draw(background_hero_menu_);
         for (auto it : hero_menu_texts_) {
             this->game_window_->draw(it);
@@ -489,7 +490,8 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
 
 void Game::playerTurnControl(float delta_time, sf::Clock clock) {
     setHeroMenu();
-    while(this->current_game_state_->isPlayerTurn() && this->game_window_->isOpen()){
+    while(this->current_game_state_->isPlayerTurn(rogue_.isAlive() + mage_.isAlive() + knight_.isAlive()) && 
+                this->game_window_->isOpen()){
         this->update();
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();

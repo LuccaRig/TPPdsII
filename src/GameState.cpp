@@ -16,8 +16,8 @@ void GameState::heroTurnRestart() {
     hero_turn_count_ = 0;
 } 
 
-bool GameState::isPlayerTurn() {
-    if(hero_turn_count_ < 3){
+bool GameState::isPlayerTurn(int hero_greatest_turn) {
+    if(hero_turn_count_ < hero_greatest_turn){
         return true;
     }
     else{
