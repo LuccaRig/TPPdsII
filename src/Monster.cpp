@@ -96,6 +96,11 @@
 
     void Monster::set_monster_hp(int dmg) {
         monster_hp_ -= dmg;
+          if (monster_hp_ <= 0) {
+            //Item m_item(monster_position_x_, monster_position_y_);
+            // Board::registerItem(m_item);
+            this->~Monster();
+          }
     }
 
     bool Monster::monsterIsDead() {
@@ -153,6 +158,5 @@
             animation_timer_ = 0.0f;
         }
     }
-
     Monster::~Monster() {    
     }
