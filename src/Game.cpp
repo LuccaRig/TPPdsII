@@ -452,16 +452,22 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
             if(current_game_state_->whichHeroTurn() == "rogue" && rogue_.isAlive()){
                 is_hero_turn = 1;
                 heroWalk(rogue_, delta_time, clock);
+                enter_pressed_hero_menu_ = false;
             }
             else if(current_game_state_->whichHeroTurn() == "mage" && mage_.isAlive()){
                 is_hero_turn = 1;
                 heroWalk(mage_, delta_time, clock);
+                enter_pressed_hero_menu_ = false;
             }
             else if(current_game_state_->whichHeroTurn() == "knight" && knight_.isAlive()){
                 is_hero_turn = 1;
                 heroWalk(knight_, delta_time, clock);
+                enter_pressed_hero_menu_ = false;
             }
-            else current_game_state_->heroTurnPass();
+            else {
+                this->current_game_state_->heroTurnPass();
+                enter_pressed_hero_menu_ = false;
+            }
         } 
 
         if (hero_menu_position_ == 1) {
