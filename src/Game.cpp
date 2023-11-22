@@ -12,7 +12,7 @@
 #include <SFML/Network.hpp>
 
 void Game::initWindow(){
-    this->game_window_ = new sf::RenderWindow(sf::VideoMode(1200, 800), "My Game", sf::Style::Close);
+    this->game_window_ = new sf::RenderWindow(sf::VideoMode(1200, 800), "Trinity Dungeon", sf::Style::Close);
     sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
     int centro_x = (desktop.width - 1200) / 2;
     int centro_y = (desktop.height - 800) / 2;
