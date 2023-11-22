@@ -38,7 +38,7 @@ class GameState{
 
     /// @brief Serve para o jogo controlar a passagem de turnos dos herois
     /// @return Uma string dizendo o turno de qual heroi está ocorrendo no presente momento 
-    std::string whichHeroTurn();
+    std::string whichHeroTurn(Hero &rogue, Hero &mage, Hero &knight);
 
   private:
     int hero_turn_count_;

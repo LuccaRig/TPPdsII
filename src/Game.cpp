@@ -511,17 +511,17 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
         chooseDirection(1);
 
         if (hero_menu_position_ == 0) {
-            if(current_game_state_->whichHeroTurn() == "rogue" && rogue_.isAlive()){
+            if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()){
                 is_hero_turn = 1;
                 heroWalk(rogue_, delta_time, clock);
                 enter_pressed_hero_menu_ = false;
             }
-            else if(current_game_state_->whichHeroTurn() == "mage" && mage_.isAlive()){
+            else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && mage_.isAlive()){
                 is_hero_turn = 1;
                 heroWalk(mage_, delta_time, clock);
                 enter_pressed_hero_menu_ = false;
             }
-            else if(current_game_state_->whichHeroTurn() == "knight" && knight_.isAlive()){
+            else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && knight_.isAlive()){
                 is_hero_turn = 1;
                 heroWalk(knight_, delta_time, clock);
                 enter_pressed_hero_menu_ = false;
@@ -543,7 +543,7 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
         if (hero_menu_position_ == 3) {
           selected_choice_ = "wait";
         }
-        
+
         chooseDirection(0);
       }
     }
@@ -555,7 +555,7 @@ void Game::playerTurnControl(float delta_time, sf::Clock clock) {
     setHeroMenu();
     while(this->current_game_state_->isPlayerTurn(rogue_.isAlive() + mage_.isAlive() + knight_.isAlive()) && 
                 this->game_window_->isOpen()){
-        this->heroNameTurn(current_game_state_->whichHeroTurn());
+        this->heroNameTurn(current_game_state_->whichHeroTurn(rogue_, mage_, knight_));
         this->update();
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();

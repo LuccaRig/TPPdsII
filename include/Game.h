@@ -61,6 +61,8 @@ class Game {
     /// @brief Constrói o texto que diz de qual herói é o turno
     void heroNameTurn(std::string hero_type);
 
+    /// @brief Constrói o texto que alerta que o enter já foi pressionado
+    /// @param enter_is_pressed 
     void chooseDirection(int enter_is_pressed);
 
     /// @brief Determina qual ação foi escolhida para o herói
