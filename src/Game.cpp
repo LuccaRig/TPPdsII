@@ -267,10 +267,6 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                     is_hero_turn = 0;
                     break;
 
-                case sf::Keyboard::F:
-                    this->current_game_state_->heroTurnPass();
-                    break;
-
                 case sf::Keyboard::W:
                     pos_attack_x = hero.get_hero_position_x();
                     pos_attack_y = hero.get_hero_position_y()-1;
@@ -508,9 +504,10 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
       if (event.key.code == sf::Keyboard::Enter && !enter_pressed_hero_menu_) {
         enter_pressed_hero_menu_ = true;
         heroNameTurn("delete");
-        chooseDirection(1);
 
         if (hero_menu_position_ == 0) {
+            chooseDirection(1);
+
             if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()){
                 is_hero_turn = 1;
                 heroWalk(rogue_, delta_time, clock);
@@ -541,7 +538,10 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
         }
 
         if (hero_menu_position_ == 3) {
-          selected_choice_ = "wait";
+          is_hero_turn = 1;
+          this->current_game_state_->heroTurnPass();
+          is_hero_turn = 0;
+          enter_pressed_hero_menu_ = false;
         }
 
         chooseDirection(0);
