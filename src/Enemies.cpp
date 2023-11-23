@@ -31,7 +31,8 @@ void Enemies::deleteMonsterPool() {
 Monster* Enemies::getMonsterInPosition(int position_x, int position_y){
     for(int i=0;i<enemy_count_;++i){
         if((this->enemy(i)->get_monster_position_x() == position_x) &&
-            this->enemy(i)->get_monster_position_y() == position_y){
+            (this->enemy(i)->get_monster_position_y() == position_y) &&
+            !this->enemy(i)->monsterIsDead()){
                 return this->enemy(i);
             }
     }
