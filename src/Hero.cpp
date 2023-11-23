@@ -21,7 +21,7 @@ Hero::Hero(std::string hero_type) {
     if (hero_type_ == "knight") {
         hero_hp_ = hero_full_hp_ = 35;
         hero_attack_ = 50;
-        hero_special_attack_ = 5;
+        hero_special_attack_ = 35;
         
         hero_position_x_ = 2;
         hero_position_y_ = 2;
@@ -84,10 +84,17 @@ void Hero::set_hero_hp(int changed_hp) {
         hero_position_x_ = 60;
         hero_position_y_ = 60;
     }
+    else if (hero_hp_ >= hero_full_hp_) {
+        hero_hp_ = hero_full_hp_;
+    }
 }
 
 int Hero::get_hero_attack() {
     return hero_attack_;
+}
+
+void Hero::set_hero_attack(int changed_attack) {
+    hero_attack_ += changed_attack;
 }
 
 int Hero::get_hero_special_attack() {
@@ -95,7 +102,7 @@ int Hero::get_hero_special_attack() {
 }
 
 void Hero::UseSkill() {
-    Skill skill(hero_type_, hero_special_attack_);
+    Skill skill(hero_type_, hero_special_attack_); 
     hero_hp_ += skill.skill_heal();
     hero_attack_ += skill.skill_buff();
     //Dar dano nos monstros
