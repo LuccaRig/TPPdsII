@@ -331,8 +331,8 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     break;
 
                 case sf::Keyboard::Right:
-                    pos_to_attack_x = hero.get_hero_position_x();
-                    pos_to_attack_y = hero.get_hero_position_y()+1;
+                    pos_to_attack_x = hero.get_hero_position_x()+1;
+                    pos_to_attack_y = hero.get_hero_position_y();
                     if(pos_to_attack_x > 4) continue;
                     if(!game_board_->get_tile_at(pos_to_attack_x, pos_to_attack_y)->monsterIsInTile()) {
                         is_hero_turn = 0;
