@@ -171,8 +171,27 @@ void Game::boardRender(float delta_time) {
             sf::RectangleShape tileShape(sf::Vector2f(currentTile->getTileSize(), currentTile->getTileSize()));
             tileShape.setPosition(board_positionX + i * currentTile->getTileSize(), 
                                   board_positionY + j * currentTile->getTileSize());
+            sf::RectangleShape currentPosition(sf::Vector2f(currentTile->getTileSize(), currentTile->getTileSize()));
+            currentPosition.setOutlineThickness(-2);
+            currentPosition.setFillColor(sf::Color::Transparent);
+            currentPosition.setOutlineColor(sf::Color::White);
             //Define a cor do quadrado como transparente
             tileShape.setFillColor(sf::Color::Transparent);
+            if (current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()) {
+                currentPosition.setPosition(board_positionX + rogue_.get_hero_position_x() * currentTile->getTileSize(), 
+                                        board_positionY + rogue_.get_hero_position_y() * currentTile->getTileSize());
+                this->game_window_->draw(currentPosition);
+            }
+            else if (current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && mage_.isAlive()) {
+                currentPosition.setPosition(board_positionX + mage_.get_hero_position_x() * currentTile->getTileSize(), 
+                                        board_positionY + mage_.get_hero_position_y() * currentTile->getTileSize());
+                this->game_window_->draw(currentPosition);
+            }
+            else if (current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && knight_.isAlive()) {
+                currentPosition.setPosition(board_positionX + knight_.get_hero_position_x() * currentTile->getTileSize(), 
+                                        board_positionY + knight_.get_hero_position_y() * currentTile->getTileSize());
+                this->game_window_->draw(currentPosition);
+            }
             //Desenha o quadrado na janela
             this->game_window_->draw(tileShape);
 
