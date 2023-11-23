@@ -42,8 +42,6 @@ class Enemies{
     /// @return Um ponteiro para um monstro específico e suas características
     Monster* enemy(int enemy_number);
 
-    void checkForDeadEnemies();
-
     /// @brief Limpa o vetor de inimigos e todos os mosntros dentro dela
     /// para a criação de uma nova horda
     void deleteMonsterPool();

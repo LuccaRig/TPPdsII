@@ -38,14 +38,6 @@ Monster* Enemies::getMonsterInPosition(int position_x, int position_y){
     return nullptr;
 }
 
-void Enemies::checkForDeadEnemies() {
-    for(int i=0;i<enemy_count_;++i) {
-        if(this->enemy(i)->monsterIsDead()) {
-            enemies_[i].reset();
-            enemy_count_--;
-        }
-    }
-}
 
 Monster* Enemies::enemy(int enemy_number) {
     return enemies_[enemy_number].get();

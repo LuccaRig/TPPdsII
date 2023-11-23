@@ -136,10 +136,7 @@ void Game::putHeroInBoard(int position_x, int position_y, Hero &hero, float delt
 }
 
 void Game::putMonsterInBoard(int position_x, int position_y, Monster &monster, float delta_time, sf::RectangleShape &tileShape) {
-    if(monster.monsterIsDead() && position_x == monster.get_monster_position_x() &&  position_y == monster.get_monster_position_y()){
-        game_board_->get_tile_at(position_x, position_y)->deleteObjectInTile();
-        return;
-    }
+    if(monster.monsterIsDead()) return;
     if (position_x == monster.get_monster_position_x() && position_y == monster.get_monster_position_y()) {
     //Modifica o tamanho do sprite do monstro para ficar um tamanho proporcional ao tabuleiro
     game_board_->get_tile_at(position_x, position_y)->setObjectInTile("monster");
@@ -299,7 +296,7 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     if(my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y) == nullptr) continue;
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
                     dmg = hero.get_hero_attack();
-                    (*monster_to_be_attacked).set_monster_hp(dmg);
+                    (*monster_to_be_attacked).set_monster_hp(game_board_, dmg);
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -311,7 +308,7 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     if(my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y) == nullptr) continue;
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
                     dmg = hero.get_hero_attack();
-                    (*monster_to_be_attacked).set_monster_hp(dmg);
+                    (*monster_to_be_attacked).set_monster_hp(game_board_, dmg);
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -323,7 +320,7 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     if(my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y) == nullptr) continue;
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
                     dmg = hero.get_hero_attack();
-                    (*monster_to_be_attacked).set_monster_hp(dmg);
+                    (*monster_to_be_attacked).set_monster_hp(game_board_, dmg);
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -335,7 +332,7 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     if(my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y) == nullptr) continue;
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
                     dmg = hero.get_hero_attack();
-                    (*monster_to_be_attacked).set_monster_hp(dmg);
+                    (*monster_to_be_attacked).set_monster_hp(game_board_, dmg);
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -373,88 +370,90 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
 
 
     for(int n = 0; n < number_of_monsters; n++) {
-        int monster_pos_x = my_hordes_.enemy(n)->get_monster_position_x();
-        int monster_pos_y = my_hordes_.enemy(n)->get_monster_position_y();
+        if(!my_hordes_.enemy(n)->monsterIsDead()){
+            int monster_pos_x = my_hordes_.enemy(n)->get_monster_position_x();
+            int monster_pos_y = my_hordes_.enemy(n)->get_monster_position_y();
 
-        // descobre e armazena qual o herói mais próximo ao monstro 
-        int nearest_hero_number = 0;
-        for (int m = 0; m < 3; m++) {
-            hero[m].distance_x = monster_pos_x - hero[m].pos_x;
-            hero[m].distance_y = monster_pos_y - hero[m].pos_y;
-            hero[m].distance = std::sqrt(std::pow(hero[m].distance_x, 2) + 
-            std::pow(hero[m].distance_y, 2));
-        }
-
-        heroes nearest_hero = hero[0];
-
-        for (int m = 1; m < 3; m++) {
-            if (hero[m].distance < nearest_hero.distance) {
-                nearest_hero = hero[m];
-                nearest_hero_number = m;
+            // descobre e armazena qual o herói mais próximo ao monstro 
+            int nearest_hero_number = 0;
+            for (int m = 0; m < 3; m++) {
+                hero[m].distance_x = monster_pos_x - hero[m].pos_x;
+                hero[m].distance_y = monster_pos_y - hero[m].pos_y;
+                hero[m].distance = std::sqrt(std::pow(hero[m].distance_x, 2) + 
+                std::pow(hero[m].distance_y, 2));
             }
-        }
 
-        // decide qual será a ação do monstro sabendo qual o herói mais próximo a ele
+            heroes nearest_hero = hero[0];
 
-        if (nearest_hero.distance == 1) {
-            int dmg = my_hordes_.enemy(n)->get_dmg_output();
-            if (nearest_hero_number == 0) {
-                knight_.set_hero_hp(dmg);
-                set_hero_health_bars(0, knight_.get_hero_full_hp(), knight_.get_hero_hp());
-            } else if (nearest_hero_number == 1) {
-                mage_.set_hero_hp(dmg);
-                set_hero_health_bars(1, mage_.get_hero_full_hp(), mage_.get_hero_hp());
-            } else if (nearest_hero_number == 2) {
-                rogue_.set_hero_hp(dmg);
-                set_hero_health_bars(2, rogue_.get_hero_full_hp(), rogue_.get_hero_hp());
-            }; 
-        }
-
-        // tem que virar else if quando o if acima funcionar
-        else if (fabs<int>(nearest_hero.distance_x) >= fabs<int>(nearest_hero.distance_y)) { 
-            if (nearest_hero.distance_x > 0) {
-                 if (game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->moveableTile()) {
-                    sf::sleep(sf::seconds(0.5));
-                    my_hordes_.enemy(n)->set_monster_position_x((monster_pos_x-1));
-                    game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
-                    game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->setObjectInTile("monster");
-                }
-            } 
-
-            else if (nearest_hero.distance_x < 0) {
-                if (game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->moveableTile()) {
-                    sf::sleep(sf::seconds(0.5));
-                    my_hordes_.enemy(n)->set_monster_position_x(monster_pos_x+1);
-                    game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
-                    game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->setObjectInTile("monster");
+            for (int m = 1; m < 3; m++) {
+                if (hero[m].distance < nearest_hero.distance) {
+                    nearest_hero = hero[m];
+                    nearest_hero_number = m;
                 }
             }
-       }
 
-        else if (fabs(nearest_hero.distance_x) < fabs(nearest_hero.distance_y)){
-            if (nearest_hero.distance_y > 0) {
-                if (game_board_->get_tile_at(monster_pos_x, (monster_pos_y-1))->moveableTile()) {
-                    sf::sleep(sf::seconds(0.5));
-                    my_hordes_.enemy(n)->set_monster_position_y(monster_pos_y-1);
-                    game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
-                    game_board_->get_tile_at(monster_pos_x, (monster_pos_y-1))->setObjectInTile("monster");
+            // decide qual será a ação do monstro sabendo qual o herói mais próximo a ele
+
+            if (nearest_hero.distance == 1) {
+                int dmg = my_hordes_.enemy(n)->get_dmg_output();
+                if (nearest_hero_number == 0) {
+                    knight_.set_hero_hp(dmg);
+                    set_hero_health_bars(0, knight_.get_hero_full_hp(), knight_.get_hero_hp());
+                } else if (nearest_hero_number == 1) {
+                    mage_.set_hero_hp(dmg);
+                    set_hero_health_bars(1, mage_.get_hero_full_hp(), mage_.get_hero_hp());
+                } else if (nearest_hero_number == 2) {
+                    rogue_.set_hero_hp(dmg);
+                    set_hero_health_bars(2, rogue_.get_hero_full_hp(), rogue_.get_hero_hp());
+                }; 
+            }
+
+            // tem que virar else if quando o if acima funcionar
+            else if (fabs<int>(nearest_hero.distance_x) >= fabs<int>(nearest_hero.distance_y)) { 
+                if (nearest_hero.distance_x > 0) {
+                    if (game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->moveableTile()) {
+                        sf::sleep(sf::seconds(0.5));
+                        my_hordes_.enemy(n)->set_monster_position_x((monster_pos_x-1));
+                        game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
+                        game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->setObjectInTile("monster");
+                    }
+                } 
+
+                else if (nearest_hero.distance_x < 0) {
+                    if (game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->moveableTile()) {
+                        sf::sleep(sf::seconds(0.5));
+                        my_hordes_.enemy(n)->set_monster_position_x(monster_pos_x+1);
+                        game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
+                        game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->setObjectInTile("monster");
+                    }
                 }
-            } else if (nearest_hero.distance_y < 0) {
-                if (game_board_->get_tile_at(monster_pos_x, (monster_pos_y+1))->moveableTile()) {
-                    sf::sleep(sf::seconds(0.5));
-                    my_hordes_.enemy(n)->set_monster_position_y(monster_pos_y+1);
-                    game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
-                    game_board_->get_tile_at(monster_pos_x, (monster_pos_y+1))->setObjectInTile("monster");
+        }
+
+            else if (fabs(nearest_hero.distance_x) < fabs(nearest_hero.distance_y)){
+                if (nearest_hero.distance_y > 0) {
+                    if (game_board_->get_tile_at(monster_pos_x, (monster_pos_y-1))->moveableTile()) {
+                        sf::sleep(sf::seconds(0.5));
+                        my_hordes_.enemy(n)->set_monster_position_y(monster_pos_y-1);
+                        game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
+                        game_board_->get_tile_at(monster_pos_x, (monster_pos_y-1))->setObjectInTile("monster");
+                    }
+                } else if (nearest_hero.distance_y < 0) {
+                    if (game_board_->get_tile_at(monster_pos_x, (monster_pos_y+1))->moveableTile()) {
+                        sf::sleep(sf::seconds(0.5));
+                        my_hordes_.enemy(n)->set_monster_position_y(monster_pos_y+1);
+                        game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
+                        game_board_->get_tile_at(monster_pos_x, (monster_pos_y+1))->setObjectInTile("monster");
+                    }
                 }
             }
-        }
 
-        else {
-            // nada deve acontecer 
+            else {
+                // nada deve acontecer 
+            }
+        
+            this->render(delta_time);
+            delta_time = clock.restart().asSeconds();
         }
-    
-        this->render(delta_time);
-        delta_time = clock.restart().asSeconds();
     }
     
     current_game_state_->heroTurnRestart();
