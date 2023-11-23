@@ -357,11 +357,32 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
 }
 
 void Game::heroUseBuffSkill(int hero_number, std::string hero_type, Hero &hero) {
-    Skill skill(hero_type, hero.get_hero_special_attack());
-    hero.set_hero_hp(-skill.skill_heal());
-    set_hero_health_bars(hero_number, hero.get_hero_full_hp(), hero.get_hero_hp());
-    hero.set_hero_attack(skill.skill_buff());
-    this->current_game_state_->heroTurnPass();
+  Skill skill(hero_type, hero.get_hero_special_attack());
+  hero.set_hero_hp(-skill.skill_heal());
+  set_hero_health_bars(hero_number, hero.get_hero_full_hp(), hero.get_hero_hp());
+  hero.set_hero_attack(skill.skill_buff());
+  this->current_game_state_->heroTurnPass();
+}
+
+void Game::heroUseDamageSkill(std::string hero_type, Hero &hero) {
+  Skill skill(hero_type, hero.get_hero_special_attack());
+  int pos_to_attack_x = 0, pos_to_attack_y = 0;
+  Monster* monster_to_be_attacked;
+
+  pos_to_attack_x = hero.get_hero_position_x();
+  pos_to_attack_y = hero.get_hero_position_y();
+
+  for (int i = 0; i < 5; i++) {
+    for (int j = 0; j < 5; j++) {
+      if (i == pos_to_attack_y || j == pos_to_attack_x) {
+        if(game_board_->get_tile_at(j, i)->monsterIsInTile()) {
+          monster_to_be_attacked = my_hordes_.getMonsterInPosition(j, i);
+          (*monster_to_be_attacked).set_monster_hp(game_board_, skill.skill_damage());
+        }
+      }
+    }
+  }
+ this->current_game_state_->heroTurnPass();
 }
 
 void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock) {
@@ -635,6 +656,10 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
           }
           else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && knight_.isAlive()) {
             heroUseBuffSkill(0, "knight", knight_);
+            enter_pressed_hero_menu_ = false;
+          }
+          else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && knight_.isAlive()) {
+            heroUseDamageSkill("mage", mage_);
             enter_pressed_hero_menu_ = false;
           }
           else {
