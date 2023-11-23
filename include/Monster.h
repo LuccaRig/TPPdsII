@@ -20,7 +20,7 @@ class Monster {
 
     /// @brief  adiciona o valor recebido em pontos de vida para o monstro. PRECONDIÇÃO: parâmetro deve ser valor negativo 
     /// @param  attack_ do herói
-    void set_monster_hp(int);
+    void set_monster_hp(Board* my_game_board, int dmg);
 
     /// @return retorna true se o monstro estiver morto e false se não estiver.
     bool monsterIsDead();
