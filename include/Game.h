@@ -90,7 +90,7 @@ class Game {
 
     void heroUseBuffSkill(int hero_number, std::string hero_type, Hero &hero);
 
-    void heroUseDamageSkill(Hero &hero);
+    void heroUseDamageSkill(std::string hero_type, Hero &hero);
 
     /// @brief Determina a ação de cada monstro 
     /// @param monster: numero de monstros que serão movimentados
