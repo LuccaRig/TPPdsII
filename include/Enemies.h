@@ -42,12 +42,16 @@ class Enemies{
     /// @return Um ponteiro para um monstro específico e suas características
     Monster* enemy(int enemy_number);
 
+    void checkForDeadEnemies();
+
     /// @brief Limpa o vetor de inimigos e todos os mosntros dentro dela
     /// para a criação de uma nova horda
     void deleteMonsterPool();
 
     /// @brief Compara se algum dos monstros possui a posição específicada e retorna um ponteiro para monstro
     /// @return Ponteiro para o  monstro na posição especificada
+    /// @param position_x posição x para ser comparada
+    /// @param position_y posição y para ser comparada
     Monster* getMonsterInPosition(int position_x, int position_y);
 
   private:

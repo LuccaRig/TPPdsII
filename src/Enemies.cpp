@@ -29,11 +29,21 @@ void Enemies::deleteMonsterPool() {
 }
 
 Monster* Enemies::getMonsterInPosition(int position_x, int position_y){
-    for(int i=0;i<6;++i){
+    for(int i=0;i<enemy_count_;++i){
         if((this->enemy(i)->get_monster_position_x() == position_x) &&
             this->enemy(i)->get_monster_position_y() == position_y){
                 return this->enemy(i);
             }
+    }
+    return nullptr;
+}
+
+void Enemies::checkForDeadEnemies() {
+    for(int i=0;i<enemy_count_;++i) {
+        if(this->enemy(i)->monsterIsDead()) {
+            enemies_[i].reset();
+            enemy_count_--;
+        }
     }
 }
 

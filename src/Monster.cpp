@@ -99,7 +99,6 @@
           if (monster_hp_ <= 0) {
             //Item m_item(monster_position_x_, monster_position_y_);
             // Board::registerItem(m_item);
-            this->~Monster();
           }
     }
 
