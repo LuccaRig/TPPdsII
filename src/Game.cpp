@@ -297,8 +297,7 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                         break;
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
-                    dmg = hero.get_hero_attack();
-                    (*monster_to_be_attacked).set_monster_hp(game_board_, dmg);
+                    (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -312,8 +311,7 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                         break;
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
-                    dmg = hero.get_hero_attack();
-                    (*monster_to_be_attacked).set_monster_hp(game_board_, dmg);
+                    (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -327,8 +325,7 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                         break;
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
-                    dmg = hero.get_hero_attack();
-                    (*monster_to_be_attacked).set_monster_hp(game_board_, dmg);
+                    (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -342,8 +339,7 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                         break;
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
-                    dmg = hero.get_hero_attack();
-                    (*monster_to_be_attacked).set_monster_hp(game_board_, dmg);
+                    (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
