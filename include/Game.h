@@ -14,6 +14,7 @@
 #include "Hero.h"
 #include "GameState.h"
 #include "Enemies.h"
+#include "Skill.h"
 
 class Game {
 
@@ -87,6 +88,10 @@ class Game {
     /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
     void heroAttack(Hero &hero, float delta_time, sf::Clock clock);
 
+    void heroUseBuffSkill(int hero_number, std::string hero_type, Hero &hero);
+
+    void heroUseDamageSkill(Hero &hero);
+
     /// @brief Determina a ação de cada monstro 
     /// @param monster: numero de monstros que serão movimentados
     /// @param delta_time: Tempo decorrido desde o ultimo clock 
@@ -140,6 +145,7 @@ class Game {
     Hero mage_;
     Hero knight_;
     Hero rogue_;
+
     Enemies my_hordes_;
 
     /// @brief Cria um novo objeto do tipo RenderWindow

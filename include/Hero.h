@@ -35,11 +35,11 @@ class Hero {
     /// @return Retorna o ataque do herói
     int get_hero_attack();
 
+    /// @brief Altera o dano atual do herói
+    void set_hero_attack(int changed_attack);
+
     /// @return Retorna o ataque especial do herói
     int get_hero_special_attack();
-
-    // /// @brief Ataca uma das 4 casas adjacentes ao herói
-    // void HeroAttack();
 
     /// @brief Utiliza a habilidade especial do herói
     void UseSkill();

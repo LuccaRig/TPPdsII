@@ -2,7 +2,7 @@
 
 #include "Skill.h"
 
-Skill::Skill(std::string type, int skill_effect)
+Skill::Skill(std::string type, int skill_effect) 
 {
     skill_type_ = type;
 
