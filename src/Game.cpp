@@ -606,16 +606,19 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
           if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()){
                 is_hero_turn = 1;
                 heroAttack(rogue_, delta_time, clock);
+                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && mage_.isAlive()){
                 is_hero_turn = 1;
                 heroAttack(mage_, delta_time, clock);
+                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && knight_.isAlive()){
                 is_hero_turn = 1;
                 heroAttack(knight_, delta_time, clock);
+                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else {
@@ -669,8 +672,9 @@ void Game::playerTurnControl(float delta_time, sf::Clock clock) {
 
 void Game::run(sf::Clock clock) {
     float delta_time = clock.restart().asSeconds();
-    my_hordes_.createHordeEnemies();
+    my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
     while(this->game_window_->isOpen()) {
+
         //Conta a passagem de tempo desde a ultima vez que o clock.restart() foi chamado
         delta_time = clock.restart().asSeconds();
 
