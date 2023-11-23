@@ -81,8 +81,14 @@ class Game {
     /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
     void heroWalk(Hero &hero, float delta_time, sf::Clock clock);
 
+    /// @brief Realiza a ação de ataque do heroi
+    /// @param hero: Heroi selecionado para atacar no seu devido turno
+    /// @param delta_time: Tempo decorrido desde o ultimo clock 
+    /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
+    void heroAttack(Hero &hero, float delta_time, sf::Clock clock);
+
     /// @brief Determina a ação de cada monstro 
-    /// @param monster: vetor dos monstros que serão movimentados
+    /// @param monster: numero de monstros que serão movimentados
     /// @param delta_time: Tempo decorrido desde o ultimo clock 
     /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
     void monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock);

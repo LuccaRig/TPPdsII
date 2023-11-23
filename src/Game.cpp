@@ -120,8 +120,6 @@ void Game::update() {
 void Game::putHeroInBoard(int position_x, int position_y, Hero &hero, float delta_time, sf::RectangleShape &tileShape) {
     if(!hero.isAlive()){
         game_board_->get_tile_at(position_x, position_y)->deleteObjectInTile();
-        hero.set_hero_position_x(60);
-        hero.set_hero_position_y(60);
         return;
     }
     if (position_x == hero.get_hero_position_x() && position_y == hero.get_hero_position_y()) {
@@ -138,6 +136,10 @@ void Game::putHeroInBoard(int position_x, int position_y, Hero &hero, float delt
 }
 
 void Game::putMonsterInBoard(int position_x, int position_y, Monster &monster, float delta_time, sf::RectangleShape &tileShape) {
+    if(monster.monsterIsDead() && position_x == monster.get_monster_position_x() &&  position_y == monster.get_monster_position_y()){
+        game_board_->get_tile_at(position_x, position_y)->deleteObjectInTile();
+        return;
+    }
     if (position_x == monster.get_monster_position_x() && position_y == monster.get_monster_position_y()) {
     //Modifica o tamanho do sprite do monstro para ficar um tamanho proporcional ao tabuleiro
     game_board_->get_tile_at(position_x, position_y)->setObjectInTile("monster");
@@ -266,6 +268,78 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
+                default:
+                    this->update();
+                    this->render(delta_time);
+                    delta_time = clock.restart().asSeconds();
+                    break;
+
+            }
+        }
+    }
+}
+
+void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
+    while((this->game_window_->pollEvent(this->SFML_event_) && this->game_window_->isOpen()) || is_hero_turn){
+        int pos_to_attack_x = 0, pos_to_attack_y = 0;
+        int dmg=0;
+        Monster* monster_to_be_attacked;
+        this->render(delta_time);
+        delta_time = clock.restart().asSeconds();
+
+        if(this->SFML_event_.type == sf::Event::Closed){
+            this->game_window_->close();
+        }
+        if(this->SFML_event_.type == sf::Event::KeyPressed){ 
+            switch (this->SFML_event_.key.code) {
+                case sf::Keyboard::Up:
+                    pos_to_attack_x = hero.get_hero_position_x();
+                    pos_to_attack_y = hero.get_hero_position_y()-1;
+                    if(pos_to_attack_y > 4 || pos_to_attack_x > 4 || pos_to_attack_x < 0 || pos_to_attack_y < 0) continue;
+                    if(my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y) == nullptr) continue;
+                    monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
+                    dmg = hero.get_hero_attack();
+                    (*monster_to_be_attacked).set_monster_hp(dmg);
+                    this->current_game_state_->heroTurnPass();
+                    is_hero_turn = 0;
+                    break;
+
+                case sf::Keyboard::Down:
+                    pos_to_attack_x = hero.get_hero_position_x();
+                    pos_to_attack_y = hero.get_hero_position_y()+1;
+                    if(pos_to_attack_y > 4 || pos_to_attack_x > 4 || pos_to_attack_x < 0 || pos_to_attack_y < 0) continue;
+                    if(my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y) == nullptr) continue;
+                    monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
+                    dmg = hero.get_hero_attack();
+                    (*monster_to_be_attacked).set_monster_hp(dmg);
+                    this->current_game_state_->heroTurnPass();
+                    is_hero_turn = 0;
+                    break;
+
+                case sf::Keyboard::Left:
+                    pos_to_attack_x = hero.get_hero_position_x()-1;
+                    pos_to_attack_y = hero.get_hero_position_y();
+                    if(pos_to_attack_y > 4 || pos_to_attack_x > 4 || pos_to_attack_x < 0 || pos_to_attack_y < 0) continue;
+                    if(my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y) == nullptr) continue;
+                    monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
+                    dmg = hero.get_hero_attack();
+                    (*monster_to_be_attacked).set_monster_hp(dmg);
+                    this->current_game_state_->heroTurnPass();
+                    is_hero_turn = 0;
+                    break;
+
+                case sf::Keyboard::Right:
+                    pos_to_attack_x = hero.get_hero_position_x();
+                    pos_to_attack_y = hero.get_hero_position_y()+1;
+                    if(pos_to_attack_y > 4 || pos_to_attack_x > 4 || pos_to_attack_x < 0 || pos_to_attack_y < 0) continue;
+                    if(my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y) == nullptr) continue;
+                    monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
+                    dmg = hero.get_hero_attack();
+                    (*monster_to_be_attacked).set_monster_hp(dmg);
+                    this->current_game_state_->heroTurnPass();
+                    is_hero_turn = 0;
+                    break;
+
                 default:
                     this->update();
                     this->render(delta_time);
@@ -514,6 +588,25 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
 
         if (hero_menu_position_ == 1) {
           selected_choice_ = "attack";
+          if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()){
+                is_hero_turn = 1;
+                heroAttack(rogue_, delta_time, clock);
+                enter_pressed_hero_menu_ = false;
+            }
+            else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && mage_.isAlive()){
+                is_hero_turn = 1;
+                heroAttack(mage_, delta_time, clock);
+                enter_pressed_hero_menu_ = false;
+            }
+            else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && knight_.isAlive()){
+                is_hero_turn = 1;
+                heroAttack(knight_, delta_time, clock);
+                enter_pressed_hero_menu_ = false;
+            }
+            else {
+                this->current_game_state_->heroTurnPass();
+                enter_pressed_hero_menu_ = false;
+            }
         }
 
         if (hero_menu_position_ == 2) {
@@ -564,8 +657,9 @@ void Game::run(sf::Clock clock) {
         this->playerTurnControl(delta_time, clock);
 
         ///O monsterTakeAction movimenta o monstro para a direção dos herois e os ataca
-        this->monsterTakeAction(6, delta_time, clock);
+        this->monsterTakeAction(my_hordes_.hordeSize(), delta_time, clock);
 
+        //Se for GameOver a janela será fechada com qualquer tecla apertada
         this->gameOverCloseWindow(delta_time, clock);
 
     }  
