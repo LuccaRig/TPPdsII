@@ -279,7 +279,6 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
 void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
     while((this->game_window_->pollEvent(this->SFML_event_) && this->game_window_->isOpen()) || is_hero_turn){
         int pos_to_attack_x = 0, pos_to_attack_y = 0;
-        int dmg=0;
         Monster* monster_to_be_attacked;
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();
@@ -292,8 +291,11 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                 case sf::Keyboard::Up:
                     pos_to_attack_x = hero.get_hero_position_x();
                     pos_to_attack_y = hero.get_hero_position_y()-1;
-                    if(pos_to_attack_y > 4 || pos_to_attack_x > 4 || pos_to_attack_x < 0 || pos_to_attack_y < 0) continue;
-                    if(my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y) == nullptr) continue;
+                    if(pos_to_attack_y < 0) continue;
+                    if(!game_board_->get_tile_at(pos_to_attack_x, pos_to_attack_y)->monsterIsInTile()) {
+                        is_hero_turn = 0;
+                        break;
+                    }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
                     dmg = hero.get_hero_attack();
                     (*monster_to_be_attacked).set_monster_hp(game_board_, dmg);
@@ -304,8 +306,11 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                 case sf::Keyboard::Down:
                     pos_to_attack_x = hero.get_hero_position_x();
                     pos_to_attack_y = hero.get_hero_position_y()+1;
-                    if(pos_to_attack_y > 4 || pos_to_attack_x > 4 || pos_to_attack_x < 0 || pos_to_attack_y < 0) continue;
-                    if(my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y) == nullptr) continue;
+                    if(pos_to_attack_y > 4) continue;
+                    if(!game_board_->get_tile_at(pos_to_attack_x, pos_to_attack_y)->monsterIsInTile()) {
+                        is_hero_turn = 0;
+                        break;
+                    }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
                     dmg = hero.get_hero_attack();
                     (*monster_to_be_attacked).set_monster_hp(game_board_, dmg);
@@ -316,8 +321,11 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                 case sf::Keyboard::Left:
                     pos_to_attack_x = hero.get_hero_position_x()-1;
                     pos_to_attack_y = hero.get_hero_position_y();
-                    if(pos_to_attack_y > 4 || pos_to_attack_x > 4 || pos_to_attack_x < 0 || pos_to_attack_y < 0) continue;
-                    if(my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y) == nullptr) continue;
+                    if(pos_to_attack_x < 0) continue;
+                    if(!game_board_->get_tile_at(pos_to_attack_x, pos_to_attack_y)->monsterIsInTile()) {
+                        is_hero_turn = 0;
+                        break;
+                    }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
                     dmg = hero.get_hero_attack();
                     (*monster_to_be_attacked).set_monster_hp(game_board_, dmg);
@@ -328,8 +336,11 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                 case sf::Keyboard::Right:
                     pos_to_attack_x = hero.get_hero_position_x();
                     pos_to_attack_y = hero.get_hero_position_y()+1;
-                    if(pos_to_attack_y > 4 || pos_to_attack_x > 4 || pos_to_attack_x < 0 || pos_to_attack_y < 0) continue;
-                    if(my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y) == nullptr) continue;
+                    if(pos_to_attack_x > 4) continue;
+                    if(!game_board_->get_tile_at(pos_to_attack_x, pos_to_attack_y)->monsterIsInTile()) {
+                        is_hero_turn = 0;
+                        break;
+                    }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
                     dmg = hero.get_hero_attack();
                     (*monster_to_be_attacked).set_monster_hp(game_board_, dmg);
@@ -586,7 +597,8 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
         } 
 
         if (hero_menu_position_ == 1) {
-          selected_choice_ = "attack";
+          chooseDirection(1);
+
           if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()){
                 is_hero_turn = 1;
                 heroAttack(rogue_, delta_time, clock);

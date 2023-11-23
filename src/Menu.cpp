@@ -13,13 +13,13 @@ Menu::Menu() {
   //Construindo background do menu
   menu_image_.loadFromFile("Textures/BackgroundMenu.png");
   menu_background_.setTexture(menu_image_);
-  menu_background_.setScale(10, 9);
+  menu_background_.setScale(10, 10);
 
   //Construindo textos das opções do menu
   menu_font_.loadFromFile("Resources/Retro Gaming.ttf");
   menu_texts_.resize(4);
   printed_texts_ = {"Trinity", "Dungeon", "Jogar", "Sair"};
-  texts_position_ = {{160, 20}, {260, 180}, {497, 418}, {534, 583}};
+  texts_position_ = {{160, 35}, {260, 195}, {497, 468}, {534, 648}};
   texts_size_ = {140, 140, 60, 60};
   texts_color_ = {sf::Color::White, sf::Color::White, sf::Color::White, sf::Color(64, 64, 64)};
   for (unsigned int i = 0; i < menu_texts_.size(); i++) {
