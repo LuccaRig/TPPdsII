@@ -1,7 +1,7 @@
 #include "Enemies.h"
 
 Enemies::Enemies(){
-    horde_number_ = 0;
+    horde_number_ = 2;
     enemy_count_ = 6;
     boss_turns_ = 0;
 }
@@ -49,10 +49,31 @@ void Enemies::bossTurnIncrement() {
     boss_turns_++;
 }
 
-void Enemies::eyeSpawn() {
+void Enemies::randomEyeSelect() {
+    int random_selec = rand()%2;
+    if(random_selec == 0) enemies_.push_back(std::unique_ptr<Monster>(new Monster("bloodshot eye")));
+    else if(random_selec == 1) enemies_.push_back(std::unique_ptr<Monster>(new Monster("ocular whatcher")));
+}
+
+
+std::pair<int, int> Enemies::randomPositionSpawn(Board* my_board) {
+    int random_position_x = rand()%5;
+    int random_position_y = rand()%5;
+    return std::make_pair(random_position_x, random_position_y);
+}
+
+void Enemies::eyeSpawn(Board* my_board) {
     if(!(boss_turns_%2)){
-    enemy_count_++;
-    enemies_.push_back(std::unique_ptr<Monster>(new Monster("unholy skull")));
+        int pos_x = this->randomPositionSpawn(my_board).first;
+        int pos_y = this->randomPositionSpawn(my_board).second;
+        enemy_count_++;
+        this->randomEyeSelect();
+        while(!(my_board->get_tile_at(pos_x, pos_y)->moveableTile())){
+            pos_x = this->randomPositionSpawn(my_board).first;
+            pos_y = this->randomPositionSpawn(my_board).second;
+        }
+        (*enemies_[enemy_count_-1]).set_monster_position_x(pos_x);
+        (*enemies_[enemy_count_-1]).set_monster_position_y(pos_y);
     }
 }
 
@@ -110,7 +131,7 @@ void Enemies::createHordeEnemies(Hero &rogue, Hero &mage, Hero &knight) {
         setAllInStartPosition(rogue, mage, knight);
         this->hordePass();
     }
-    if(horde_number_ == 2 && this->allEnemiesAreDead()){
+    if(horde_number_ == 2 /*&& this->allEnemiesAreDead()*/){
         this->deleteMonsterPool();
         enemy_count_ = 1;
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("BOSS")));

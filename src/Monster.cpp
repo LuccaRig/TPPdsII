@@ -95,6 +95,8 @@
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/BloodshotEyeIdleSide.png");
+            monster_sprite_.setTexture(monster_texture_);
+            monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
         else if (monster_type_ == "BOSS") {
             monster_hp_ = 13;
