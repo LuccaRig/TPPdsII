@@ -363,7 +363,7 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     is_hero_turn = 0;
                     break;
 
-                case sf::Keyboard::Left:
+                case sf::Keyboard::Left: 
                     pos_to_attack_x = hero.get_hero_position_x()-1;
                     pos_to_attack_y = hero.get_hero_position_y();
                     if(pos_to_attack_x < 0) continue;
@@ -430,7 +430,6 @@ void Game::heroUseDamageSkill(std::string hero_type, Hero &hero) {
           (*monster_to_be_attacked).set_monster_hp(game_board_, skill.skill_damage());
           setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                   monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
-
         }
       }
     }
