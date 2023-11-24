@@ -32,6 +32,7 @@ class Game {
     /// testa se um dos eventos é do tipo Closed(Apertar no x da janela)
     void testIsClosed();
 
+    /// @brief Constrói os nomes e as barras de vida dos heróis
     void herosNameInicialization();
 
     /// @brief Atualiza a janela para cada evento que deve ocorrer
@@ -90,8 +91,10 @@ class Game {
     /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
     void heroAttack(Hero &hero, float delta_time, sf::Clock clock);
 
+    /// @brief Realiza a habilidade de um herói que aumenta o próprio status
     void heroUseBuffSkill(int hero_number, std::string hero_type, Hero &hero);
 
+    /// @brief Realiza a habilidade de um herói que da dano aos monstros
     void heroUseDamageSkill(std::string hero_type, Hero &hero);
 
     /// @brief Determina a ação de cada monstro 
@@ -99,6 +102,12 @@ class Game {
     /// @param delta_time: Tempo decorrido desde o ultimo clock 
     /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
     void monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock);
+
+    /// @brief Constrói as barras de vida dos monstros
+    void initMonstersHealthBars();
+
+    /// @brief Muda o tamanho das barras de vida dos monstros
+    void setMonstersHealthBars(int damaged_monster, int full_hp, int current_hp);
 
     /// @brief função auxiliar a monsterTakeAction, 
     /// @param nearest_hero_number identifica qual herói será atacado
@@ -142,6 +151,12 @@ class Game {
 
     sf::Text which_hero_;
     sf::Text which_direction_;
+
+    //Barras de vida dos monstros
+    sf::Text monsters_;
+    std::vector<sf::RectangleShape> background_monsters_health_bars_;
+    std::vector<sf::RectangleShape> monsters_health_bars_;
+    std::vector<sf::Vector2f> monsters_health_bars_position_;
 
     //Personagens dos jogadores:
     Hero mage_;
