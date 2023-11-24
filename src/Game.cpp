@@ -406,6 +406,7 @@ void Game::heroUseDamageSkill(std::string hero_type, Hero &hero) {
 
 void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock) {
     if(rogue_.isAlive() || mage_.isAlive() || knight_.isAlive()){
+        
         if(this->my_hordes_.bossIsAlive()){
             this->my_hordes_.eyeSpawn();
             this->my_hordes_.bossTurnIncrement();
