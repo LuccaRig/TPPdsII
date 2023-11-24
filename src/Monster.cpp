@@ -18,7 +18,7 @@
         monster_position_y_ = 0;
 
         if (monster_type_ == "bloody abomination") {
-            monster_hp_ = 12;
+            monster_hp_ = monster_full_hp_ = 12;
             monster_dmg_ = 8;
             monster_exp_drop_ = 5;
             monster_number_ = 4;
@@ -29,7 +29,7 @@
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
         else if (monster_type_ == "death knight") {
-             monster_hp_ = 20;
+            monster_hp_ = monster_full_hp_ = 20;
             monster_dmg_ = 6;
             monster_exp_drop_ = 8;
             monster_number_ = 5;
@@ -40,7 +40,7 @@
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
         else if (monster_type_ == "sand golem") {
-            monster_hp_ = 40;
+            monster_hp_ = monster_full_hp_ = 40;
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
             monster_number_ = 2;
@@ -51,7 +51,7 @@
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
         else if (monster_type_ == "ghastly beholder") {
-            monster_hp_ = 10;
+            monster_hp_ = monster_full_hp_ = 10;
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
             monster_number_ = 3;
@@ -62,7 +62,7 @@
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
         else if (monster_type_ == "unholy skull") {
-            monster_hp_ = 10;
+            monster_hp_ = monster_full_hp_ = 10;
             monster_dmg_ = 4;
             monster_exp_drop_ = 1;
             monster_number_ = 0;
@@ -73,7 +73,7 @@
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
         else if (monster_type_ == "virulent wight") {
-            monster_hp_ = 13;
+            monster_hp_ = monster_full_hp_ = 13;
             monster_dmg_ = 5;
             monster_exp_drop_ = 1;
             monster_number_ = 1;
@@ -85,10 +85,10 @@
         }
 
         else if (monster_type_ == "ocular whatcher") {
-            monster_hp_ = 7;
+            monster_hp_ = monster_full_hp_ = 7;
             monster_dmg_ = 3;
             monster_exp_drop_ = 1;
-            monster_number_ = 6;
+            monster_number_ = 2;
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/OcularWatcherIdleSide.png");
@@ -96,10 +96,10 @@
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         } 
         else if (monster_type_ == "bloodshot eye") {
-            monster_hp_ = 5;
+            monster_hp_ = monster_full_hp_ = 5;
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
-            monster_number_ = 7;
+            monster_number_ = 1;
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/BloodshotEyeIdleSide.png");
@@ -107,10 +107,10 @@
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
         else if (monster_type_ == "BOSS") {
-            monster_hp_ = 13;
+            monster_hp_ = monster_full_hp_ = 13;
             monster_dmg_ = 5;
             monster_exp_drop_ = 1;
-            monster_number_ = 8;
+            monster_number_ = 0;
 
             monster_position_x_ = 0;
             monster_position_y_ = 0;
@@ -135,7 +135,7 @@
         monster_hp_ -= dmg;
           if (monster_hp_ <= 0) {
             monster_hp_ = 0;
-            Item m_item(monster_position_x_, monster_position_y_, my_game_board);
+            //Item m_item(monster_position_x_, monster_position_y_, my_game_board);
             my_game_board->get_tile_at(monster_position_x_, monster_position_y_)->deleteObjectInTile();
             //my_game_board->get_tile_at(monster_position_x_, monster_position_y_)->setObjectInTile(m_item.returnsRandomItem());
           }
