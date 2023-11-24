@@ -467,7 +467,7 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
     if(rogue_.isAlive() || mage_.isAlive() || knight_.isAlive()){
         
         if(this->my_hordes_.bossIsAlive()){
-            this->my_hordes_.eyeSpawn();
+            this->my_hordes_.eyeSpawn(game_board_);
             this->my_hordes_.bossTurnIncrement();
         }
     
@@ -686,19 +686,19 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
             if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()){
                 is_hero_turn = 1;
                 heroWalk(rogue_, delta_time, clock);
-                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+                //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && mage_.isAlive()){
                 is_hero_turn = 1;
                 heroWalk(mage_, delta_time, clock);
-                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+                //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && knight_.isAlive()){
                 is_hero_turn = 1;
                 heroWalk(knight_, delta_time, clock);
-                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+                //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else {
@@ -713,19 +713,19 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
           if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()){
                 is_hero_turn = 1;
                 heroAttack(rogue_, delta_time, clock);
-                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+                //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && mage_.isAlive()){
                 is_hero_turn = 1;
                 heroAttack(mage_, delta_time, clock);
-                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+                //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && knight_.isAlive()){
                 is_hero_turn = 1;
                 heroAttack(knight_, delta_time, clock);
-                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+                //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else {
@@ -738,17 +738,17 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
 
           if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()) {
             heroUseBuffSkill(2, "rogue", rogue_);
-            my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+            //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
             enter_pressed_hero_menu_ = false;
           }
           else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && knight_.isAlive()) {
             heroUseBuffSkill(0, "knight", knight_);
-            my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+            //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
             enter_pressed_hero_menu_ = false;
           }
           else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && knight_.isAlive()) {
             heroUseDamageSkill("mage", mage_);
-            my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+            //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
             enter_pressed_hero_menu_ = false;
           }
           else {
@@ -803,6 +803,8 @@ void Game::run(sf::Clock clock) {
 
         ///O monsterTakeAction movimenta o monstro para a direção dos herois e os ataca
         this->monsterTakeAction(my_hordes_.hordeSize(), delta_time, clock);
+
+        my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
 
         //Se for GameOver a janela será fechada com qualquer tecla apertada
         this->gameOverCloseWindow(delta_time, clock);

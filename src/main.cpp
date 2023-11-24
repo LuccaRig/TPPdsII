@@ -4,7 +4,8 @@
 
 
 int main(){
-
+    srand((unsigned) time(NULL));
+    
     Menu myMenu;
 
     myMenu.runMenu();
