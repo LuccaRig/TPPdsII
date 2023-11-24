@@ -31,6 +31,9 @@ Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue") {
     //Construindo os nomes dos heróis e suas barras de vida
     herosNameInicialization();
 
+    //Construindo as barras de vida dos monstros
+    initMonstersHealthBars();
+
     this->initWindow();
     this->current_game_state_ = new GameState();
 }
@@ -338,6 +341,8 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
                     (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
+                    setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
+                                            monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -352,6 +357,8 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
                     (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
+                    setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
+                                            monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -366,6 +373,8 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
                     (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
+                    setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
+                                            monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -380,6 +389,8 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
                     (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
+                    setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
+                                            monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -417,6 +428,9 @@ void Game::heroUseDamageSkill(std::string hero_type, Hero &hero) {
         if(game_board_->get_tile_at(j, i)->monsterIsInTile()) {
           monster_to_be_attacked = my_hordes_.getMonsterInPosition(j, i);
           (*monster_to_be_attacked).set_monster_hp(game_board_, skill.skill_damage());
+          setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
+                                  monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
+
         }
       }
     }
@@ -443,6 +457,10 @@ void Game::initMonstersHealthBars() {
         background_monsters_health_bars_[i].setFillColor(sf::Color::Black);
         background_monsters_health_bars_[i].setPosition(monsters_health_bars_position_[i]);
     }
+}
+
+void Game::setMonstersHealthBars(int damaged_monster, float full_hp, float current_hp) {
+    monsters_health_bars_[damaged_monster].setSize(sf::Vector2f(100*current_hp/full_hp, 20));
 }
 
 void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock) {
@@ -755,7 +773,6 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
 
 void Game::playerTurnControl(float delta_time, sf::Clock clock) {
     setHeroMenu();
-    initMonstersHealthBars();
     while(this->current_game_state_->isPlayerTurn(rogue_.isAlive() + mage_.isAlive() + knight_.isAlive()) && 
                 this->game_window_->isOpen()){
         this->heroNameTurn(current_game_state_->whichHeroTurn(rogue_, mage_, knight_));
