@@ -88,7 +88,7 @@
             monster_hp_ = 7;
             monster_dmg_ = 3;
             monster_exp_drop_ = 1;
-            monster_number_ = 6;
+            monster_number_ = 2;
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/OcularWatcherIdleSide.png");
@@ -99,7 +99,7 @@
             monster_hp_ = 5;
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
-            monster_number_ = 7;
+            monster_number_ = 1;
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/BloodshotEyeIdleSide.png");
@@ -110,7 +110,7 @@
             monster_hp_ = 13;
             monster_dmg_ = 5;
             monster_exp_drop_ = 1;
-            monster_number_ = 8;
+            monster_number_ = 0;
 
             monster_position_x_ = 0;
             monster_position_y_ = 0;
