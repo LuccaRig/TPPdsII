@@ -1,7 +1,7 @@
 #include "Enemies.h"
 
 Enemies::Enemies(){
-    horde_number_ = 2;
+    horde_number_ = 0;
     enemy_count_ = 6;
     boss_turns_ = 0;
 }
@@ -131,7 +131,7 @@ void Enemies::createHordeEnemies(Hero &rogue, Hero &mage, Hero &knight) {
         setAllInStartPosition(rogue, mage, knight);
         this->hordePass();
     }
-    if(horde_number_ == 2 /*&& this->allEnemiesAreDead()*/){
+    if(horde_number_ == 2 && this->allEnemiesAreDead()){
         this->deleteMonsterPool();
         enemy_count_ = 1;
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("BOSS")));
