@@ -151,6 +151,15 @@ void Game::putMonsterInBoard(int position_x, int position_y, Monster &monster, f
     }
 }
 
+void Game::putItemInBoard(int position_y, int position_x, Item &item, float delta_time,sf::RectangleShape &tileShape) {
+    if (position_x == item.get_item_position_x() && position_y == item.get_item_position_y()) {
+        game_board_->get_tile_at(position_x, position_y)->setObjectInTile("item");
+        item.get_item_sprite().setScale(3.f, 3.f);
+        item.get_item_sprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - item.get_item_sprite().getLocalBounds().width*3) / 2,
+                                              tileShape.getPosition().y + (tileShape.getSize().y - item.get_item_sprite().getLocalBounds().height*3) / 2);
+    }
+}
+
 void Game::set_hero_health_bars(int hero, int full_hp, int current_hp) {
     health_bars_[hero].setSize(sf::Vector2f(190*current_hp/full_hp, 30));
 }
@@ -198,9 +207,11 @@ void Game::boardRender(float delta_time) {
             putHeroInBoard(i, j, mage_, delta_time, tileShape);
             putHeroInBoard(i, j, knight_, delta_time, tileShape);
             putHeroInBoard(i, j, rogue_, delta_time, tileShape);
-            for(int k=0;k < my_hordes_.hordeSize();++k){
+            for(int k = 0; k < my_hordes_.hordeSize(); ++k) {
                 putMonsterInBoard(i, j, *(my_hordes_.enemy(k)), delta_time, tileShape);
             }
+
+            // for (int m = 0; k <)
         }
     }
 }
