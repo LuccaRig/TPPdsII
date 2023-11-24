@@ -215,14 +215,23 @@ void Game::render(float delta_time) {
         this->game_window_->draw(it);
     }
     if (current_game_state_->isPlayerTurn(rogue_.isAlive() + mage_.isAlive() + knight_.isAlive()) && 
-                !current_game_state_->isGameOver(rogue_, mage_, knight_)) {
+          !current_game_state_->isGameOver(rogue_, mage_, knight_)) {
         this->game_window_->draw(background_hero_menu_);
         for (auto it : hero_menu_texts_) {
             this->game_window_->draw(it);
         }
         this->game_window_->draw(which_hero_);
         this->game_window_->draw(which_direction_);
-    };
+    }
+    if (my_hordes_.get_horde_number() == 1 || my_hordes_.get_horde_number() == 2) {
+        this->game_window_->draw(monsters_);
+        for (auto it : background_monsters_health_bars_) {
+            this->game_window_->draw(it);
+        }
+        for (auto it : monsters_health_bars_) {
+            this->game_window_->draw(it);
+        }
+    }
     this->boardRender(delta_time);
     if(this->current_game_state_->isGameOver(rogue_, mage_, knight_)){
         this->gameOverRender();
@@ -404,6 +413,27 @@ void Game::heroUseDamageSkill(std::string hero_type, Hero &hero) {
  this->current_game_state_->heroTurnPass();
 }
 
+void Game::initMonstersHealthBars() {
+    font_.loadFromFile("Resources/Retro Gaming.ttf");
+    monsters_.setFont(font_);
+    monsters_.setString("Monstros");
+    monsters_.setCharacterSize(30);
+    monsters_.setFillColor(sf::Color::White);
+    monsters_.setPosition(sf::Vector2f(1009, 20));
+
+    background_monsters_health_bars_.resize(my_hordes_.hordeSize());
+    monsters_health_bars_.resize(my_hordes_.hordeSize());
+    monsters_health_bars_position_ = {{1050, 70}, {1050, 100}, {1050, 130}, {1050, 160}, {1050, 190}, {1050, 220}};
+    for (unsigned int i = 0; i < monsters_health_bars_.size(); i++) {
+        monsters_health_bars_[i].setSize(sf::Vector2f(100, 20));
+        monsters_health_bars_[i].setFillColor(sf::Color(128, 0, 0));
+        monsters_health_bars_[i].setPosition(monsters_health_bars_position_[i]);
+        background_monsters_health_bars_[i].setSize(sf::Vector2f(100, 20));
+        background_monsters_health_bars_[i].setFillColor(sf::Color::Black);
+        background_monsters_health_bars_[i].setPosition(monsters_health_bars_position_[i]);
+    }
+}
+
 void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock) {
     if(rogue_.isAlive() || mage_.isAlive() || knight_.isAlive()){
     struct heroes {
@@ -422,7 +452,6 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
     hero[1].pos_y = mage_.get_hero_position_y();
     hero[2].pos_x = rogue_.get_hero_position_x();
     hero[2].pos_y = rogue_.get_hero_position_y();
-
 
     for(int n = 0; n < number_of_monsters; n++) {
         if(!my_hordes_.enemy(n)->monsterIsDead()){
@@ -703,6 +732,7 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
 
 void Game::playerTurnControl(float delta_time, sf::Clock clock) {
     setHeroMenu();
+    initMonstersHealthBars();
     while(this->current_game_state_->isPlayerTurn(rogue_.isAlive() + mage_.isAlive() + knight_.isAlive()) && 
                 this->game_window_->isOpen()){
         this->heroNameTurn(current_game_state_->whichHeroTurn(rogue_, mage_, knight_));
