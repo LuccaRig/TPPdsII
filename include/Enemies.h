@@ -3,6 +3,9 @@
 
 #include <iostream>
 #include <vector>
+#include <utility>
+#include <cstdlib>  
+#include <ctime>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -58,7 +61,11 @@ class Enemies{
 
     bool bossIsAlive();
 
-    void eyeSpawn();
+    std::pair<int, int> randomPositionSpawn(Board* my_board);
+
+    void randomEyeSelect();
+
+    void eyeSpawn(Board* my_board);
 
     void bossTurnIncrement();
 
