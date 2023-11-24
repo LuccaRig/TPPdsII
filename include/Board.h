@@ -25,4 +25,4 @@ class Board{
     std::vector<std::vector<Tile*>> my_board_;
 };
 
-#endif
+#endif // BOARD_H_

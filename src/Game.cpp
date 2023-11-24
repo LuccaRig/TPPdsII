@@ -151,6 +151,15 @@ void Game::putMonsterInBoard(int position_x, int position_y, Monster &monster, f
     }
 }
 
+void Game::putItemInBoard(int position_y, int position_x, Item &item, float delta_time,sf::RectangleShape &tileShape) {
+    if (position_x == item.get_item_position_x() && position_y == item.get_item_position_y()) {
+        game_board_->get_tile_at(position_x, position_y)->setObjectInTile("item");
+        item.get_item_sprite().setScale(3.f, 3.f);
+        item.get_item_sprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - item.get_item_sprite().getLocalBounds().width*3) / 2,
+                                              tileShape.getPosition().y + (tileShape.getSize().y - item.get_item_sprite().getLocalBounds().height*3) / 2);
+    }
+}
+
 void Game::set_hero_health_bars(int hero, int full_hp, int current_hp) {
     health_bars_[hero].setSize(sf::Vector2f(190*current_hp/full_hp, 30));
 }
@@ -198,9 +207,11 @@ void Game::boardRender(float delta_time) {
             putHeroInBoard(i, j, mage_, delta_time, tileShape);
             putHeroInBoard(i, j, knight_, delta_time, tileShape);
             putHeroInBoard(i, j, rogue_, delta_time, tileShape);
-            for(int k=0;k < my_hordes_.hordeSize();++k){
+            for(int k = 0; k < my_hordes_.hordeSize(); ++k) {
                 putMonsterInBoard(i, j, *(my_hordes_.enemy(k)), delta_time, tileShape);
             }
+
+            // for (int m = 0; k <)
         }
     }
 }
@@ -436,6 +447,12 @@ void Game::initMonstersHealthBars() {
 
 void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock) {
     if(rogue_.isAlive() || mage_.isAlive() || knight_.isAlive()){
+        
+        if(this->my_hordes_.bossIsAlive()){
+            this->my_hordes_.eyeSpawn();
+            this->my_hordes_.bossTurnIncrement();
+        }
+    
     struct heroes {
         int pos_x;
         int pos_y;
@@ -651,16 +668,19 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
             if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()){
                 is_hero_turn = 1;
                 heroWalk(rogue_, delta_time, clock);
+                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && mage_.isAlive()){
                 is_hero_turn = 1;
                 heroWalk(mage_, delta_time, clock);
+                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && knight_.isAlive()){
                 is_hero_turn = 1;
                 heroWalk(knight_, delta_time, clock);
+                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else {
@@ -700,14 +720,17 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
 
           if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()) {
             heroUseBuffSkill(2, "rogue", rogue_);
+            my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
             enter_pressed_hero_menu_ = false;
           }
           else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && knight_.isAlive()) {
             heroUseBuffSkill(0, "knight", knight_);
+            my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
             enter_pressed_hero_menu_ = false;
           }
           else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && knight_.isAlive()) {
             heroUseDamageSkill("mage", mage_);
+            my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
             enter_pressed_hero_menu_ = false;
           }
           else {
