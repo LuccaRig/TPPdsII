@@ -92,6 +92,20 @@
             monster_sprite_.setTexture(monster_texture_);
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
+        else if (monster_type_ == "BOSS") {
+            monster_hp_ = 13;
+            monster_dmg_ = 5;
+            monster_exp_drop_ = 1;
+
+            monster_position_x_ = 0;
+            monster_position_y_ = 0;
+
+            //Parte das texturas e animações
+            number_of_frames_ = 9;
+            monster_texture_.loadFromFile("Textures/GrandmasterWarlockIdle.png");
+            monster_sprite_.setTexture(monster_texture_);
+            monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
+        }
 }
 
     void Monster::set_monster_hp(Board* my_game_board, int dmg) {
