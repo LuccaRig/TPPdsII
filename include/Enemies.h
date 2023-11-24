@@ -11,6 +11,7 @@
 #include <SFML/Network.hpp>
 
 #include "Monster.h"
+#include "Hero.h"
 
 
 class Enemies{
@@ -26,12 +27,15 @@ class Enemies{
     /// @brief Aumenta o contador para a proxima horda ser gerada
     void hordePass();
 
+    /// @brief Checa se todos os monstros de uma horda ja morreram
+    bool allEnemiesAreDead();
+
     /// @brief Cria uma horda de inimigos dependendo do valor da horda atual
-    void createHordeEnemies();
+    void createHordeEnemies(Hero &rogue, Hero &mage, Hero &knight);
     
     /// @brief Modifica as posições de todos os mosntros para ficarem em suas posições
     /// iniciais
-    void putAllMonsterInStartPosition();
+    void setAllInStartPosition(Hero &rogue, Hero &mage, Hero &knight);
 
     /// @brief Getter do numero de inimigos
     /// @return tamanho da horda atual 
@@ -52,10 +56,17 @@ class Enemies{
     /// @param position_y posição y para ser comparada
     Monster* getMonsterInPosition(int position_x, int position_y);
 
+    bool bossIsAlive();
+
+    void eyeSpawn();
+
+    void bossTurnIncrement();
+
   private:
     int horde_number_;
     int enemy_count_;
     std::vector<std::unique_ptr<Monster>> enemies_;
+    int boss_turns_;
 };
 
 
