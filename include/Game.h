@@ -107,7 +107,7 @@ class Game {
     void initMonstersHealthBars();
 
     /// @brief Muda o tamanho das barras de vida dos monstros
-    void setMonstersHealthBars(int damaged_monster, int full_hp, int current_hp);
+    void setMonstersHealthBars(int damaged_monster, float full_hp, float current_hp);
 
     /// @brief função auxiliar a monsterTakeAction, 
     /// @param nearest_hero_number identifica qual herói será atacado
