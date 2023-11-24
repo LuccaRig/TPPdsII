@@ -29,7 +29,7 @@
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
         else if (monster_type_ == "death knight") {
-             monster_hp_ = 20;
+            monster_hp_ = 20;
             monster_dmg_ = 6;
             monster_exp_drop_ = 8;
             monster_number_ = 5;
