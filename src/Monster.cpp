@@ -116,7 +116,7 @@
         monster_hp_ -= dmg;
           if (monster_hp_ <= 0) {
             my_game_board->get_tile_at(monster_position_x_, monster_position_y_)->deleteObjectInTile();
-            Item m_item(monster_position_x_, monster_position_y_, my_game_board);
+            //my_game_board->get_tile_at(monster_position_x_, monster_position_y_)->setObjectInTile(m_item.returnsRandomItem());
           }
     }
 
