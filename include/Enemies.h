@@ -56,10 +56,17 @@ class Enemies{
     /// @param position_y posição y para ser comparada
     Monster* getMonsterInPosition(int position_x, int position_y);
 
+    bool bossIsAlive();
+
+    void eyeSpawn();
+
+    void bossTurnIncrement();
+
   private:
     int horde_number_;
     int enemy_count_;
     std::vector<std::unique_ptr<Monster>> enemies_;
+    int boss_turns_;
 };
 
 

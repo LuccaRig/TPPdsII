@@ -3,6 +3,7 @@
 Enemies::Enemies(){
     horde_number_ = 0;
     enemy_count_ = 6;
+    boss_turns_ = 0;
 }
 
 Enemies::~Enemies() {
@@ -24,6 +25,11 @@ int Enemies::hordeSize() {
     return enemy_count_;
 }
 
+bool Enemies::bossIsAlive() {
+    if(boss_turns_ > 0) return true;
+    else return false;
+}
+
 void Enemies::deleteMonsterPool() {
     enemies_.clear();
 }
@@ -37,6 +43,17 @@ Monster* Enemies::getMonsterInPosition(int position_x, int position_y){
             }
     }
     return nullptr;
+}
+
+void Enemies::bossTurnIncrement() {
+    boss_turns_++;
+}
+
+void Enemies::eyeSpawn() {
+    if(!(boss_turns_%2)){
+    enemy_count_++;
+    enemies_.push_back(std::unique_ptr<Monster>(new Monster("unholy skull")));
+    }
 }
 
 
@@ -83,7 +100,6 @@ void Enemies::createHordeEnemies(Hero &rogue, Hero &mage, Hero &knight) {
         this->hordePass();
     }
     if(horde_number_ == 1 && this->allEnemiesAreDead()){
-        std::cout << "hora da segunda horda\n";
         this->deleteMonsterPool();
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("unholy skull")));
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("virulent wight")));
@@ -94,8 +110,12 @@ void Enemies::createHordeEnemies(Hero &rogue, Hero &mage, Hero &knight) {
         setAllInStartPosition(rogue, mage, knight);
         this->hordePass();
     }
-    if(horde_number_ == 2){
-
-        //BOSS
+    if(horde_number_ == 2 && this->allEnemiesAreDead()){
+        this->deleteMonsterPool();
+        enemy_count_ = 1;
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("BOSS")));
+        setAllInStartPosition(rogue, mage, knight);
+        boss_turns_++;
+        horde_number_++;
     }
 }
