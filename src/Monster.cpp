@@ -1,6 +1,7 @@
+#include "Monster.h"
+
 #include <string>
 
-#include "Monster.h"
 #include "Board.h"
 #include "Item.h"
 #include "Hero.h"
@@ -13,14 +14,13 @@
         number_of_frames_ = 4;
         current_frame_ = 0;
         animation_timer_ = 0.0f;
+        monster_position_x_ = 0;
+        monster_position_y_ = 0;
 
         if (monster_type_ == "bloody abomination") {
             monster_hp_ = 12;
             monster_dmg_ = 8;
             monster_exp_drop_ = 5;
-
-            monster_position_x_ = 0;
-            monster_position_y_ = 0;
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/BloodyAbominationIdleSide.png");
@@ -32,9 +32,6 @@
             monster_dmg_ = 6;
             monster_exp_drop_ = 8;
 
-            monster_position_x_ = 0;
-            monster_position_y_ = 0;
-
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/DeathKnightIdleSide.png");
             monster_sprite_.setTexture(monster_texture_);
@@ -44,9 +41,6 @@
             monster_hp_ = 40;
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
-
-            monster_position_x_ = 0;
-            monster_position_y_ = 0;
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/SandGolemIdleSide.png");
@@ -58,9 +52,6 @@
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
 
-            monster_position_x_ = 0;
-            monster_position_y_ = 0;
-
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/GhastlyBeholderIdleSide.png");
             monster_sprite_.setTexture(monster_texture_);
@@ -70,9 +61,6 @@
             monster_hp_ = 10;
             monster_dmg_ = 4;
             monster_exp_drop_ = 1;
-
-            monster_position_x_ = 2;
-            monster_position_y_ = 0;
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/UnholySkullIdleSide.png");
@@ -84,11 +72,28 @@
             monster_dmg_ = 5;
             monster_exp_drop_ = 1;
 
-            monster_position_x_ = 0;
-            monster_position_y_ = 0;
-
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/VirulentWightIdleSide.png");
+            monster_sprite_.setTexture(monster_texture_);
+            monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
+        }
+        else if (monster_type_ == "ocular whatcher") {
+            monster_hp_ = 7;
+            monster_dmg_ = 3;
+            monster_exp_drop_ = 1;
+
+            //Parte das texturas e animações
+            monster_texture_.loadFromFile("Textures/OcularWatcherIdleSide.png");
+            monster_sprite_.setTexture(monster_texture_);
+            monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
+        } 
+        else if (monster_type_ == "bloodshot eye") {
+            monster_hp_ = 5;
+            monster_dmg_ = 2;
+            monster_exp_drop_ = 1;
+
+            //Parte das texturas e animações
+            monster_texture_.loadFromFile("Textures/BloodshotEyeIdleSide.png");
             monster_sprite_.setTexture(monster_texture_);
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
@@ -97,9 +102,8 @@
     void Monster::set_monster_hp(Board* my_game_board, int dmg) {
         monster_hp_ -= dmg;
           if (monster_hp_ <= 0) {
-            Item m_item(monster_position_x_, monster_position_y_);
             my_game_board->get_tile_at(monster_position_x_, monster_position_y_)->deleteObjectInTile();
-            my_game_board->get_tile_at(monster_position_x_, monster_position_y_)->setObjectInTile(m_item.returnsRandomItem());
+            Item m_item(monster_position_x_, monster_position_y_, my_game_board);
           }
     }
 
@@ -158,5 +162,5 @@
             animation_timer_ = 0.0f;
         }
     }
-    Monster::~Monster() {    
-    }
+    Monster::~Monster() {}
+    

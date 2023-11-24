@@ -48,6 +48,8 @@ class Game {
 
     void putMonsterInBoard(int position_y, int position_x, Monster &monster, float delta_time,sf::RectangleShape &tileShape);
 
+    void putItemInBoard(int position_y, int position_x, Item &item, float delta_time,sf::RectangleShape &tileShape);
+
     /// @brief Muda o tamanho das barras de vida dos heróis
     void set_hero_health_bars(int damaged_hero, int full_hp, int current_hp);
 
