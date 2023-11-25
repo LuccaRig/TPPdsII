@@ -52,6 +52,9 @@ class Hero {
 
     /// @return Retorna a string com o tipo do herói
     std::string get_hero_type();
+
+    /// @return Retorna o número do herói
+    int get_hero_number();
     
     /// @return Retorna 1 se o herói estiver vivo
     bool isAlive();
@@ -88,6 +91,7 @@ class Hero {
     int current_exp_;
     int needed_exp_;
     std::string hero_type_;
+    int hero_number_;
   
     int hero_position_x_;
     int hero_position_y_;

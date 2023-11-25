@@ -340,6 +340,7 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
                     if (monster_to_be_attacked->monsterIsDead()) {
                         hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
+                        set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
                     }
                     setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                             monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
@@ -359,6 +360,7 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
                     if (monster_to_be_attacked->monsterIsDead()) {
                         hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
+                        set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
                     }
                     setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                             monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
@@ -378,6 +380,7 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
                     if (monster_to_be_attacked->monsterIsDead()) {
                         hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
+                        set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
                     }
                     setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                             monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
@@ -397,6 +400,7 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
                     if (monster_to_be_attacked->monsterIsDead()) {
                         hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
+                        set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
                     }
                     setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                             monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
@@ -439,6 +443,7 @@ void Game::heroUseDamageSkill(std::string hero_type, Hero &hero) {
           (*monster_to_be_attacked).set_monster_hp(game_board_, skill.skill_damage());
           if (monster_to_be_attacked->monsterIsDead()) {
             hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
+            set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
           }
           setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                   monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());

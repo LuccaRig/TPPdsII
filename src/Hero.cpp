@@ -22,7 +22,8 @@ Hero::Hero(std::string hero_type) {
     if (hero_type_ == "knight") {
         hero_hp_ = hero_full_hp_ = 35;
         hero_attack_ = 5;
-        hero_special_attack_ = 5;
+        hero_special_attack_ = 30;
+        hero_number_ = 0;
         
         hero_position_x_ = 2;
         hero_position_y_ = 2;
@@ -36,6 +37,7 @@ Hero::Hero(std::string hero_type) {
         hero_hp_ = hero_full_hp_ = 25;
         hero_attack_ = 8;
         hero_special_attack_ = 1;
+        hero_number_ = 2;
 
         hero_position_x_ = 3;
         hero_position_y_ = 2;
@@ -48,7 +50,8 @@ Hero::Hero(std::string hero_type) {
     else if (hero_type_ == "mage"){
         hero_hp_ = hero_full_hp_ = 30;
         hero_attack_ = 4;
-        hero_special_attack_ = 50;
+        hero_special_attack_ = 10;
+        hero_number_ = 1;
         
         hero_position_x_ = 1;
         hero_position_y_ = 2;
@@ -117,23 +120,30 @@ void Hero::lvlUp(std::string hero_type) {
         hero_full_hp_ += 5;
         hero_attack_ += 1;
         hero_special_attack_ += 2;
+        needed_exp_ += 2;
     }
     else if (hero_type == "rogue") {
         hero_hp_ += 2;
         hero_full_hp_ += 2;
         hero_attack_ += 3;
         hero_special_attack_ += 1;
+        needed_exp_ += 2;
     }
     else if (hero_type == "mage") {
         hero_hp_ += 2;
         hero_full_hp_ += 2;
         hero_attack_ += 1;
         hero_special_attack_ += 2;
+        needed_exp_ += 2;
     }
 }
 
 std::string Hero::get_hero_type() {
     return hero_type_;
+}
+
+int Hero::get_hero_number() {
+    return hero_number_;
 }
 
 int Hero::get_hero_position_x() {
