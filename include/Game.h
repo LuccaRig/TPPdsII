@@ -10,6 +10,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 
+#include "Item.h"
 #include "Board.h"
 #include "Hero.h"
 #include "GameState.h"
@@ -149,6 +150,7 @@ class Game {
     Hero rogue_;
 
     Enemies my_hordes_;
+    std::vector<std::unique_ptr<Item>> items_;
 
     /// @brief Cria um novo objeto do tipo RenderWindow
     void initWindow();

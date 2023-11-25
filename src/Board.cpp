@@ -27,3 +27,15 @@ Tile* Board::get_tile_at(int selected_line, int selected_column) {
     //Caso um valor fora do Board tenha sido selecionado:
     return nullptr;
 }
+
+int Board::get_number_of_items() {
+    return number_of_items_;
+}
+
+void Board::set_number_of_items(int n) {
+    number_of_items_ += n;
+}
+
+void Board::initializeNumberOfItems() {
+    number_of_items_ = 0;
+}

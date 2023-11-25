@@ -1,8 +1,9 @@
 #ifndef BOARD_H
 #define BOARD_H
 
-#include "Tile.h"
 #include <vector>
+
+#include "Tile.h"
 
 class Board{
   public:
@@ -18,11 +19,18 @@ class Board{
     /// @return Retorna o estado de algum Tile em uma posição específica 
     Tile* get_tile_at(int selected_line, int selected_column);
 
+    int get_number_of_items();
+
+    void set_number_of_items(int n);
+
+    void initializeNumberOfItems();
+
   private:
 
     /// @brief Matriz que armazena os Tiles, cada Tile tem um conteúdo para distinguir
     /// qual objeto está em cima dele
     std::vector<std::vector<Tile*>> my_board_;
+    int number_of_items_;
 };
 
 #endif // BOARD_H_

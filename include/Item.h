@@ -18,7 +18,7 @@ class Item {
   public:
 
     /// @brief constructor, constrói um item com posição e tipo definidos
-    Item(int x, int y, Board* my_board);
+    Item(int x, int y);
 
     /// @returns retorna um tipo de item ou uma string vazia significando nenhum item. Os itens serão
     /// construídos e nomeados dentro da própria função 

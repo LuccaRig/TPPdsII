@@ -11,8 +11,8 @@
 #include <SFML/Network.hpp>
 
 
-Item::Item(int x, int y, Board* my_game_board) {
-    item_type_ = returnsRandomItem();
+Item::Item(int x, int y) {
+    item_type_ = "heal"; // returnsRandomItem();
     item_position_x_ = x;
     item_position_y_ = y;
     

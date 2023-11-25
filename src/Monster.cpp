@@ -112,11 +112,23 @@
         }
 }
 
-    void Monster::set_monster_hp(Board* my_game_board, int dmg) {
+    template <typename T>
+    void Monster::set_monster_hp(Board* my_game_board,  std::vector<std::unique_ptr<T>>& items_, int dmg) {
         monster_hp_ -= dmg;
           if (monster_hp_ <= 0) {
             my_game_board->get_tile_at(monster_position_x_, monster_position_y_)->deleteObjectInTile();
-            Item m_item(monster_position_x_, monster_position_y_, my_game_board);
+            items_.push_back(std::unique_ptr<Item> (new Item(monster_position_x_, monster_position_y_)));
+            my_game_board->set_number_of_items(1);
+          }
+    }
+
+     template <>
+    void Monster::set_monster_hp(Board* my_game_board, std::vector<std::unique_ptr<Item>>& items_, int dmg) {
+        monster_hp_ -= dmg;
+          if (monster_hp_ <= 0) {
+            my_game_board->get_tile_at(monster_position_x_, monster_position_y_)->deleteObjectInTile();
+            items_.push_back(std::unique_ptr<Item>(new Item(monster_position_x_, monster_position_y_)));
+            my_game_board->set_number_of_items(1);
           }
     }
 
