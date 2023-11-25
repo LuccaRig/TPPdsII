@@ -114,7 +114,6 @@ void Hero::set_current_exp(int monster_exp, std::string hero_type) {
 }
 
 void Hero::lvlUp(std::string hero_type) {
-    std::cout << "Hero levelled up\n";
     if (hero_type == "knight") {
         hero_hp_ += 5;
         hero_full_hp_ += 5;
