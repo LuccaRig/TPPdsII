@@ -32,7 +32,7 @@ Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue") {
     herosNameInicialization();
 
     //Construindo as barras de vida dos monstros
-    initMonstersHealthBars();
+    //initMonstersHealthBars();
 
     this->initWindow();
     this->current_game_state_ = new GameState();
@@ -785,6 +785,7 @@ void Game::playerTurnControl(float delta_time, sf::Clock clock) {
 
 void Game::run(sf::Clock clock) {
     float delta_time = clock.restart().asSeconds();
+    if (my_hordes_.get_horde_number() == 0) initMonstersHealthBars();
     my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
     while(this->game_window_->isOpen()) {
 
@@ -803,7 +804,9 @@ void Game::run(sf::Clock clock) {
         ///O monsterTakeAction movimenta o monstro para a direção dos herois e os ataca
         this->monsterTakeAction(my_hordes_.hordeSize(), delta_time, clock);
 
+        if (my_hordes_.get_horde_number() == 1 && my_hordes_.allEnemiesAreDead()) initMonstersHealthBars();
         my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+        if (my_hordes_.get_horde_number() == 2 && my_hordes_.allEnemiesAreDead()) initMonstersHealthBars();
 
         //Se for GameOver a janela será fechada com qualquer tecla apertada
         this->gameOverCloseWindow(delta_time, clock);
