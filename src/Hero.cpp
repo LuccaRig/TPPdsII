@@ -12,6 +12,7 @@
 Hero::Hero(std::string hero_type) {
     current_exp_ = 0;
     needed_exp_ = 2;
+    hero_lvl_ = 1;
     hero_type_ = hero_type;
     hero_sprite_ = sf::Sprite();
     
@@ -114,6 +115,7 @@ void Hero::set_current_exp(int monster_exp, std::string hero_type) {
 }
 
 void Hero::lvlUp(std::string hero_type) {
+    hero_lvl_++;
     if (hero_type == "knight") {
         hero_hp_ += 5;
         hero_full_hp_ += 5;
@@ -135,6 +137,10 @@ void Hero::lvlUp(std::string hero_type) {
         hero_special_attack_ += 2;
         needed_exp_ += 2;
     }
+}
+
+int Hero::get_hero_lvl() {
+    return hero_lvl_;
 }
 
 std::string Hero::get_hero_type() {

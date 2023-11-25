@@ -30,6 +30,7 @@ Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue") {
 
     //Construindo os nomes dos heróis e suas barras de vida
     herosNameInicialization();
+    init_hero_lvl_ = 0;
 
     this->initWindow();
     this->current_game_state_ = new GameState();
@@ -64,6 +65,42 @@ void Game::herosNameInicialization() {
         health_bars_[i].setSize(sf::Vector2f(190, 30));
         health_bars_[i].setFillColor(sf::Color(128, 0, 0));
         health_bars_[i].setPosition(health_bars_position_[i]);
+    }
+}
+
+void Game::heroFirstLevel() {
+    font_.loadFromFile("Resources/Retro Gaming.ttf");
+    hero_lvl_.resize(3);
+    hero_lvl_printed_ = {"Lvl 1", "Lvl 1", "Lvl 1"};
+    hero_lvl_position_= {{218, 20}, {128, 140}, {160, 260}};
+    for (unsigned int i = 0; i < hero_lvl_.size(); i++) {
+        hero_lvl_[i].setFont(font_);
+        hero_lvl_[i].setString(hero_lvl_printed_[i]);
+        hero_lvl_[i].setCharacterSize(30);
+        hero_lvl_[i].setFillColor(sf::Color::White);
+        hero_lvl_[i].setPosition(hero_lvl_position_[i]);
+    }
+    init_hero_lvl_ = 1;
+}
+
+void Game::heroLevel(Hero &hero, int hero_type) {
+    int lvl = hero.get_hero_lvl();
+    font_.loadFromFile("Resources/Retro Gaming.ttf");
+    hero_lvl_.resize(3);
+    if (lvl == 2) hero_lvl_printed_[hero_type] = "Lvl 2";
+    else if (lvl == 3) hero_lvl_printed_[hero_type] = "Lvl 3";
+    else if (lvl == 4) hero_lvl_printed_[hero_type] = "Lvl 4";
+    else if (lvl == 5) hero_lvl_printed_[hero_type] = "Lvl 5";
+    hero_lvl_position_= {{218, 20}, {128, 140}, {160, 260}};
+    for (unsigned int i = 0; i < hero_lvl_.size(); i++) {
+        hero_lvl_[i].setFont(font_);
+        hero_lvl_[i].setString(hero_lvl_printed_[i]);
+        hero_lvl_[i].setCharacterSize(30);
+        hero_lvl_[i].setFillColor(sf::Color::White);
+        hero_lvl_[i].setPosition(hero_lvl_position_[i]);
+    }
+    for (auto it : hero_lvl_) {
+        this->game_window_->draw(it);
     }
 }
 
@@ -223,6 +260,9 @@ void Game::render(float delta_time) {
         this->game_window_->draw(it);
     }
     for (auto it : health_bars_) {
+        this->game_window_->draw(it);
+    }
+    for (auto it : hero_lvl_) {
         this->game_window_->draw(it);
     }
     if (current_game_state_->isPlayerTurn(rogue_.isAlive() + mage_.isAlive() + knight_.isAlive()) && 
@@ -729,18 +769,21 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
           if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()){
                 is_hero_turn = 1;
                 heroAttack(rogue_, delta_time, clock);
+                heroLevel(rogue_, rogue_.get_hero_number());
                 //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && mage_.isAlive()){
                 is_hero_turn = 1;
                 heroAttack(mage_, delta_time, clock);
+                heroLevel(mage_, mage_.get_hero_number());
                 //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && knight_.isAlive()){
                 is_hero_turn = 1;
                 heroAttack(knight_, delta_time, clock);
+                heroLevel(knight_, knight_.get_hero_number());
                 //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
@@ -764,6 +807,7 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
           }
           else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && knight_.isAlive()) {
             heroUseDamageSkill("mage", mage_);
+            heroLevel(mage_, mage_.get_hero_number());
             //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
             enter_pressed_hero_menu_ = false;
           }
@@ -788,6 +832,7 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
 
 
 void Game::playerTurnControl(float delta_time, sf::Clock clock) {
+    if (!init_hero_lvl_) heroFirstLevel();
     setHeroMenu();
     while(this->current_game_state_->isPlayerTurn(rogue_.isAlive() + mage_.isAlive() + knight_.isAlive()) && 
                 this->game_window_->isOpen()){

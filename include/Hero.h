@@ -50,6 +50,9 @@ class Hero {
     /// @brief Aumenta o nível do herói
     void lvlUp(std::string hero_type);
 
+    /// @return Retorna o nível atual do herói
+    int get_hero_lvl();
+
     /// @return Retorna a string com o tipo do herói
     std::string get_hero_type();
 
@@ -90,6 +93,7 @@ class Hero {
     int hero_special_attack_;
     int current_exp_;
     int needed_exp_;
+    int hero_lvl_;
     std::string hero_type_;
     int hero_number_;
   
