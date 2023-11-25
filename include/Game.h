@@ -35,6 +35,12 @@ class Game {
     /// @brief Constrói os nomes e as barras de vida dos heróis
     void herosNameInicialization();
 
+    /// @brief Constrói o texto do primeiro nível dos heróis
+    void heroFirstLevel();
+
+    /// @brief Indica o lvl dos heróis na frente do nome
+    void heroLevel(Hero &hero, int hero_type);
+
     /// @brief Atualiza a janela para cada evento que deve ocorrer
     void update();
 
@@ -126,6 +132,10 @@ class Game {
     sf::Texture background_;
     sf::Sprite background_sprite_;
 
+    Board *game_board_;
+    GameState *current_game_state_;
+
+    //Nomes e barras de vida dos heróis
     sf::Font font_;
     std::vector<sf::Text> heros_;
     std::vector<sf::Vector2f> hero_names_position_;
@@ -134,8 +144,10 @@ class Game {
     std::vector<sf::RectangleShape> health_bars_;
     std::vector<sf::Vector2f> health_bars_position_;
 
-    Board *game_board_;
-    GameState *current_game_state_;
+    std::vector<sf::Text> hero_lvl_;
+    std::vector<sf::Vector2f> hero_lvl_position_;
+    std::vector<std::string> hero_lvl_printed_;
+    int init_hero_lvl_;
 
     //Menu de opções dos jogadores
     int hero_menu_position_, is_hero_turn;
