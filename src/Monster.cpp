@@ -20,7 +20,7 @@
         if (monster_type_ == "bloody abomination") {
             monster_hp_ = monster_full_hp_ = 12;
             monster_dmg_ = 8;
-            monster_exp_drop_ = 5;
+            monster_exp_drop_ = 1;
             monster_number_ = 4;
 
             //Parte das texturas e animações
@@ -31,7 +31,7 @@
         else if (monster_type_ == "death knight") {
             monster_hp_ = monster_full_hp_ = 20;
             monster_dmg_ = 6;
-            monster_exp_drop_ = 8;
+            monster_exp_drop_ = 1;
             monster_number_ = 5;
 
             //Parte das texturas e animações

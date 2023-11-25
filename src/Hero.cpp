@@ -10,7 +10,8 @@
 
 
 Hero::Hero(std::string hero_type) {
-    exp_ = 0;
+    current_exp_ = 0;
+    needed_exp_ = 2;
     hero_type_ = hero_type;
     hero_sprite_ = sf::Sprite();
     
@@ -20,8 +21,8 @@ Hero::Hero(std::string hero_type) {
 
     if (hero_type_ == "knight") {
         hero_hp_ = hero_full_hp_ = 35;
-        hero_attack_ = 50;
-        hero_special_attack_ = 35;
+        hero_attack_ = 5;
+        hero_special_attack_ = 5;
         
         hero_position_x_ = 2;
         hero_position_y_ = 2;
@@ -33,7 +34,7 @@ Hero::Hero(std::string hero_type) {
     }
     else if (hero_type_ == "rogue"){
         hero_hp_ = hero_full_hp_ = 25;
-        hero_attack_ = 80;
+        hero_attack_ = 8;
         hero_special_attack_ = 1;
 
         hero_position_x_ = 3;
@@ -46,7 +47,7 @@ Hero::Hero(std::string hero_type) {
     }
     else if (hero_type_ == "mage"){
         hero_hp_ = hero_full_hp_ = 30;
-        hero_attack_ = 40;
+        hero_attack_ = 4;
         hero_special_attack_ = 50;
         
         hero_position_x_ = 1;
@@ -101,11 +102,38 @@ int Hero::get_hero_special_attack() {
     return hero_special_attack_;
 }
 
-void Hero::UseSkill() {
-    Skill skill(hero_type_, hero_special_attack_); 
-    hero_hp_ += skill.skill_heal();
-    hero_attack_ += skill.skill_buff();
-    //Dar dano nos monstros
+void Hero::set_current_exp(int monster_exp, std::string hero_type) {
+  current_exp_ += monster_exp;
+  if (current_exp_ >= needed_exp_) {
+    current_exp_ -= needed_exp_;
+    lvlUp(hero_type);
+  }
+}
+
+void Hero::lvlUp(std::string hero_type) {
+    std::cout << "Hero levelled up\n";
+    if (hero_type == "knight") {
+        hero_hp_ += 5;
+        hero_full_hp_ += 5;
+        hero_attack_ += 1;
+        hero_special_attack_ += 2;
+    }
+    else if (hero_type == "rogue") {
+        hero_hp_ += 2;
+        hero_full_hp_ += 2;
+        hero_attack_ += 3;
+        hero_special_attack_ += 1;
+    }
+    else if (hero_type == "mage") {
+        hero_hp_ += 2;
+        hero_full_hp_ += 2;
+        hero_attack_ += 1;
+        hero_special_attack_ += 2;
+    }
+}
+
+std::string Hero::get_hero_type() {
+    return hero_type_;
 }
 
 int Hero::get_hero_position_x() {

@@ -31,9 +31,6 @@ Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue") {
     //Construindo os nomes dos heróis e suas barras de vida
     herosNameInicialization();
 
-    //Construindo as barras de vida dos monstros
-    //initMonstersHealthBars();
-
     this->initWindow();
     this->current_game_state_ = new GameState();
 }
@@ -341,6 +338,9 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
                     (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
+                    if (monster_to_be_attacked->monsterIsDead()) {
+                        hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
+                    }
                     setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                             monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
                     this->current_game_state_->heroTurnPass();
@@ -357,6 +357,9 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
                     (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
+                    if (monster_to_be_attacked->monsterIsDead()) {
+                        hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
+                    }
                     setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                             monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
                     this->current_game_state_->heroTurnPass();
@@ -373,6 +376,9 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
                     (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
+                    if (monster_to_be_attacked->monsterIsDead()) {
+                        hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
+                    }
                     setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                             monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
                     this->current_game_state_->heroTurnPass();
@@ -389,6 +395,9 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
                     (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
+                    if (monster_to_be_attacked->monsterIsDead()) {
+                        hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
+                    }
                     setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                             monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
                     this->current_game_state_->heroTurnPass();
@@ -428,6 +437,9 @@ void Game::heroUseDamageSkill(std::string hero_type, Hero &hero) {
         if(game_board_->get_tile_at(j, i)->monsterIsInTile()) {
           monster_to_be_attacked = my_hordes_.getMonsterInPosition(j, i);
           (*monster_to_be_attacked).set_monster_hp(game_board_, skill.skill_damage());
+          if (monster_to_be_attacked->monsterIsDead()) {
+            hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
+          }
           setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                   monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
         }
