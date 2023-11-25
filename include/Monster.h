@@ -2,10 +2,11 @@
 #define MONSTER_H_
 
 #include <string>
+#include <vector>
 
+#include "Item.h"
 #include "Board.h"
 #include "Tile.h"
-#include "Item.h"
 #include "Hero.h"
 
 class Monster {
@@ -26,7 +27,8 @@ class Monster {
 
     /// @brief  adiciona o valor recebido em pontos de vida para o monstro. PRECONDIÇÃO: parâmetro deve ser valor negativo 
     /// @param  attack_ do herói
-    void set_monster_hp(Board* my_game_board, int dmg);
+    template<typename T>
+    void set_monster_hp(Board* my_game_board, std::vector<std::unique_ptr<T>>& items_, int dmg);
 
     /// @return retorna true se o monstro estiver morto e false se não estiver.
     bool monsterIsDead();

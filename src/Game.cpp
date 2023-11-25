@@ -3,6 +3,7 @@
 #include "GameState.h"
 #include "Enemies.h"
 #include "Skill.h"
+#include "Item.h"
 
 #include <iostream>
 #include <math.h>
@@ -34,9 +35,13 @@ Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue") {
 
     this->initWindow();
     this->current_game_state_ = new GameState();
+    game_board_->initializeNumberOfItems();
+    game_board_->set_number_of_items(2);
+    items_.push_back(std::unique_ptr<Item> (new Item(2, 2)));
+    items_.push_back(std::unique_ptr<Item> (new Item(1, 2)));
 }
 
-Game::~Game(){
+Game::~Game() {
     delete this->game_window_;
     delete this->game_board_;
     delete this->current_game_state_;
@@ -166,7 +171,7 @@ void Game::putHeroInBoard(int position_x, int position_y, Hero &hero, float delt
     hero.get_hero_sprite().setScale(3.f, 3.f);
     hero.get_hero_sprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - hero.get_hero_sprite().getLocalBounds().width*3) / 2,
                                               tileShape.getPosition().y + (tileShape.getSize().y - hero.get_hero_sprite().getLocalBounds().height*3) / 2);
-    hero.updateAnimation(delta_time);
+   hero.updateAnimation(delta_time);
     
     // Desenha o herói na janela
     this->game_window_->draw(hero.get_hero_sprite());
@@ -188,13 +193,16 @@ void Game::putMonsterInBoard(int position_x, int position_y, Monster &monster, f
     }
 }
 
-void Game::putItemInBoard(int position_y, int position_x, Item &item, float delta_time,sf::RectangleShape &tileShape) {
-    if (position_x == item.get_item_position_x() && position_y == item.get_item_position_y()) {
-        game_board_->get_tile_at(position_x, position_y)->setObjectInTile("item");
+void Game::putItemInBoard(int position_y, int position_x, Item& item, float delta_time,sf::RectangleShape &tileShape) {
+   if (item.get_item_position_x() < 5 && item.get_item_position_y() < 5) {
+       if (item.get_item_type() != "empty") {
+       game_board_->get_tile_at(position_x, position_y)->setObjectInTile("item");
         item.get_item_sprite().setScale(3.f, 3.f);
         item.get_item_sprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - item.get_item_sprite().getLocalBounds().width*3) / 2,
-                                              tileShape.getPosition().y + (tileShape.getSize().y - item.get_item_sprite().getLocalBounds().height*3) / 2);
-    }
+                                          tileShape.getPosition().y + (tileShape.getSize().y - item.get_item_sprite().getLocalBounds().height*3) / 2);
+        this->game_window_->draw(item.get_item_sprite());
+       }
+   }
 }
 
 void Game::set_hero_health_bars(int hero, int full_hp, int current_hp) {
@@ -247,8 +255,15 @@ void Game::boardRender(float delta_time) {
             for(int k = 0; k < my_hordes_.hordeSize(); ++k) {
                 putMonsterInBoard(i, j, *(my_hordes_.enemy(k)), delta_time, tileShape);
             }
+           // if (game_board_->get_number_of_items() > 0) {
+                putItemInBoard(items_[0].get()->get_item_position_x(), items_[0]->get_item_position_y(), *(items_[0].get()), delta_time, tileShape);
+                putItemInBoard(items_[1].get()->get_item_position_x(), items_[1]->get_item_position_y(), *(items_[1].get()), delta_time, tileShape);
+                putItemInBoard(1, 1, *(items_[1].get()), delta_time, tileShape);
 
-            // for (int m = 0; k <)
+                // for (int m = 0; m < game_board_->get_number_of_items(); m++) {
+                //     putItemInBoard(items_[m]->get_item_position_x(), items_[m]->get_item_position_y(), items_[m], delta_time, tileShape);
+                // }
+           // }
         }
     }
 }
@@ -377,13 +392,16 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                         break;
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
-                    (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
+
+                    (*monster_to_be_attacked).set_monster_hp<Item>(game_board_, items_, hero.get_hero_attack());
+
                     if (monster_to_be_attacked->monsterIsDead()) {
                         hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
                         set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
                     }
                     setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                             monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
+
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -397,13 +415,16 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                         break;
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
-                    (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
+
+                    (*monster_to_be_attacked).set_monster_hp<Item>(game_board_, items_, hero.get_hero_attack());
+
                     if (monster_to_be_attacked->monsterIsDead()) {
                         hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
                         set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
                     }
                     setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                             monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
+
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -417,13 +438,16 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                         break;
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
-                    (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
+
+                    (*monster_to_be_attacked).set_monster_hp<Item>(game_board_, items_, hero.get_hero_attack());
+                
                     if (monster_to_be_attacked->monsterIsDead()) {
                         hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
                         set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
                     }
                     setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                             monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
+                
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -437,13 +461,16 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                         break;
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
-                    (*monster_to_be_attacked).set_monster_hp(game_board_, hero.get_hero_attack());
+
+                    (*monster_to_be_attacked).set_monster_hp<Item>(game_board_, items_, hero.get_hero_attack());
+
                     if (monster_to_be_attacked->monsterIsDead()) {
                         hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
                         set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
                     }
                     setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                             monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
+
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -480,13 +507,16 @@ void Game::heroUseDamageSkill(std::string hero_type, Hero &hero) {
       if (i == pos_to_attack_y || j == pos_to_attack_x) {
         if(game_board_->get_tile_at(j, i)->monsterIsInTile()) {
           monster_to_be_attacked = my_hordes_.getMonsterInPosition(j, i);
-          (*monster_to_be_attacked).set_monster_hp(game_board_, skill.skill_damage());
+          
+          (*monster_to_be_attacked).set_monster_hp<Item>(game_board_, items_, skill.skill_damage());
+
           if (monster_to_be_attacked->monsterIsDead()) {
             hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
             set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
           }
           setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                   monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
+
         }
       }
     }
