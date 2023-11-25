@@ -33,7 +33,14 @@ class Game {
     /// testa se um dos eventos é do tipo Closed(Apertar no x da janela)
     void testIsClosed();
 
+    /// @brief Constrói os nomes e as barras de vida dos heróis
     void herosNameInicialization();
+
+    /// @brief Constrói o texto do primeiro nível dos heróis
+    void heroFirstLevel();
+
+    /// @brief Indica o lvl dos heróis na frente do nome
+    void heroLevel(Hero &hero, int hero_type);
 
     /// @brief Atualiza a janela para cada evento que deve ocorrer
     void update();
@@ -91,8 +98,10 @@ class Game {
     /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
     void heroAttack(Hero &hero, float delta_time, sf::Clock clock);
 
+    /// @brief Realiza a habilidade de um herói que aumenta o próprio status
     void heroUseBuffSkill(int hero_number, std::string hero_type, Hero &hero);
 
+    /// @brief Realiza a habilidade de um herói que da dano aos monstros
     void heroUseDamageSkill(std::string hero_type, Hero &hero);
 
     /// @brief Determina a ação de cada monstro 
@@ -100,6 +109,12 @@ class Game {
     /// @param delta_time: Tempo decorrido desde o ultimo clock 
     /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
     void monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock);
+
+    /// @brief Constrói as barras de vida dos monstros
+    void initMonstersHealthBars();
+
+    /// @brief Muda o tamanho das barras de vida dos monstros
+    void setMonstersHealthBars(int damaged_monster, float full_hp, float current_hp);
 
     /// @brief função auxiliar a monsterTakeAction, 
     /// @param nearest_hero_number identifica qual herói será atacado
@@ -118,6 +133,10 @@ class Game {
     sf::Texture background_;
     sf::Sprite background_sprite_;
 
+    Board *game_board_;
+    GameState *current_game_state_;
+
+    //Nomes e barras de vida dos heróis
     sf::Font font_;
     std::vector<sf::Text> heros_;
     std::vector<sf::Vector2f> hero_names_position_;
@@ -126,8 +145,10 @@ class Game {
     std::vector<sf::RectangleShape> health_bars_;
     std::vector<sf::Vector2f> health_bars_position_;
 
-    Board *game_board_;
-    GameState *current_game_state_;
+    std::vector<sf::Text> hero_lvl_;
+    std::vector<sf::Vector2f> hero_lvl_position_;
+    std::vector<std::string> hero_lvl_printed_;
+    int init_hero_lvl_;
 
     //Menu de opções dos jogadores
     int hero_menu_position_, is_hero_turn;
@@ -143,6 +164,12 @@ class Game {
 
     sf::Text which_hero_;
     sf::Text which_direction_;
+
+    //Barras de vida dos monstros
+    sf::Text monsters_;
+    std::vector<sf::RectangleShape> background_monsters_health_bars_;
+    std::vector<sf::RectangleShape> monsters_health_bars_;
+    std::vector<sf::Vector2f> monsters_health_bars_position_;
 
     //Personagens dos jogadores:
     Hero mage_;

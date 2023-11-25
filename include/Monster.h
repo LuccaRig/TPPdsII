@@ -19,6 +19,12 @@ class Monster {
     /// @brief destrutor
     ~Monster();
 
+    /// @brief Retorna o hp máximo do monstro
+    int get_monster_full_hp();
+
+    /// @brief Retorna o hp atual do monstro
+    int get_monster_hp();
+
     /// @brief  adiciona o valor recebido em pontos de vida para o monstro. PRECONDIÇÃO: parâmetro deve ser valor negativo 
     /// @param  attack_ do herói
     template<typename T>
@@ -30,9 +36,11 @@ class Monster {
     /// @return retorna o número de experiência que o monstro dará quando for derrotado
     int get_exp_drop();
 
-
     /// @return retorna a quantidade de dano que o monstro aplica
     int get_dmg_output();
+
+    /// @return retorna o número relativo ao monstro
+    int get_monster_number();
 
     /// @return retorna a coordenada x do monstro
     int get_monster_position_x();
@@ -61,10 +69,12 @@ class Monster {
   private:
     //Características
     std::string monster_type_;
+    int monster_full_hp_;
     int monster_hp_;
     int monster_dmg_;
     int monster_exp_drop_;
     std::string monster_item_;
+    int monster_number_;
 
     int monster_position_x_;
     int monster_position_y_;

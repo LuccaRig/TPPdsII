@@ -31,6 +31,7 @@ Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue") {
 
     //Construindo os nomes dos heróis e suas barras de vida
     herosNameInicialization();
+    init_hero_lvl_ = 0;
 
     this->initWindow();
     this->current_game_state_ = new GameState();
@@ -69,6 +70,42 @@ void Game::herosNameInicialization() {
         health_bars_[i].setSize(sf::Vector2f(190, 30));
         health_bars_[i].setFillColor(sf::Color(128, 0, 0));
         health_bars_[i].setPosition(health_bars_position_[i]);
+    }
+}
+
+void Game::heroFirstLevel() {
+    font_.loadFromFile("Resources/Retro Gaming.ttf");
+    hero_lvl_.resize(3);
+    hero_lvl_printed_ = {"Lvl 1", "Lvl 1", "Lvl 1"};
+    hero_lvl_position_= {{218, 20}, {128, 140}, {160, 260}};
+    for (unsigned int i = 0; i < hero_lvl_.size(); i++) {
+        hero_lvl_[i].setFont(font_);
+        hero_lvl_[i].setString(hero_lvl_printed_[i]);
+        hero_lvl_[i].setCharacterSize(30);
+        hero_lvl_[i].setFillColor(sf::Color::White);
+        hero_lvl_[i].setPosition(hero_lvl_position_[i]);
+    }
+    init_hero_lvl_ = 1;
+}
+
+void Game::heroLevel(Hero &hero, int hero_type) {
+    int lvl = hero.get_hero_lvl();
+    font_.loadFromFile("Resources/Retro Gaming.ttf");
+    hero_lvl_.resize(3);
+    if (lvl == 2) hero_lvl_printed_[hero_type] = "Lvl 2";
+    else if (lvl == 3) hero_lvl_printed_[hero_type] = "Lvl 3";
+    else if (lvl == 4) hero_lvl_printed_[hero_type] = "Lvl 4";
+    else if (lvl == 5) hero_lvl_printed_[hero_type] = "Lvl 5";
+    hero_lvl_position_= {{218, 20}, {128, 140}, {160, 260}};
+    for (unsigned int i = 0; i < hero_lvl_.size(); i++) {
+        hero_lvl_[i].setFont(font_);
+        hero_lvl_[i].setString(hero_lvl_printed_[i]);
+        hero_lvl_[i].setCharacterSize(30);
+        hero_lvl_[i].setFillColor(sf::Color::White);
+        hero_lvl_[i].setPosition(hero_lvl_position_[i]);
+    }
+    for (auto it : hero_lvl_) {
+        this->game_window_->draw(it);
     }
 }
 
@@ -240,15 +277,27 @@ void Game::render(float delta_time) {
     for (auto it : health_bars_) {
         this->game_window_->draw(it);
     }
+    for (auto it : hero_lvl_) {
+        this->game_window_->draw(it);
+    }
     if (current_game_state_->isPlayerTurn(rogue_.isAlive() + mage_.isAlive() + knight_.isAlive()) && 
-                !current_game_state_->isGameOver(rogue_, mage_, knight_)) {
+          !current_game_state_->isGameOver(rogue_, mage_, knight_)) {
         this->game_window_->draw(background_hero_menu_);
         for (auto it : hero_menu_texts_) {
             this->game_window_->draw(it);
         }
         this->game_window_->draw(which_hero_);
         this->game_window_->draw(which_direction_);
-    };
+    }
+    if (my_hordes_.get_horde_number() == 1 || my_hordes_.get_horde_number() == 2) {
+        this->game_window_->draw(monsters_);
+        for (auto it : background_monsters_health_bars_) {
+            this->game_window_->draw(it);
+        }
+        for (auto it : monsters_health_bars_) {
+            this->game_window_->draw(it);
+        }
+    }
     this->boardRender(delta_time);
     if(this->current_game_state_->isGameOver(rogue_, mage_, knight_)){
         this->gameOverRender();
@@ -343,7 +392,16 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                         break;
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
+
                     (*monster_to_be_attacked).set_monster_hp<Item>(game_board_, items_, hero.get_hero_attack());
+
+                    if (monster_to_be_attacked->monsterIsDead()) {
+                        hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
+                        set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
+                    }
+                    setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
+                                            monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
+
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -357,12 +415,21 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                         break;
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
+
                     (*monster_to_be_attacked).set_monster_hp<Item>(game_board_, items_, hero.get_hero_attack());
+
+                    if (monster_to_be_attacked->monsterIsDead()) {
+                        hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
+                        set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
+                    }
+                    setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
+                                            monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
+
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
 
-                case sf::Keyboard::Left:
+                case sf::Keyboard::Left: 
                     pos_to_attack_x = hero.get_hero_position_x()-1;
                     pos_to_attack_y = hero.get_hero_position_y();
                     if(pos_to_attack_x < 0) continue;
@@ -371,7 +438,16 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                         break;
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
+
                     (*monster_to_be_attacked).set_monster_hp<Item>(game_board_, items_, hero.get_hero_attack());
+                
+                    if (monster_to_be_attacked->monsterIsDead()) {
+                        hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
+                        set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
+                    }
+                    setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
+                                            monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
+                
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -385,7 +461,16 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                         break;
                     }
                     monster_to_be_attacked = my_hordes_.getMonsterInPosition(pos_to_attack_x, pos_to_attack_y);
+
                     (*monster_to_be_attacked).set_monster_hp<Item>(game_board_, items_, hero.get_hero_attack());
+
+                    if (monster_to_be_attacked->monsterIsDead()) {
+                        hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
+                        set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
+                    }
+                    setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
+                                            monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
+
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -422,7 +507,16 @@ void Game::heroUseDamageSkill(std::string hero_type, Hero &hero) {
       if (i == pos_to_attack_y || j == pos_to_attack_x) {
         if(game_board_->get_tile_at(j, i)->monsterIsInTile()) {
           monster_to_be_attacked = my_hordes_.getMonsterInPosition(j, i);
+          
           (*monster_to_be_attacked).set_monster_hp<Item>(game_board_, items_, skill.skill_damage());
+
+          if (monster_to_be_attacked->monsterIsDead()) {
+            hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
+            set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
+          }
+          setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
+                                  monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
+
         }
       }
     }
@@ -430,10 +524,36 @@ void Game::heroUseDamageSkill(std::string hero_type, Hero &hero) {
  this->current_game_state_->heroTurnPass();
 }
 
+void Game::initMonstersHealthBars() {
+    font_.loadFromFile("Resources/Retro Gaming.ttf");
+    monsters_.setFont(font_);
+    monsters_.setString("Monstros");
+    monsters_.setCharacterSize(30);
+    monsters_.setFillColor(sf::Color::White);
+    monsters_.setPosition(sf::Vector2f(1009, 20));
+
+    background_monsters_health_bars_.resize(my_hordes_.hordeSize());
+    monsters_health_bars_.resize(my_hordes_.hordeSize());
+    monsters_health_bars_position_ = {{1050, 70}, {1050, 100}, {1050, 130}, {1050, 160}, {1050, 190}, {1050, 220}};
+    for (unsigned int i = 0; i < monsters_health_bars_.size(); i++) {
+        monsters_health_bars_[i].setSize(sf::Vector2f(100, 20));
+        monsters_health_bars_[i].setFillColor(sf::Color(128, 0, 0));
+        monsters_health_bars_[i].setPosition(monsters_health_bars_position_[i]);
+        background_monsters_health_bars_[i].setSize(sf::Vector2f(100, 20));
+        background_monsters_health_bars_[i].setFillColor(sf::Color::Black);
+        background_monsters_health_bars_[i].setPosition(monsters_health_bars_position_[i]);
+    }
+}
+
+void Game::setMonstersHealthBars(int damaged_monster, float full_hp, float current_hp) {
+    monsters_health_bars_[damaged_monster].setSize(sf::Vector2f(100*current_hp/full_hp, 20));
+}
+
 void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock) {
     if(rogue_.isAlive() || mage_.isAlive() || knight_.isAlive()){
+        
         if(this->my_hordes_.bossIsAlive()){
-            this->my_hordes_.eyeSpawn();
+            this->my_hordes_.eyeSpawn(game_board_);
             this->my_hordes_.bossTurnIncrement();
         }
     
@@ -453,7 +573,6 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
     hero[1].pos_y = mage_.get_hero_position_y();
     hero[2].pos_x = rogue_.get_hero_position_x();
     hero[2].pos_y = rogue_.get_hero_position_y();
-
 
     for(int n = 0; n < number_of_monsters; n++) {
         if(!my_hordes_.enemy(n)->monsterIsDead()){
@@ -653,19 +772,19 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
             if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()){
                 is_hero_turn = 1;
                 heroWalk(rogue_, delta_time, clock);
-                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+                //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && mage_.isAlive()){
                 is_hero_turn = 1;
                 heroWalk(mage_, delta_time, clock);
-                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+                //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && knight_.isAlive()){
                 is_hero_turn = 1;
                 heroWalk(knight_, delta_time, clock);
-                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+                //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else {
@@ -680,19 +799,22 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
           if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()){
                 is_hero_turn = 1;
                 heroAttack(rogue_, delta_time, clock);
-                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+                heroLevel(rogue_, rogue_.get_hero_number());
+                //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && mage_.isAlive()){
                 is_hero_turn = 1;
                 heroAttack(mage_, delta_time, clock);
-                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+                heroLevel(mage_, mage_.get_hero_number());
+                //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && knight_.isAlive()){
                 is_hero_turn = 1;
                 heroAttack(knight_, delta_time, clock);
-                my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+                heroLevel(knight_, knight_.get_hero_number());
+                //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
                 enter_pressed_hero_menu_ = false;
             }
             else {
@@ -705,17 +827,18 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
 
           if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()) {
             heroUseBuffSkill(2, "rogue", rogue_);
-            my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+            //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
             enter_pressed_hero_menu_ = false;
           }
           else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && knight_.isAlive()) {
             heroUseBuffSkill(0, "knight", knight_);
-            my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+            //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
             enter_pressed_hero_menu_ = false;
           }
           else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && knight_.isAlive()) {
             heroUseDamageSkill("mage", mage_);
-            my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+            heroLevel(mage_, mage_.get_hero_number());
+            //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
             enter_pressed_hero_menu_ = false;
           }
           else {
@@ -739,6 +862,7 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
 
 
 void Game::playerTurnControl(float delta_time, sf::Clock clock) {
+    if (!init_hero_lvl_) heroFirstLevel();
     setHeroMenu();
     while(this->current_game_state_->isPlayerTurn(rogue_.isAlive() + mage_.isAlive() + knight_.isAlive()) && 
                 this->game_window_->isOpen()){
@@ -753,6 +877,7 @@ void Game::playerTurnControl(float delta_time, sf::Clock clock) {
 
 void Game::run(sf::Clock clock) {
     float delta_time = clock.restart().asSeconds();
+    if (my_hordes_.get_horde_number() == 0) initMonstersHealthBars();
     my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
     while(this->game_window_->isOpen()) {
 
@@ -770,6 +895,10 @@ void Game::run(sf::Clock clock) {
 
         ///O monsterTakeAction movimenta o monstro para a direção dos herois e os ataca
         this->monsterTakeAction(my_hordes_.hordeSize(), delta_time, clock);
+
+        if (my_hordes_.get_horde_number() == 1 && my_hordes_.allEnemiesAreDead()) initMonstersHealthBars();
+        my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+        if (my_hordes_.get_horde_number() == 2 && my_hordes_.allEnemiesAreDead()) initMonstersHealthBars();
 
         //Se for GameOver a janela será fechada com qualquer tecla apertada
         this->gameOverCloseWindow(delta_time, clock);
