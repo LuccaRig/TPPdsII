@@ -41,18 +41,19 @@ class Hero {
     /// @return Retorna o ataque especial do herói
     int get_hero_special_attack();
 
-    /// @brief Utiliza a habilidade especial do herói
-    void UseSkill();
-
     // /// @brief Utiliza um item dropado por um monstro
     // void UseItem(Item dropped_item);
 
-    // /// @return Retorna a experiência do herói
-    // int current_exp();
+    /// @brief Altera a experiência atual do herói
+    void set_current_exp(int monster_exp, std::string hero_type);
 
-    // /// @brief Aumenta o nível do herói
-    // void LvlUp(int exp);
+    /// @brief Aumenta o nível do herói
+    void lvlUp(std::string hero_type);
+
+    /// @return Retorna a string com o tipo do herói
+    std::string get_hero_type();
     
+    /// @return Retorna 1 se o herói estiver vivo
     bool isAlive();
 
     /// @return Posição x do herói no tabuleiro
@@ -84,7 +85,8 @@ class Hero {
     int hero_hp_;
     int hero_attack_;
     int hero_special_attack_;
-    int exp_;
+    int current_exp_;
+    int needed_exp_;
     std::string hero_type_;
   
     int hero_position_x_;
