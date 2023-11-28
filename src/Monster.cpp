@@ -128,8 +128,8 @@
         monster_hp_ -= dmg;
           if (monster_hp_ <= 0) {
             my_game_board->get_tile_at(monster_position_x_, monster_position_y_)->deleteObjectInTile();
-            items_.push_back(std::unique_ptr<Item> (new Item(monster_position_x_, monster_position_y_)));
-            my_game_board->set_number_of_items(1);
+            // items_.push_back(std::unique_ptr<Item> (new Item(monster_position_x_, monster_position_y_)));
+            // my_game_board->set_number_of_items(1);
           }
           else if (monster_hp_ >= monster_full_hp_) {
             monster_hp_ = monster_full_hp_;
@@ -142,8 +142,8 @@
           if (monster_hp_ <= 0) {
             monster_hp_ = 0;
             my_game_board->get_tile_at(monster_position_x_, monster_position_y_)->deleteObjectInTile();
-            items_.push_back(std::unique_ptr<Item>(new Item(monster_position_x_, monster_position_y_)));
-            my_game_board->set_number_of_items(1);
+            // items_.push_back(std::unique_ptr<Item>(new Item(monster_position_x_, monster_position_y_)));
+            // my_game_board->set_number_of_items(1);
           }
           else if (monster_hp_ >= monster_full_hp_) {
             monster_hp_ = monster_full_hp_;
