@@ -82,7 +82,13 @@ Monster* Enemies::enemy(int enemy_number) {
     return enemies_[enemy_number].get();
 }
 
-void Enemies::setAllInStartPosition(Hero &rogue, Hero &mage, Hero &knight) {
+void Enemies::setAllInStartPosition(Board* my_board, Hero &rogue, Hero &mage, Hero &knight) {
+    for(int i=0;i<5;i++) {
+        for(int j=0;j<5;j++) {
+            my_board->get_tile_at(i, j)->deleteObjectInTile();
+        }
+    }
+    
     for(int i=0; i < this->hordeSize();++i){
         if(i < 2) this->enemy(i)->set_monster_position_x(i*2);
         if(i == 2) this->enemy(i)->set_monster_position_x(4);
@@ -109,7 +115,7 @@ bool Enemies::allEnemiesAreDead() {
     return true;
 }
 
-void Enemies::createHordeEnemies(Hero &rogue, Hero &mage, Hero &knight) {
+void Enemies::createHordeEnemies(Board* my_board, Hero &rogue, Hero &mage, Hero &knight) {
     if(horde_number_ == 0){
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("unholy skull")));
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("virulent wight")));
@@ -117,7 +123,7 @@ void Enemies::createHordeEnemies(Hero &rogue, Hero &mage, Hero &knight) {
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("ghastly beholder")));
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("bloody abomination")));
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("death knight")));
-        setAllInStartPosition(rogue, mage, knight);
+        setAllInStartPosition(my_board, rogue, mage, knight);
         this->hordePass();
     }
     if(horde_number_ == 1 && this->allEnemiesAreDead()){
@@ -128,14 +134,14 @@ void Enemies::createHordeEnemies(Hero &rogue, Hero &mage, Hero &knight) {
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("ghastly beholder")));
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("bloody abomination")));
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("death knight")));
-        setAllInStartPosition(rogue, mage, knight);
+        setAllInStartPosition(my_board, rogue, mage, knight);
         this->hordePass();
     }
     if(horde_number_ == 2 && this->allEnemiesAreDead()){
         this->deleteMonsterPool();
         enemy_count_ = 1;
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("BOSS")));
-        setAllInStartPosition(rogue, mage, knight);
+        setAllInStartPosition(my_board, rogue, mage, knight);
         boss_turns_++;
         horde_number_++;
     }

@@ -15,6 +15,7 @@
 
 #include "Monster.h"
 #include "Hero.h"
+#include "Board.h"
 
 
 class Enemies{
@@ -34,11 +35,11 @@ class Enemies{
     bool allEnemiesAreDead();
 
     /// @brief Cria uma horda de inimigos dependendo do valor da horda atual
-    void createHordeEnemies(Hero &rogue, Hero &mage, Hero &knight);
+    void createHordeEnemies(Board* my_board, Hero &rogue, Hero &mage, Hero &knight);
     
     /// @brief Modifica as posições de todos os mosntros para ficarem em suas posições
     /// iniciais
-    void setAllInStartPosition(Hero &rogue, Hero &mage, Hero &knight);
+    void setAllInStartPosition(Board* my_board, Hero &rogue, Hero &mage, Hero &knight);
 
     /// @brief Getter do numero de inimigos
     /// @return tamanho da horda atual 

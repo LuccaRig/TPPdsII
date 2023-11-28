@@ -35,10 +35,10 @@ Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue") {
 
     this->initWindow();
     this->current_game_state_ = new GameState();
-    game_board_->initializeNumberOfItems();
-    game_board_->set_number_of_items(2);
-    items_.push_back(std::unique_ptr<Item> (new Item(2, 2)));
-    items_.push_back(std::unique_ptr<Item> (new Item(1, 2)));
+    //game_board_->initializeNumberOfItems();
+    //game_board_->set_number_of_items(2);
+    //items_.push_back(std::unique_ptr<Item> (new Item(2, 2)));
+    //items_.push_back(std::unique_ptr<Item> (new Item(1, 2)));
 }
 
 Game::~Game() {
@@ -256,9 +256,9 @@ void Game::boardRender(float delta_time) {
                 putMonsterInBoard(i, j, *(my_hordes_.enemy(k)), delta_time, tileShape);
             }
            // if (game_board_->get_number_of_items() > 0) {
-                putItemInBoard(items_[0].get()->get_item_position_x(), items_[0]->get_item_position_y(), *(items_[0].get()), delta_time, tileShape);
-                putItemInBoard(items_[1].get()->get_item_position_x(), items_[1]->get_item_position_y(), *(items_[1].get()), delta_time, tileShape);
-                putItemInBoard(1, 1, *(items_[1].get()), delta_time, tileShape);
+                // putItemInBoard(items_[0].get()->get_item_position_x(), items_[0]->get_item_position_y(), *(items_[0].get()), delta_time, tileShape);
+                // putItemInBoard(items_[1].get()->get_item_position_x(), items_[1]->get_item_position_y(), *(items_[1].get()), delta_time, tileShape);
+                // putItemInBoard(1, 1, *(items_[1].get()), delta_time, tileShape);
 
                 // for (int m = 0; m < game_board_->get_number_of_items(); m++) {
                 //     putItemInBoard(items_[m]->get_item_position_x(), items_[m]->get_item_position_y(), items_[m], delta_time, tileShape);
@@ -878,7 +878,7 @@ void Game::playerTurnControl(float delta_time, sf::Clock clock) {
 void Game::run(sf::Clock clock) {
     float delta_time = clock.restart().asSeconds();
     if (my_hordes_.get_horde_number() == 0) initMonstersHealthBars();
-    my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+    my_hordes_.createHordeEnemies(game_board_, rogue_, mage_, knight_);
     while(this->game_window_->isOpen()) {
 
         //Conta a passagem de tempo desde a ultima vez que o clock.restart() foi chamado
@@ -897,7 +897,7 @@ void Game::run(sf::Clock clock) {
         this->monsterTakeAction(my_hordes_.hordeSize(), delta_time, clock);
 
         if (my_hordes_.get_horde_number() == 1 && my_hordes_.allEnemiesAreDead()) initMonstersHealthBars();
-        my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
+        my_hordes_.createHordeEnemies(game_board_, rogue_, mage_, knight_);
         if (my_hordes_.get_horde_number() == 2 && my_hordes_.allEnemiesAreDead()) initMonstersHealthBars();
 
         //Se for GameOver a janela será fechada com qualquer tecla apertada
