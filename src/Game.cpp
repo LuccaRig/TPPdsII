@@ -835,7 +835,7 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
             //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
             enter_pressed_hero_menu_ = false;
           }
-          else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && knight_.isAlive()) {
+          else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && mage_.isAlive()) {
             heroUseDamageSkill("mage", mage_);
             heroLevel(mage_, mage_.get_hero_number());
             //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);

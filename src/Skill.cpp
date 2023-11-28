@@ -21,11 +21,6 @@ Skill::Skill(std::string type, int skill_effect)
         skill_attack_ += 0;
         changed_target_hp_ = skill_effect;
     }
-    else if (skill_type_ == "boss"){
-        skill_hp_ += 0;
-        skill_attack_ += 0;
-        changed_target_hp_ = skill_effect;
-    }
 }
 
 Skill::~Skill()

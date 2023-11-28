@@ -91,6 +91,7 @@ class Hero {
     int hero_hp_;
     int hero_attack_;
     int hero_special_attack_;
+    int skill_cooldown_;
     int current_exp_;
     int needed_exp_;
     int hero_lvl_;
