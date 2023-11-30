@@ -19,17 +19,17 @@ Item::Item(int x, int y) {
     if (item_type_ == "heal") {
         item_texture_.loadFromFile("Textures/potion_red.png");
         item_sprite_.setTexture(item_texture_);
-        item_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
+        item_sprite_.setTextureRect(sf::IntRect(0, 0, 7, 8));
         item_effect_ = 50;
     } else if (item_type_ == "spellBuff") {
         item_texture_.loadFromFile("Textures/potion_blue.png");
         item_sprite_.setTexture(item_texture_);
-        item_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
+        item_sprite_.setTextureRect(sf::IntRect(0, 0, 7, 8));
         item_effect_ = 9;
     } else if (item_type_ == "dmgBuff") {
         item_texture_.loadFromFile("Textures/potion_green.png");
         item_sprite_.setTexture(item_texture_);
-        item_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
+        item_sprite_.setTextureRect(sf::IntRect(0, 0, 7, 8));
         item_effect_ = 5;
     }
 }
@@ -51,6 +51,13 @@ std::string Item::returnsRandomItem() {
     }
 }
 
+bool Item::itemWasUsed() {
+    return item_used_;
+}
+
+void Item::set_item_to_used() {
+    item_used_ = true;
+}
 int Item::get_item_position_x() {
     return item_position_x_;
 }
@@ -71,3 +78,4 @@ int Item::get_item_effect() {
     return item_effect_;
 }
 
+Item::~Item() {}

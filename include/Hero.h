@@ -41,6 +41,15 @@ class Hero {
     /// @return Retorna o ataque especial do herói
     int get_hero_special_attack();
 
+    /// @return Retorna o cooldown da skill do herói
+    int get_skill_cooldown();
+
+    /// @brief Reinicia o cooldown da skill do herói
+    void restartSkillCooldown();
+
+    /// @brief Diminui o cooldown da skill do herói
+    void decreaseSkillCooldown();
+
     // /// @brief Utiliza um item dropado por um monstro
     // void UseItem(Item dropped_item);
 

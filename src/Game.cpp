@@ -353,6 +353,8 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();
 
+        heroSkillCooldownDecreases(hero);
+
         if(this->SFML_event_.type == sf::Event::Closed){
             this->game_window_->close();
         }
@@ -418,6 +420,8 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
         Monster* monster_to_be_attacked;
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();
+
+        heroSkillCooldownDecreases(hero);
 
         if(this->SFML_event_.type == sf::Event::Closed){
             this->game_window_->close();
@@ -528,41 +532,90 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
 }
 
 void Game::heroUseBuffSkill(int hero_number, std::string hero_type, Hero &hero) {
-  Skill skill(hero_type, hero.get_hero_special_attack());
-  hero.set_hero_hp(-skill.skill_heal());
-  set_hero_health_bars(hero_number, hero.get_hero_full_hp(), hero.get_hero_hp());
-  hero.set_hero_attack(skill.skill_buff());
-  this->current_game_state_->heroTurnPass();
+  if (hero_type == "knight") {
+    if (hero.get_skill_cooldown() == 2) {
+      Skill skill(hero_type, hero.get_hero_special_attack());
+      hero.set_hero_hp(-skill.skill_heal());
+      set_hero_health_bars(hero_number, hero.get_hero_full_hp(), hero.get_hero_hp());
+      hero.set_hero_attack(skill.skill_buff());
+      hero.restartSkillCooldown();
+      this->current_game_state_->heroTurnPass();
+    }
+    else {
+      hero.decreaseSkillCooldown();
+      this->current_game_state_->heroTurnPass();
+    }
+  }
+  else if (hero_type == "rogue") {
+    if (hero.get_skill_cooldown() == 1) {
+      Skill skill(hero_type, hero.get_hero_special_attack());
+      hero.set_hero_hp(-skill.skill_heal());
+      set_hero_health_bars(hero_number, hero.get_hero_full_hp(), hero.get_hero_hp());
+      hero.set_hero_attack(skill.skill_buff());
+      hero.restartSkillCooldown();
+      this->current_game_state_->heroTurnPass();
+    }
+    else {
+      hero.decreaseSkillCooldown();
+      this->current_game_state_->heroTurnPass();
+    }
+  }
 }
 
 void Game::heroUseDamageSkill(std::string hero_type, Hero &hero) {
-  Skill skill(hero_type, hero.get_hero_special_attack());
-  int pos_to_attack_x = 0, pos_to_attack_y = 0;
-  Monster* monster_to_be_attacked;
+  if (hero.get_skill_cooldown() == 2) {
+    Skill skill(hero_type, hero.get_hero_special_attack());
+    int pos_to_attack_x = 0, pos_to_attack_y = 0;
+    Monster* monster_to_be_attacked;
 
-  pos_to_attack_x = hero.get_hero_position_x();
-  pos_to_attack_y = hero.get_hero_position_y();
+    pos_to_attack_x = hero.get_hero_position_x();
+    pos_to_attack_y = hero.get_hero_position_y();
 
-  for (int i = 0; i < 5; i++) {
-    for (int j = 0; j < 5; j++) {
-      if (i == pos_to_attack_y || j == pos_to_attack_x) {
-        if(game_board_->get_tile_at(j, i)->monsterIsInTile()) {
-          monster_to_be_attacked = my_hordes_.getMonsterInPosition(j, i);
-          
-          (*monster_to_be_attacked).set_monster_hp<Item>(game_board_, items_, skill.skill_damage());
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+        if (i == pos_to_attack_y || j == pos_to_attack_x) {
+            if(game_board_->get_tile_at(j, i)->monsterIsInTile()) {
+            monster_to_be_attacked = my_hordes_.getMonsterInPosition(j, i);
+            
+            (*monster_to_be_attacked).set_monster_hp<Item>(game_board_, items_, skill.skill_damage());
 
-          if (monster_to_be_attacked->monsterIsDead()) {
-            hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
-            set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
-          }
-          setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
-                                  monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
+            if (monster_to_be_attacked->monsterIsDead()) {
+                hero.set_current_exp(monster_to_be_attacked->get_exp_drop(), hero.get_hero_type());
+                set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
+            }
+            setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
+                                    monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
 
+            }
         }
-      }
+        }
     }
+    hero.restartSkillCooldown();
+    this->current_game_state_->heroTurnPass();
   }
- this->current_game_state_->heroTurnPass();
+  else {
+    hero.decreaseSkillCooldown();
+    this->current_game_state_->heroTurnPass();
+  }
+}
+
+void Game::heroSkillCooldownDecreases(Hero &hero) {
+    if (hero.get_hero_type() == "knight" || hero.get_hero_type() == "mage") {
+        if (hero.get_skill_cooldown() == 2) {
+            return;
+        }
+        else {
+            hero.decreaseSkillCooldown();
+        }
+    }
+    else if (hero.get_hero_type() == "rogue") {
+        if (hero.get_skill_cooldown() == 1) {
+            return;
+        }
+        else {
+            hero.decreaseSkillCooldown();
+        }
+    }
 }
 
 void Game::initMonstersHealthBars() {
@@ -889,10 +942,27 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
         }
 
         if (hero_menu_position_ == 3) {
-          is_hero_turn = 1;
-          this->current_game_state_->heroTurnPass();
-          is_hero_turn = 0;
-          enter_pressed_hero_menu_ = false;
+          if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()) {
+            is_hero_turn = 1;
+            heroSkillCooldownDecreases(rogue_);
+            this->current_game_state_->heroTurnPass();
+            is_hero_turn = 0;
+            enter_pressed_hero_menu_ = false;
+          }
+          else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && knight_.isAlive()) {
+            is_hero_turn = 1;
+            heroSkillCooldownDecreases(knight_);
+            this->current_game_state_->heroTurnPass();
+            is_hero_turn = 0;
+            enter_pressed_hero_menu_ = false;
+          }
+          else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && mage_.isAlive()) {
+            is_hero_turn = 1;
+            heroSkillCooldownDecreases(mage_);
+            this->current_game_state_->heroTurnPass();
+            is_hero_turn = 0;
+            enter_pressed_hero_menu_ = false;
+          }
         }
 
         chooseDirection(0);
