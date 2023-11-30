@@ -60,7 +60,7 @@ class Game {
     void putItemInBoard(int position_y, int position_x, Item &item, float delta_time,sf::RectangleShape &tileShape);
 
     /// @brief Muda o tamanho das barras de vida dos heróis
-    void set_hero_health_bars(int damaged_hero, int full_hp, int current_hp);
+    void set_hero_health_bars(int damaged_hero, float full_hp, float current_hp);
 
     /// @brief Renderiza o tabuleiro com os personagens nele
     /// @param delta_time = tempo decorrido desde o ultimo clock/renderização
