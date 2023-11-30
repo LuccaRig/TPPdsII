@@ -104,6 +104,9 @@ class Game {
     /// @brief Realiza a habilidade de um herói que da dano aos monstros
     void heroUseDamageSkill(std::string hero_type, Hero &hero);
 
+    /// @brief Diminui o cooldown da skill dos heróis
+    void heroSkillCooldownDecreases(Hero &hero);
+
     /// @brief Determina a ação de cada monstro 
     /// @param monster: numero de monstros que serão movimentados
     /// @param delta_time: Tempo decorrido desde o ultimo clock 
