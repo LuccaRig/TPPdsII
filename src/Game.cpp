@@ -326,6 +326,7 @@ void Game::render(float delta_time) {
         }
         this->game_window_->draw(which_hero_);
         this->game_window_->draw(which_direction_);
+        this->game_window_->draw(skill_on_cooldown_);
     }
     if (my_hordes_.get_horde_number() == 1 || my_hordes_.get_horde_number() == 2) {
         this->game_window_->draw(monsters_);
@@ -618,6 +619,31 @@ void Game::heroSkillCooldownDecreases(Hero &hero) {
     }
 }
 
+bool Game::isSkillOnCooldown() {
+  if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && 
+      rogue_.get_skill_cooldown() != 1) return true;
+  else if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && 
+           mage_.get_skill_cooldown() != 2) return true;
+  else if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && 
+           knight_.get_skill_cooldown() != 2) return true;
+  return false;
+}
+
+void Game::writeCooldown(int is_on_cooldown) {
+  font_.loadFromFile("Resources/Retro Gaming.ttf");
+  skill_on_cooldown_.setFont(font_);
+  if (is_on_cooldown) {
+    skill_on_cooldown_.setString("Em Cooldown");
+    skill_on_cooldown_.setFillColor(sf::Color::White);
+  }
+  else if (!is_on_cooldown) {
+    skill_on_cooldown_.setString(" ");
+    skill_on_cooldown_.setFillColor(sf::Color::Transparent);
+  }
+  skill_on_cooldown_.setCharacterSize(20);
+  skill_on_cooldown_.setPosition(sf::Vector2f(600, 600));
+}
+
 void Game::initMonstersHealthBars() {
     font_.loadFromFile("Resources/Retro Gaming.ttf");
     monsters_.setFont(font_);
@@ -834,9 +860,18 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
         if (hero_menu_position_ < 3) {
           hero_menu_position_++;
           keyboard_pressed_hero_menu_ = true;
-          if (hero_menu_position_ == 1) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Red);
-          if (hero_menu_position_ == 2) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Blue);
-          if (hero_menu_position_ == 3) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Black);
+          if (hero_menu_position_ == 1) {
+            hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Red);
+            writeCooldown(0);
+          }
+          if (hero_menu_position_ == 2) {
+            hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Blue);
+            if (isSkillOnCooldown()) writeCooldown(1);
+          }
+          if (hero_menu_position_ == 3) {
+            hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Black);
+            writeCooldown(0);
+          }
           hero_menu_texts_[hero_menu_position_-1].setFillColor(sf::Color(64, 64, 64));
         }
         keyboard_pressed_hero_menu_ = false;
@@ -847,9 +882,18 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
         if (hero_menu_position_ > 0) {
           hero_menu_position_--;
           keyboard_pressed_hero_menu_ = true;
-          if (hero_menu_position_ == 0) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Green);
-          if (hero_menu_position_ == 1) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Red);
-          if (hero_menu_position_ == 2) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Blue);
+          if (hero_menu_position_ == 0) {
+            hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Green);
+            writeCooldown(0);
+          }
+          if (hero_menu_position_ == 1) {
+            hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Red);
+            writeCooldown(0);
+          }          
+          if (hero_menu_position_ == 2) {
+            hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Blue);
+            if (isSkillOnCooldown()) writeCooldown(1);
+          }          
           hero_menu_texts_[hero_menu_position_+1].setFillColor(sf::Color(64, 64, 64));
         }
         keyboard_pressed_hero_menu_ = false;
@@ -918,6 +962,7 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
         }
 
         if (hero_menu_position_ == 2) {
+          writeCooldown(0);
 
           if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()) {
             heroUseBuffSkill(2, "rogue", rogue_);
