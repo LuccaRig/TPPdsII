@@ -25,6 +25,7 @@ Hero::Hero(std::string hero_type) {
         hero_attack_ = 5;
         hero_special_attack_ = 30;
         hero_number_ = 0;
+        skill_cooldown_ = 2;
         
         hero_position_x_ = 2;
         hero_position_y_ = 2;
@@ -37,8 +38,9 @@ Hero::Hero(std::string hero_type) {
     else if (hero_type_ == "rogue"){
         hero_hp_ = hero_full_hp_ = 25;
         hero_attack_ = 8;
-        hero_special_attack_ = 1;
+        hero_special_attack_ = 5;
         hero_number_ = 2;
+        skill_cooldown_ = 1;
 
         hero_position_x_ = 3;
         hero_position_y_ = 2;
@@ -53,6 +55,7 @@ Hero::Hero(std::string hero_type) {
         hero_attack_ = 4;
         hero_special_attack_ = 10;
         hero_number_ = 1;
+        skill_cooldown_ = 2;
         
         hero_position_x_ = 1;
         hero_position_y_ = 2;
@@ -104,6 +107,18 @@ void Hero::set_hero_attack(int changed_attack) {
 
 int Hero::get_hero_special_attack() {
     return hero_special_attack_;
+}
+
+int Hero::get_skill_cooldown() {
+    return skill_cooldown_;
+}
+
+void Hero::restartSkillCooldown() {
+    skill_cooldown_ = 0;
+}
+
+void Hero::decreaseSkillCooldown() {
+    skill_cooldown_++;
 }
 
 void Hero::set_current_exp(int monster_exp, std::string hero_type) {
