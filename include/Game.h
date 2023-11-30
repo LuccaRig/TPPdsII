@@ -104,8 +104,14 @@ class Game {
     /// @brief Realiza a habilidade de um herói que da dano aos monstros
     void heroUseDamageSkill(std::string hero_type, Hero &hero);
 
-    /// @brief Diminui o cooldown da skill dos heróis
+    /// @brief Diminui o cooldown da habilidade dos heróis
     void heroSkillCooldownDecreases(Hero &hero);
+
+    /// @return Retorna se a habilidade do herói atual está em cooldown
+    bool isSkillOnCooldown();
+
+    /// @brief Escreve que a habilidade está em cooldown
+    void writeCooldown(int is_on_cooldown);
 
     /// @brief Determina a ação de cada monstro 
     /// @param monster: numero de monstros que serão movimentados
@@ -167,6 +173,8 @@ class Game {
 
     sf::Text which_hero_;
     sf::Text which_direction_;
+
+    sf::Text skill_on_cooldown_;
 
     //Barras de vida dos monstros
     sf::Text monsters_;
