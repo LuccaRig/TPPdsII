@@ -186,6 +186,11 @@ class Game {
     std::vector<sf::RectangleShape> monsters_health_bars_;
     std::vector<sf::Vector2f> monsters_health_bars_position_;
 
+    //Barra de vida do boss
+    sf::Text boss_;
+    sf::RectangleShape background_boss_health_bar_;
+    sf::RectangleShape boss_health_bar_;
+
     //Personagens dos jogadores:
     Hero mage_;
     Hero knight_;

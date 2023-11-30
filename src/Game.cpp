@@ -337,6 +337,11 @@ void Game::render(float delta_time) {
             this->game_window_->draw(it);
         }
     }
+    if (my_hordes_.get_horde_number() == 3) {
+        this->game_window_->draw(boss_);
+        this->game_window_->draw(background_boss_health_bar_);
+        this->game_window_->draw(boss_health_bar_);
+    }
     this->boardRender(delta_time);
     if(current_game_state_->isGameOver(rogue_, mage_, knight_)){
         this->gameOverRender();
@@ -663,10 +668,25 @@ void Game::initMonstersHealthBars() {
         background_monsters_health_bars_[i].setFillColor(sf::Color::Black);
         background_monsters_health_bars_[i].setPosition(monsters_health_bars_position_[i]);
     }
+
+
+    boss_.setFont(font_);
+    boss_.setString("Vida do Boss");
+    boss_.setCharacterSize(30);
+    boss_.setFillColor(sf::Color::White);
+    boss_.setPosition(sf::Vector2f(900, 20));
+
+    boss_health_bar_.setSize(sf::Vector2f(220, 30));
+    boss_health_bar_.setFillColor(sf::Color(128, 0, 0));
+    boss_health_bar_.setPosition(sf::Vector2f(900, 70));
+    background_boss_health_bar_.setSize(sf::Vector2f(220, 30));
+    background_boss_health_bar_.setFillColor(sf::Color::Black);
+    background_boss_health_bar_.setPosition(sf::Vector2f(900, 70));
 }
 
 void Game::setMonstersHealthBars(int damaged_monster, float full_hp, float current_hp) {
-    monsters_health_bars_[damaged_monster].setSize(sf::Vector2f(100*current_hp/full_hp, 20));
+    if(my_hordes_.get_horde_number() == 3 && damaged_monster == 8)  boss_health_bar_.setSize(sf::Vector2f(220*current_hp/full_hp, 30));
+    else monsters_health_bars_[damaged_monster].setSize(sf::Vector2f(100*current_hp/full_hp, 20));
 }
 
 void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock) {
