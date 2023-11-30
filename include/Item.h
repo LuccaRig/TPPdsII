@@ -24,6 +24,12 @@ class Item {
     /// construídos e nomeados dentro da própria função 
     std::string returnsRandomItem();
 
+    /// @return retorna verdadeiro se o item já foi coletado e falso se não 
+    bool itemWasUsed();
+
+    /// @brief chamada quando o item for usado
+    void set_item_to_used();
+
     /// @return retorna posição x do item
     int get_item_position_x();
 
@@ -39,6 +45,9 @@ class Item {
     /// @return retorna quantitativamente o efeito do item
     int get_item_effect();
 
+    /// @brief destrutor
+    ~Item();
+
 
   private:
     
@@ -46,10 +55,10 @@ class Item {
     int item_position_x_;
     int item_position_y_;
     int item_effect_;
+    bool item_used_;
 
     sf::Texture item_texture_;
     sf::Sprite item_sprite_;
-    
 };
 
 #endif // ITEM_H_
