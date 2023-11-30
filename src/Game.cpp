@@ -587,6 +587,7 @@ bool Game::isNextSkillOnCooldown() {
       mage_.get_skill_cooldown() != 2) return true;
   else if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" &&
            knight_.get_skill_cooldown() != 2) return true;
+
   return false;
 }
 
