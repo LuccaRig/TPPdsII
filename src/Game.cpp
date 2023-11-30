@@ -243,7 +243,7 @@ void Game::putItemInBoard(int position_y, int position_x, Item& item, float delt
    }
 }
 
-void Game::set_hero_health_bars(int hero, int full_hp, int current_hp) {
+void Game::set_hero_health_bars(int hero, float full_hp, float current_hp) {
     health_bars_[hero].setSize(sf::Vector2f(190*current_hp/full_hp, 30));
 }
 
