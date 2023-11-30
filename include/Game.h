@@ -110,6 +110,8 @@ class Game {
     /// @return Retorna se a habilidade do herói atual está em cooldown
     bool isSkillOnCooldown();
 
+    bool isNextSkillOnCooldown();
+
     /// @brief Escreve que a habilidade está em cooldown
     void writeCooldown(int is_on_cooldown);
 

@@ -607,18 +607,12 @@ void Game::heroUseDamageSkill(std::string hero_type, Hero &hero) {
 
 void Game::heroSkillCooldownDecreases(Hero &hero) {
     if (hero.get_hero_type() == "knight" || hero.get_hero_type() == "mage") {
-        if (hero.get_skill_cooldown() == 2) {
-            return;
-        }
-        else {
+        if (hero.get_skill_cooldown() < 2) {
             hero.decreaseSkillCooldown();
         }
     }
     else if (hero.get_hero_type() == "rogue") {
-        if (hero.get_skill_cooldown() == 1) {
-            return;
-        }
-        else {
+        if (hero.get_skill_cooldown() < 1) {
             hero.decreaseSkillCooldown();
         }
     }
@@ -630,6 +624,14 @@ bool Game::isSkillOnCooldown() {
   else if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && 
            mage_.get_skill_cooldown() != 2) return true;
   else if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && 
+           knight_.get_skill_cooldown() != 2) return true;
+  return false;
+}
+
+bool Game::isNextSkillOnCooldown() {
+  if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" &&
+      mage_.get_skill_cooldown() != 2) return true;
+  else if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" &&
            knight_.get_skill_cooldown() != 2) return true;
   return false;
 }
@@ -983,6 +985,7 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
 
         if (hero_menu_position_ == 2) {
           writeCooldown(0);
+          if (isNextSkillOnCooldown()) writeCooldown(1);
 
           if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()) {
             heroUseBuffSkill(2, "rogue", rogue_);
