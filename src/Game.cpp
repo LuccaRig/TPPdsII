@@ -147,6 +147,44 @@ void Game::gameOverCloseWindow(float delta_time, sf::Clock clock) {
     }
 }
 
+void Game::playerWinRender() {
+    sf::RectangleShape rectangle(sf::Vector2f(800, 200));
+    rectangle.setFillColor(sf::Color::Black);
+    rectangle.setOutlineColor(sf::Color::White);
+    rectangle.setOutlineThickness(2); 
+
+    rectangle.setPosition(200, 540);
+
+    font_.loadFromFile("Resources/Retro Gaming.ttf");
+    sf::Text game_over_text("\t\t  Parabens herois!\n Voces venceram a masmorra", font_, 40);
+    game_over_text.setFillColor(sf::Color::White);
+    sf::Text press_esc_quit("Aperte qualquer tecla para sair", font_, 20);
+    press_esc_quit.setFillColor(sf::Color::White);
+
+    sf::FloatRect textBounds = game_over_text.getLocalBounds();
+    game_over_text.setPosition(rectangle.getPosition().x + (rectangle.getSize().x - textBounds.width) / 2,
+                             rectangle.getPosition().y + (rectangle.getSize().y - textBounds.height) / 3);
+
+    sf::FloatRect textBounds2 = press_esc_quit.getLocalBounds();
+    press_esc_quit.setPosition(rectangle.getPosition().x + (rectangle.getSize().x - textBounds2.width) / 2,
+                             rectangle.getPosition().y + (rectangle.getSize().y - textBounds2.height) / 1.3);
+
+    this->game_window_->draw(rectangle);
+    this->game_window_->draw(game_over_text); 
+    this->game_window_->draw(press_esc_quit);
+}
+
+void Game::paleyrWinCloseWindow(float delta_time, sf::Clock clock) {
+    while(this->current_game_state_->playerVictory(my_hordes_) && 
+    this->game_window_->pollEvent(this->SFML_event_)) {
+        this->render(delta_time);
+        delta_time = clock.restart().asSeconds();
+        if(this->SFML_event_.type == sf::Event::Closed || this->SFML_event_.type == sf::Event::KeyPressed){
+            this->game_window_->close();
+        }
+    }
+}
+
 void Game::testIsClosed() {
     while(this->game_window_->pollEvent(this->SFML_event_)){
         if(this->SFML_event_.type == sf::Event::Closed){
@@ -281,7 +319,7 @@ void Game::render(float delta_time) {
         this->game_window_->draw(it);
     }
     if (current_game_state_->isPlayerTurn(rogue_.isAlive() + mage_.isAlive() + knight_.isAlive()) && 
-          !current_game_state_->isGameOver(rogue_, mage_, knight_)) {
+        !current_game_state_->isGameOver(rogue_, mage_, knight_) && !current_game_state_->playerVictory(my_hordes_)) {
         this->game_window_->draw(background_hero_menu_);
         for (auto it : hero_menu_texts_) {
             this->game_window_->draw(it);
@@ -299,8 +337,11 @@ void Game::render(float delta_time) {
         }
     }
     this->boardRender(delta_time);
-    if(this->current_game_state_->isGameOver(rogue_, mage_, knight_)){
+    if(current_game_state_->isGameOver(rogue_, mage_, knight_)){
         this->gameOverRender();
+    }
+    if(current_game_state_->playerVictory(my_hordes_)) {
+        this->playerWinRender();
     }
         
     this->game_window_->display();  
@@ -550,7 +591,7 @@ void Game::setMonstersHealthBars(int damaged_monster, float full_hp, float curre
 }
 
 void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock) {
-    if(rogue_.isAlive() || mage_.isAlive() || knight_.isAlive()){
+    if((rogue_.isAlive() || mage_.isAlive() || knight_.isAlive()) && !current_game_state_->playerVictory(my_hordes_)){
         
         if(this->my_hordes_.bossIsAlive()){
             this->my_hordes_.eyeSpawn(game_board_);
@@ -865,7 +906,7 @@ void Game::playerTurnControl(float delta_time, sf::Clock clock) {
     if (!init_hero_lvl_) heroFirstLevel();
     setHeroMenu();
     while(this->current_game_state_->isPlayerTurn(rogue_.isAlive() + mage_.isAlive() + knight_.isAlive()) && 
-                this->game_window_->isOpen()){
+                this->game_window_->isOpen() && !current_game_state_->playerVictory(my_hordes_)){
         this->heroNameTurn(current_game_state_->whichHeroTurn(rogue_, mage_, knight_));
         this->update();
         this->render(delta_time);
@@ -900,6 +941,7 @@ void Game::run(sf::Clock clock) {
         my_hordes_.createHordeEnemies(game_board_, rogue_, mage_, knight_);
         if (my_hordes_.get_horde_number() == 2 && my_hordes_.allEnemiesAreDead()) initMonstersHealthBars();
 
+        this->paleyrWinCloseWindow(delta_time, clock);
         //Se for GameOver a janela será fechada com qualquer tecla apertada
         this->gameOverCloseWindow(delta_time, clock);
 

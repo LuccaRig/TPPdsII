@@ -13,6 +13,7 @@
 #include "Board.h"
 #include "Hero.h"
 #include "Monster.h"
+#include "Enemies.h"
 
 
 class GameState{
@@ -35,6 +36,8 @@ class GameState{
     bool isPlayerTurn(int hero_greatest_turn);
 
     bool isGameOver(Hero &rogue, Hero &mage, Hero &knight);
+
+    bool playerVictory(Enemies &my_horde);
 
     /// @brief Serve para o jogo controlar a passagem de turnos dos herois
     /// @return Uma string dizendo o turno de qual heroi está ocorrendo no presente momento 

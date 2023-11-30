@@ -122,8 +122,12 @@ class Game {
     void monsterMove(int nearest_hero_number, int monster_number);
 
     void gameOverRender();
+    
+    void playerWinRender();
 
     void gameOverCloseWindow(float delta_time, sf::Clock clock);
+
+    void paleyrWinCloseWindow(float delta_time, sf::Clock clock);
 
   private:
     //Variables
