@@ -42,8 +42,7 @@ std::string Item::returnsRandomItem() {
     item_n[3] = "spellBuff";
     item_n[4] = "dmgBuff";
     // chance final de cair item vai ser 50%
-    srand((unsigned) time(NULL));
-	int random = 1 + rand()%20;
+	int random = 1 + rand()%4;
 
     if (random <= 4) {
         return item_n[random];
