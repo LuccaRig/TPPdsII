@@ -107,10 +107,10 @@
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
         else if (monster_type_ == "BOSS") {
-            monster_hp_ = monster_full_hp_ = 13;
+            monster_hp_ = monster_full_hp_ = 100;
             monster_dmg_ = 5;
             monster_exp_drop_ = 1;
-            monster_number_ = 0;
+            monster_number_ = 8;
 
             monster_position_x_ = 0;
             monster_position_y_ = 0;
@@ -162,7 +162,7 @@
 
     bool Monster::monsterIsDead() {
         if (monster_hp_ > 0) return false;
-        return true;
+        else return true;
     }
 
     int Monster::get_exp_drop() {

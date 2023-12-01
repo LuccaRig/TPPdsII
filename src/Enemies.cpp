@@ -12,9 +12,8 @@ Enemies::~Enemies() {
     }
 }
 
-int Enemies::get_horde_number()
-{
-    return horde_number_;
+int Enemies::get_horde_number() {
+        return horde_number_;
 }
 
 void Enemies::hordePass() {

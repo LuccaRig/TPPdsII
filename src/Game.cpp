@@ -149,6 +149,44 @@ void Game::gameOverCloseWindow(float delta_time, sf::Clock clock) {
     }
 }
 
+void Game::playerWinRender() {
+    sf::RectangleShape rectangle(sf::Vector2f(800, 200));
+    rectangle.setFillColor(sf::Color::Black);
+    rectangle.setOutlineColor(sf::Color::White);
+    rectangle.setOutlineThickness(2); 
+
+    rectangle.setPosition(200, 540);
+
+    font_.loadFromFile("Resources/Retro Gaming.ttf");
+    sf::Text game_over_text("\t\t  Parabens herois!\n Voces venceram a masmorra", font_, 40);
+    game_over_text.setFillColor(sf::Color::White);
+    sf::Text press_esc_quit("Aperte qualquer tecla para sair", font_, 20);
+    press_esc_quit.setFillColor(sf::Color::White);
+
+    sf::FloatRect textBounds = game_over_text.getLocalBounds();
+    game_over_text.setPosition(rectangle.getPosition().x + (rectangle.getSize().x - textBounds.width) / 2,
+                             rectangle.getPosition().y + (rectangle.getSize().y - textBounds.height) / 3);
+
+    sf::FloatRect textBounds2 = press_esc_quit.getLocalBounds();
+    press_esc_quit.setPosition(rectangle.getPosition().x + (rectangle.getSize().x - textBounds2.width) / 2,
+                             rectangle.getPosition().y + (rectangle.getSize().y - textBounds2.height) / 1.3);
+
+    this->game_window_->draw(rectangle);
+    this->game_window_->draw(game_over_text); 
+    this->game_window_->draw(press_esc_quit);
+}
+
+void Game::paleyrWinCloseWindow(float delta_time, sf::Clock clock) {
+    while(this->current_game_state_->playerVictory(my_hordes_) && 
+    this->game_window_->pollEvent(this->SFML_event_)) {
+        this->render(delta_time);
+        delta_time = clock.restart().asSeconds();
+        if(this->SFML_event_.type == sf::Event::Closed || this->SFML_event_.type == sf::Event::KeyPressed){
+            this->game_window_->close();
+        }
+    }
+}
+
 void Game::testIsClosed() {
     while(this->game_window_->pollEvent(this->SFML_event_)){
         if(this->SFML_event_.type == sf::Event::Closed){
@@ -210,7 +248,7 @@ void Game::putItemInBoard(int position_y, int position_x, Item& item,sf::Rectang
    }
 }
 
-void Game::set_hero_health_bars(int hero, int full_hp, int current_hp) {
+void Game::set_hero_health_bars(int hero, float full_hp, float current_hp) {
     health_bars_[hero].setSize(sf::Vector2f(190*current_hp/full_hp, 30));
 }
 
@@ -281,13 +319,14 @@ void Game::render(float delta_time) {
         this->game_window_->draw(it);
     }
     if (current_game_state_->isPlayerTurn(rogue_.isAlive() + mage_.isAlive() + knight_.isAlive()) && 
-          !current_game_state_->isGameOver(rogue_, mage_, knight_)) {
+        !current_game_state_->isGameOver(rogue_, mage_, knight_) && !current_game_state_->playerVictory(my_hordes_)) {
         this->game_window_->draw(background_hero_menu_);
         for (auto it : hero_menu_texts_) {
             this->game_window_->draw(it);
         }
         this->game_window_->draw(which_hero_);
         this->game_window_->draw(which_direction_);
+        this->game_window_->draw(skill_on_cooldown_);
     }
     if (my_hordes_.get_horde_number() == 1 || my_hordes_.get_horde_number() == 2) {
         this->game_window_->draw(monsters_);
@@ -298,9 +337,17 @@ void Game::render(float delta_time) {
             this->game_window_->draw(it);
         }
     }
+    if (my_hordes_.get_horde_number() == 3) {
+        this->game_window_->draw(boss_);
+        this->game_window_->draw(background_boss_health_bar_);
+        this->game_window_->draw(boss_health_bar_);
+    }
     this->boardRender(delta_time);
-    if(this->current_game_state_->isGameOver(rogue_, mage_, knight_)){
+    if(current_game_state_->isGameOver(rogue_, mage_, knight_)){
         this->gameOverRender();
+    }
+    if(current_game_state_->playerVictory(my_hordes_)) {
+        this->playerWinRender();
     }
         
     this->game_window_->display();  
@@ -343,7 +390,10 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                 case sf::Keyboard::Up:
                     pos_y = hero.get_hero_position_y();
                     pos_x = hero.get_hero_position_x();
-                    if ((pos_y-1) < 0 || !game_board_->get_tile_at(pos_x, (pos_y-1))->moveableTile()) continue;
+                    if ((pos_y-1) < 0 || !game_board_->get_tile_at(pos_x, (pos_y-1))->moveableTile()) {
+                        is_hero_turn = 0;
+                        break;
+                    }
                     hero.set_hero_position_y(pos_y-1);
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
 
@@ -358,7 +408,10 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                 case sf::Keyboard::Down:
                     pos_y = hero.get_hero_position_y();
                     pos_x = hero.get_hero_position_x();
-                    if ((pos_y+1) > 4 || !game_board_->get_tile_at(pos_x, (pos_y+1))->moveableTile()) continue;
+                    if ((pos_y+1) > 4 || !game_board_->get_tile_at(pos_x, (pos_y+1))->moveableTile()) {
+                        is_hero_turn = 0;
+                        break;
+                    }
                     hero.set_hero_position_y(pos_y+1);
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
 
@@ -373,7 +426,10 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                 case sf::Keyboard::Left:
                     pos_x = hero.get_hero_position_x();
                     pos_y = hero.get_hero_position_y();
-                    if ((pos_x-1) < 0 || !game_board_->get_tile_at((pos_x-1), pos_y)->moveableTile()) continue;
+                    if ((pos_x-1) < 0 || !game_board_->get_tile_at((pos_x-1), pos_y)->moveableTile()) {
+                        is_hero_turn = 0;
+                        break;
+                    }
                     hero.set_hero_position_x(pos_x-1);
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
 
@@ -388,7 +444,10 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                 case sf::Keyboard::Right:
                     pos_x = hero.get_hero_position_x();
                     pos_y = hero.get_hero_position_y();
-                    if ((pos_x+1) > 4 || !game_board_->get_tile_at((pos_x+1), pos_y)->moveableTile()) continue;
+                    if ((pos_x+1) > 4 || !game_board_->get_tile_at((pos_x+1), pos_y)->moveableTile()) {
+                        is_hero_turn = 0;
+                        break;
+                    }
                     hero.set_hero_position_x(pos_x+1);
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
 
@@ -597,21 +656,74 @@ void Game::heroUseDamageSkill(std::string hero_type, Hero &hero) {
 
 void Game::heroSkillCooldownDecreases(Hero &hero) {
     if (hero.get_hero_type() == "knight" || hero.get_hero_type() == "mage") {
-        if (hero.get_skill_cooldown() == 2) {
-            return;
-        }
-        else {
+        if (hero.get_skill_cooldown() < 2) {
             hero.decreaseSkillCooldown();
         }
     }
     else if (hero.get_hero_type() == "rogue") {
-        if (hero.get_skill_cooldown() == 1) {
-            return;
-        }
-        else {
+        if (hero.get_skill_cooldown() < 1) {
             hero.decreaseSkillCooldown();
         }
     }
+}
+
+bool Game::isSkillOnCooldown() {
+  if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && 
+      rogue_.get_skill_cooldown() != 1) return true;
+  else if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && 
+           mage_.get_skill_cooldown() != 2) return true;
+  else if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && 
+           knight_.get_skill_cooldown() != 2) return true;
+  return false;
+}
+
+bool Game::isNextSkillOnCooldown() {
+  if (rogue_.isAlive() && mage_.isAlive() && knight_.isAlive()) {
+    if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" &&
+        mage_.get_skill_cooldown() != 2) return true;
+    else if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" &&
+             knight_.get_skill_cooldown() != 2) return true;
+    else if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" &&
+             rogue_.get_skill_cooldown() != 1) return true;
+    return false;
+  }
+  else if (!rogue_.isAlive() && mage_.isAlive() && knight_.isAlive()) {
+    if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" &&
+        knight_.get_skill_cooldown() != 2) return true;
+    else if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" &&
+             mage_.get_skill_cooldown() != 2) return true;
+    return false;
+  }
+  else if (rogue_.isAlive() && !mage_.isAlive() && knight_.isAlive()) {
+    if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" &&
+        knight_.get_skill_cooldown() != 2) return true;
+    else if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" &&
+             rogue_.get_skill_cooldown() != 1) return true;
+    return false;
+  }
+    else if (rogue_.isAlive() && mage_.isAlive() && !knight_.isAlive()) {
+    if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" &&
+        mage_.get_skill_cooldown() != 2) return true;
+    else if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" &&
+             rogue_.get_skill_cooldown() != 1) return true;
+    return false;
+  }
+  return false;
+}
+
+void Game::writeCooldown(int is_on_cooldown) {
+  font_.loadFromFile("Resources/Retro Gaming.ttf");
+  skill_on_cooldown_.setFont(font_);
+  if (is_on_cooldown) {
+    skill_on_cooldown_.setString("Em Cooldown");
+    skill_on_cooldown_.setFillColor(sf::Color::White);
+  }
+  else if (!is_on_cooldown) {
+    skill_on_cooldown_.setString(" ");
+    skill_on_cooldown_.setFillColor(sf::Color::Transparent);
+  }
+  skill_on_cooldown_.setCharacterSize(20);
+  skill_on_cooldown_.setPosition(sf::Vector2f(600, 600));
 }
 
 void Game::initMonstersHealthBars() {
@@ -633,10 +745,25 @@ void Game::initMonstersHealthBars() {
         background_monsters_health_bars_[i].setFillColor(sf::Color::Black);
         background_monsters_health_bars_[i].setPosition(monsters_health_bars_position_[i]);
     }
+
+
+    boss_.setFont(font_);
+    boss_.setString("Vida do Boss");
+    boss_.setCharacterSize(30);
+    boss_.setFillColor(sf::Color::White);
+    boss_.setPosition(sf::Vector2f(900, 20));
+
+    boss_health_bar_.setSize(sf::Vector2f(220, 30));
+    boss_health_bar_.setFillColor(sf::Color(128, 0, 0));
+    boss_health_bar_.setPosition(sf::Vector2f(900, 70));
+    background_boss_health_bar_.setSize(sf::Vector2f(220, 30));
+    background_boss_health_bar_.setFillColor(sf::Color::Black);
+    background_boss_health_bar_.setPosition(sf::Vector2f(900, 70));
 }
 
 void Game::setMonstersHealthBars(int damaged_monster, float full_hp, float current_hp) {
-    monsters_health_bars_[damaged_monster].setSize(sf::Vector2f(100*current_hp/full_hp, 20));
+    if(my_hordes_.get_horde_number() == 3 && damaged_monster == 8)  boss_health_bar_.setSize(sf::Vector2f(220*current_hp/full_hp, 30));
+    else monsters_health_bars_[damaged_monster].setSize(sf::Vector2f(100*current_hp/full_hp, 20));
 }
 
 void Game::monsterMove(int enemy_number, int distance_x, int distance_y, int pos_x, int pos_y, std::string direction, bool recursion) {
@@ -723,7 +850,7 @@ void Game::monsterMove(int enemy_number, int distance_x, int distance_y, int pos
 
 
 void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock) {
-    if(rogue_.isAlive() || mage_.isAlive() || knight_.isAlive()){
+    if((rogue_.isAlive() || mage_.isAlive() || knight_.isAlive()) && !current_game_state_->playerVictory(my_hordes_)){
         
         if(this->my_hordes_.bossIsAlive()){
             this->my_hordes_.eyeSpawn(game_board_);
@@ -915,9 +1042,18 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
         if (hero_menu_position_ < 3) {
           hero_menu_position_++;
           keyboard_pressed_hero_menu_ = true;
-          if (hero_menu_position_ == 1) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Red);
-          if (hero_menu_position_ == 2) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Blue);
-          if (hero_menu_position_ == 3) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Black);
+          if (hero_menu_position_ == 1) {
+            hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Red);
+            writeCooldown(0);
+          }
+          if (hero_menu_position_ == 2) {
+            hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Blue);
+            if (isSkillOnCooldown()) writeCooldown(1);
+          }
+          if (hero_menu_position_ == 3) {
+            hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Black);
+            writeCooldown(0);
+          }
           hero_menu_texts_[hero_menu_position_-1].setFillColor(sf::Color(64, 64, 64));
         }
         keyboard_pressed_hero_menu_ = false;
@@ -928,9 +1064,18 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
         if (hero_menu_position_ > 0) {
           hero_menu_position_--;
           keyboard_pressed_hero_menu_ = true;
-          if (hero_menu_position_ == 0) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Green);
-          if (hero_menu_position_ == 1) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Red);
-          if (hero_menu_position_ == 2) hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Blue);
+          if (hero_menu_position_ == 0) {
+            hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Green);
+            writeCooldown(0);
+          }
+          if (hero_menu_position_ == 1) {
+            hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Red);
+            writeCooldown(0);
+          }          
+          if (hero_menu_position_ == 2) {
+            hero_menu_texts_[hero_menu_position_].setFillColor(sf::Color::Blue);
+            if (isSkillOnCooldown()) writeCooldown(1);
+          }          
           hero_menu_texts_[hero_menu_position_+1].setFillColor(sf::Color(64, 64, 64));
         }
         keyboard_pressed_hero_menu_ = false;
@@ -999,6 +1144,10 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
         }
 
         if (hero_menu_position_ == 2) {
+          writeCooldown(0);
+          if (isNextSkillOnCooldown() && !this->current_game_state_->isLastHeroTurn(rogue_.isAlive()+mage_.isAlive()+knight_.isAlive()))  {
+            writeCooldown(1);
+          }
 
           if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()) {
             heroUseBuffSkill(2, "rogue", rogue_);
@@ -1057,7 +1206,7 @@ void Game::playerTurnControl(float delta_time, sf::Clock clock) {
     if (!init_hero_lvl_) heroFirstLevel();
     setHeroMenu();
     while(this->current_game_state_->isPlayerTurn(rogue_.isAlive() + mage_.isAlive() + knight_.isAlive()) && 
-                this->game_window_->isOpen()){
+                this->game_window_->isOpen() && !current_game_state_->playerVictory(my_hordes_)){
         this->heroNameTurn(current_game_state_->whichHeroTurn(rogue_, mage_, knight_));
         this->update();
         this->render(delta_time);
@@ -1092,6 +1241,7 @@ void Game::run(sf::Clock clock) {
         my_hordes_.createHordeEnemies(game_board_, rogue_, mage_, knight_);
         if (my_hordes_.get_horde_number() == 2 && my_hordes_.allEnemiesAreDead()) initMonstersHealthBars();
 
+        this->paleyrWinCloseWindow(delta_time, clock);
         //Se for GameOver a janela será fechada com qualquer tecla apertada
         this->gameOverCloseWindow(delta_time, clock);
 

@@ -16,6 +16,11 @@ void GameState::heroTurnRestart() {
     hero_turn_count_ = 0;
 } 
 
+bool GameState::isLastHeroTurn(int hero_greatest_turn) {
+    if (hero_turn_count_ == hero_greatest_turn-1) return true;
+    return false;
+}
+
 bool GameState::isPlayerTurn(int hero_greatest_turn) {
     if(hero_turn_count_ < hero_greatest_turn){
         return true;
@@ -29,6 +34,11 @@ bool GameState::isPlayerTurn(int hero_greatest_turn) {
 bool GameState::isGameOver(Hero &rogue, Hero &mage, Hero &knight) {
     if(rogue.isAlive() || mage.isAlive() || knight.isAlive()) return false;
     else return true;
+}
+
+bool GameState::playerVictory(Enemies &my_horde) {
+  if(my_horde.get_horde_number() == 3 && my_horde.enemy(0)->monsterIsDead()) return true;
+  else return false;
 }
 
 std::string GameState::whichHeroTurn(Hero &rogue, Hero &mage, Hero &knight) {

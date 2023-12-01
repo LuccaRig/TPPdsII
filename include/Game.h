@@ -60,7 +60,7 @@ class Game {
     void putItemInBoard(int position_y, int position_x, Item &item, sf::RectangleShape &tileShape);
 
     /// @brief Muda o tamanho das barras de vida dos heróis
-    void set_hero_health_bars(int damaged_hero, int full_hp, int current_hp);
+    void set_hero_health_bars(int damaged_hero, float full_hp, float current_hp);
 
     /// @brief Renderiza o tabuleiro com os personagens nele
     /// @param delta_time = tempo decorrido desde o ultimo clock/renderização
@@ -104,7 +104,7 @@ class Game {
     /// @brief Realiza a habilidade de um herói que da dano aos monstros
     void heroUseDamageSkill(std::string hero_type, Hero &hero);
 
-    /// @brief Diminui o cooldown da skill dos heróis
+    /// @brief Diminui o cooldown da habilidade dos heróis
     void heroSkillCooldownDecreases(Hero &hero);
 
     /// @brief decide a movimentação em uma direção específica, função auxiliar a monsterTakeAction
@@ -112,6 +112,14 @@ class Game {
     /// @param distance_ distância do inimigo ao herói mais próximo em uma direção específica
     /// @param order_of_recursion a função poderá ser recursiva mas só se a ordem for igual a 0
     void monsterMove(int enemy_number, int distance_x, int distance_y, int pos_x, int pos_y, std::string direction, bool rescursion);
+ 
+    /// @return Retorna se a habilidade do herói atual está em cooldown
+    bool isSkillOnCooldown();
+
+    bool isNextSkillOnCooldown();
+
+    /// @brief Escreve que a habilidade está em cooldown
+    void writeCooldown(int is_on_cooldown);
 
     /// @brief Determina a ação de cada monstro 
     /// @param monster: numero de monstros que serão movimentados
@@ -126,11 +134,15 @@ class Game {
     void setMonstersHealthBars(int damaged_monster, float full_hp, float current_hp);
 
     void gameOverRender();
+    
+    void playerWinRender();
 
     void gameOverCloseWindow(float delta_time, sf::Clock clock);
     
     /// @brief aplica efeito do item no herói
     void applyItemEffect(int pos_x, int pos_y, Hero& hero);
+
+    void paleyrWinCloseWindow(float delta_time, sf::Clock clock);
 
   private:
     //Variables
@@ -172,11 +184,18 @@ class Game {
     sf::Text which_hero_;
     sf::Text which_direction_;
 
+    sf::Text skill_on_cooldown_;
+
     //Barras de vida dos monstros
     sf::Text monsters_;
     std::vector<sf::RectangleShape> background_monsters_health_bars_;
     std::vector<sf::RectangleShape> monsters_health_bars_;
     std::vector<sf::Vector2f> monsters_health_bars_position_;
+
+    //Barra de vida do boss
+    sf::Text boss_;
+    sf::RectangleShape background_boss_health_bar_;
+    sf::RectangleShape boss_health_bar_;
 
     //Personagens dos jogadores:
     Hero mage_;

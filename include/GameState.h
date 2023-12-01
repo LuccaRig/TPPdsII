@@ -13,6 +13,7 @@
 #include "Board.h"
 #include "Hero.h"
 #include "Monster.h"
+#include "Enemies.h"
 
 
 class GameState{
@@ -30,11 +31,16 @@ class GameState{
     /// @brief zera o contador dos turnos dos heróis
     void heroTurnRestart();
 
+    /// @return Retorna se é o turno do último herói do jogador
+    bool isLastHeroTurn(int hero_greatest_turn);
+
     /// @brief Enquanto o contador de turnos dos herois for menor que um valor definido
     /// essa função retorna true 
     bool isPlayerTurn(int hero_greatest_turn);
 
     bool isGameOver(Hero &rogue, Hero &mage, Hero &knight);
+
+    bool playerVictory(Enemies &my_horde);
 
     /// @brief Serve para o jogo controlar a passagem de turnos dos herois
     /// @return Uma string dizendo o turno de qual heroi está ocorrendo no presente momento 
