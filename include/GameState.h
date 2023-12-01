@@ -31,6 +31,9 @@ class GameState{
     /// @brief zera o contador dos turnos dos heróis
     void heroTurnRestart();
 
+    /// @return Retorna se é o turno do primeiro herói do jogador
+    bool isFirstHeroTurn();
+
     /// @brief Enquanto o contador de turnos dos herois for menor que um valor definido
     /// essa função retorna true 
     bool isPlayerTurn(int hero_greatest_turn);
