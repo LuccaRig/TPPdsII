@@ -291,9 +291,6 @@ void Game::boardRender(float delta_time) {
             for(int k = 0; k < my_hordes_.hordeSize(); ++k) {
                 putMonsterInBoard(i, j, *(my_hordes_.enemy(k)), delta_time, tileShape);
             }
-            // for(unsigned int i = 0; i < items_.size(); i++) {
-            //     putItemInBoard(i, j, *(items_[i]), tileShape);
-            // }
             for (auto& item_itr : items_) {
                 putItemInBoard(i, j, *(item_itr), tileShape);
             }
@@ -353,8 +350,10 @@ void Game::applyItemEffect(int x, int y, Hero& hero) {
     auto n = items_.begin();
     for (auto it = items_.begin(); it < items_.end(); it++) {
             if (((*it)->get_item_position_x() == x) && ((*it)->get_item_position_y()) == y) {
-                n = it;
-                break;
+                if(!(*it)->itemWasUsed()) {
+                    n = it;
+                    break;
+                }
             }
     }
     (*n)->set_item_to_used();
@@ -1204,7 +1203,9 @@ void Game::run(sf::Clock clock) {
         my_hordes_.createHordeEnemies(items_, game_board_, rogue_, mage_, knight_);
         if (my_hordes_.get_horde_number() == 2 && my_hordes_.allEnemiesAreDead()) initMonstersHealthBars();
 
+        //Se o jogador vencer o jogo a janela será fechada com qualquer tecla apertada
         this->paleyrWinCloseWindow(delta_time, clock);
+        
         //Se for GameOver a janela será fechada com qualquer tecla apertada
         this->gameOverCloseWindow(delta_time, clock);
 
