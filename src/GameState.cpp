@@ -16,8 +16,8 @@ void GameState::heroTurnRestart() {
     hero_turn_count_ = 0;
 } 
 
-bool GameState::isFirstHeroTurn() {
-    if (hero_turn_count_ == 0) return true;
+bool GameState::isLastHeroTurn(int hero_greatest_turn) {
+    if (hero_turn_count_ == hero_greatest_turn-1) return true;
     return false;
 }
 
