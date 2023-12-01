@@ -356,9 +356,11 @@ void Game::render(float delta_time) {
 void Game::applyItemEffect(int x, int y, Hero& hero) {
     int n = 0;
     for (int i = 0; i < game_board_->get_number_of_items(); i++) {
-        if ((items_[i]->get_item_position_x() == x) && (items_[i]->get_item_position_y()) == y) {
-            n = i;            
-            break;
+        if (!(items_[i]->itemWasUsed())) {
+            if ((items_[i]->get_item_position_x() == x) && (items_[i]->get_item_position_y()) == y) {
+                n = i;            
+                break;
+            }
         }
     }
     items_[n]->set_item_to_used();
