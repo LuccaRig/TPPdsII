@@ -19,12 +19,6 @@ class Board{
     /// @return Retorna o estado de algum Tile em uma posição específica 
     Tile* get_tile_at(int selected_line, int selected_column);
 
-    int get_number_of_items();
-
-    void set_number_of_items(int n);
-
-    void initializeNumberOfItems();
-
   private:
 
     /// @brief Matriz que armazena os Tiles, cada Tile tem um conteúdo para distinguir
