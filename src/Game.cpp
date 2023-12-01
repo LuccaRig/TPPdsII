@@ -380,8 +380,6 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();
 
-        heroSkillCooldownDecreases(hero);
-
         if(this->SFML_event_.type == sf::Event::Closed){
             this->game_window_->close();
         }
@@ -401,6 +399,7 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                         applyItemEffect(pos_x, pos_y-1, hero);
                     }
                     game_board_->get_tile_at(pos_x, (pos_y-1))->setObjectInTile("hero");
+                    heroSkillCooldownDecreases(hero);
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -419,6 +418,7 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                         applyItemEffect(pos_x, pos_y+1, hero);
                     }
                     game_board_->get_tile_at(pos_x, (pos_y+1))->setObjectInTile("hero");
+                    heroSkillCooldownDecreases(hero);
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -437,6 +437,7 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                         applyItemEffect(pos_x-1, pos_y, hero);
                     }
                     game_board_->get_tile_at((pos_x-1), pos_y)->setObjectInTile("hero");
+                    heroSkillCooldownDecreases(hero);
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -455,6 +456,7 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                         applyItemEffect(pos_x+1, pos_y, hero);
                     }
                     game_board_->get_tile_at((pos_x+1), pos_y)->setObjectInTile("hero");
+                    heroSkillCooldownDecreases(hero);
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -475,8 +477,6 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
         Monster* monster_to_be_attacked;
         this->render(delta_time);
         delta_time = clock.restart().asSeconds();
-
-        heroSkillCooldownDecreases(hero);
 
         if(this->SFML_event_.type == sf::Event::Closed){
             this->game_window_->close();
@@ -501,7 +501,8 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     }
                     setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                             monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
-
+                    
+                    heroSkillCooldownDecreases(hero);
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -525,6 +526,7 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                             monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
 
+                    heroSkillCooldownDecreases(hero);
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -548,6 +550,7 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                             monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
                 
+                    heroSkillCooldownDecreases(hero);
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
@@ -571,6 +574,7 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
                     setMonstersHealthBars(monster_to_be_attacked->get_monster_number(), 
                                             monster_to_be_attacked->get_monster_full_hp(), monster_to_be_attacked->get_monster_hp());
 
+                    heroSkillCooldownDecreases(hero);
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
                     break;
