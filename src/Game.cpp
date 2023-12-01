@@ -999,7 +999,9 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
 
         if (hero_menu_position_ == 2) {
           writeCooldown(0);
-          if (isNextSkillOnCooldown()) writeCooldown(1);
+          if (isNextSkillOnCooldown() && !this->current_game_state_->isFirstHeroTurn())  {
+            writeCooldown(1);
+          }
 
           if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()) {
             heroUseBuffSkill(2, "rogue", rogue_);
