@@ -57,7 +57,7 @@ class Game {
 
     void putMonsterInBoard(int position_y, int position_x, Monster &monster, float delta_time,sf::RectangleShape &tileShape);
 
-    void putItemInBoard(int position_y, int position_x, Item &item, float delta_time,sf::RectangleShape &tileShape);
+    void putItemInBoard(int position_y, int position_x, Item &item, sf::RectangleShape &tileShape);
 
     /// @brief Muda o tamanho das barras de vida dos heróis
     void set_hero_health_bars(int damaged_hero, int full_hp, int current_hp);
@@ -107,6 +107,12 @@ class Game {
     /// @brief Diminui o cooldown da skill dos heróis
     void heroSkillCooldownDecreases(Hero &hero);
 
+    /// @brief decide a movimentação em uma direção específica, função auxiliar a monsterTakeAction
+    /// @param enemy_number número do inimigo que vai se movimentar
+    /// @param distance_ distância do inimigo ao herói mais próximo em uma direção específica
+    /// @param order_of_recursion a função poderá ser recursiva mas só se a ordem for igual a 0
+    void monsterMove(int enemy_number, int distance_x, int distance_y, int pos_x, int pos_y, std::string direction, bool rescursion);
+
     /// @brief Determina a ação de cada monstro 
     /// @param monster: numero de monstros que serão movimentados
     /// @param delta_time: Tempo decorrido desde o ultimo clock 
@@ -119,14 +125,12 @@ class Game {
     /// @brief Muda o tamanho das barras de vida dos monstros
     void setMonstersHealthBars(int damaged_monster, float full_hp, float current_hp);
 
-    /// @brief função auxiliar a monsterTakeAction, 
-    /// @param nearest_hero_number identifica qual herói será atacado
-    /// @param monster_number identifica que monstro vai atacar
-    void monsterMove(int nearest_hero_number, int monster_number);
-
     void gameOverRender();
 
     void gameOverCloseWindow(float delta_time, sf::Clock clock);
+    
+    /// @brief aplica efeito do item no herói
+    void applyItemEffect(int pos_x, int pos_y, Hero& hero);
 
   private:
     //Variables

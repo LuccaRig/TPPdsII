@@ -38,6 +38,9 @@ class Hero {
     /// @brief Altera o dano atual do herói
     void set_hero_attack(int changed_attack);
 
+    /// @brief soma o parâmetro change ao ataque especial do herói
+    void set_hero_special_attack(int change);
+
     /// @return Retorna o ataque especial do herói
     int get_hero_special_attack();
 

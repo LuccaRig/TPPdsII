@@ -40,7 +40,7 @@ class Item {
     std::string get_item_type();
 
     /// @return retorna o sprite do item
-    sf::Sprite get_item_sprite();
+    sf::Sprite& get_item_sprite();
 
     /// @return retorna quantitativamente o efeito do item
     int get_item_effect();

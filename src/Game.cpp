@@ -35,10 +35,12 @@ Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue") {
 
     this->initWindow();
     this->current_game_state_ = new GameState();
-    //game_board_->initializeNumberOfItems();
-    //game_board_->set_number_of_items(2);
-    //items_.push_back(std::unique_ptr<Item> (new Item(2, 2)));
-    //items_.push_back(std::unique_ptr<Item> (new Item(1, 2)));
+    game_board_->initializeNumberOfItems();
+    game_board_->set_number_of_items(3);
+    items_.push_back(std::unique_ptr<Item> (new Item(2, 3)));
+    items_.push_back(std::unique_ptr<Item> (new Item(4, 3)));
+    items_.push_back(std::unique_ptr<Item> (new Item(3, 4)));
+    // items_.push_back(std::unique_ptr<Item> (new Item(1, 1)));
 }
 
 Game::~Game() {
@@ -193,14 +195,17 @@ void Game::putMonsterInBoard(int position_x, int position_y, Monster &monster, f
     }
 }
 
-void Game::putItemInBoard(int position_y, int position_x, Item& item, float delta_time,sf::RectangleShape &tileShape) {
-   if (item.get_item_position_x() < 5 && item.get_item_position_y() < 5) {
-       if (item.get_item_type() != "empty") {
-       game_board_->get_tile_at(position_x, position_y)->setObjectInTile("item");
-        item.get_item_sprite().setScale(3.f, 3.f);
-        item.get_item_sprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - item.get_item_sprite().getLocalBounds().width*3) / 2,
-                                          tileShape.getPosition().y + (tileShape.getSize().y - item.get_item_sprite().getLocalBounds().height*3) / 2);
-        this->game_window_->draw(item.get_item_sprite());
+void Game::putItemInBoard(int position_y, int position_x, Item& item,sf::RectangleShape &tileShape) {
+    if (item.itemWasUsed()) return;
+    if (position_x == item.get_item_position_x() && position_y == item.get_item_position_y()) {
+        if (item.get_item_position_x() < 5 && item.get_item_position_y() < 5) {
+            if (item.get_item_type() != "empty") {
+            game_board_->get_tile_at(position_x, position_y)->setObjectInTile("item");
+                item.get_item_sprite().setScale(3.f, 3.f);
+                item.get_item_sprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - item.get_item_sprite().getLocalBounds().width*3) / 2,
+                                                tileShape.getPosition().y + (tileShape.getSize().y - item.get_item_sprite().getLocalBounds().height*3) / 2);
+                this->game_window_->draw(item.get_item_sprite());
+            }
        }
    }
 }
@@ -255,15 +260,10 @@ void Game::boardRender(float delta_time) {
             for(int k = 0; k < my_hordes_.hordeSize(); ++k) {
                 putMonsterInBoard(i, j, *(my_hordes_.enemy(k)), delta_time, tileShape);
             }
-           // if (game_board_->get_number_of_items() > 0) {
-                // putItemInBoard(items_[0].get()->get_item_position_x(), items_[0]->get_item_position_y(), *(items_[0].get()), delta_time, tileShape);
-                // putItemInBoard(items_[1].get()->get_item_position_x(), items_[1]->get_item_position_y(), *(items_[1].get()), delta_time, tileShape);
-                // putItemInBoard(1, 1, *(items_[1].get()), delta_time, tileShape);
-
-                // for (int m = 0; m < game_board_->get_number_of_items(); m++) {
-                //     putItemInBoard(items_[m]->get_item_position_x(), items_[m]->get_item_position_y(), items_[m], delta_time, tileShape);
-                // }
-           // }
+            
+            for (int m = 0; m < game_board_->get_number_of_items(); m++) {
+                putItemInBoard(j, i, *(items_[m].get()), tileShape);
+            }
         }
     }
 }
@@ -306,6 +306,27 @@ void Game::render(float delta_time) {
     this->game_window_->display();  
 }
 
+void Game::applyItemEffect(int x, int y, Hero& hero) {
+    int n = 0;
+    for (int i = 0; i < game_board_->get_number_of_items(); i++) {
+        if ((items_[i]->get_item_position_x() == x) && (items_[i]->get_item_position_y()) == y) {
+            n = i;            
+            break;
+        }
+    }
+    items_[n]->set_item_to_used();
+    std::string item_type = items_[n]->get_item_type();
+    int item_effect = items_[n]->get_item_effect();
+    if (item_type == "heal") {
+        hero.set_hero_hp(-item_effect);
+        set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
+    } else if (item_type == "dmgBuff") {
+        hero.set_hero_attack(item_effect);
+    } else if (item_type == "spellBuff") {
+        hero.set_hero_special_attack(item_effect);
+    }
+}
+
 void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
     while((this->game_window_->pollEvent(this->SFML_event_) && this->game_window_->isOpen()) || is_hero_turn){
         int pos_x = 0, pos_y = 0;
@@ -325,6 +346,10 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                     if ((pos_y-1) < 0 || !game_board_->get_tile_at(pos_x, (pos_y-1))->moveableTile()) continue;
                     hero.set_hero_position_y(pos_y-1);
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
+
+                    if (game_board_->get_tile_at(pos_x, pos_y-1)->getObjectInTile() == "item") {
+                        applyItemEffect(pos_x, pos_y-1, hero);
+                    }
                     game_board_->get_tile_at(pos_x, (pos_y-1))->setObjectInTile("hero");
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
@@ -336,6 +361,10 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                     if ((pos_y+1) > 4 || !game_board_->get_tile_at(pos_x, (pos_y+1))->moveableTile()) continue;
                     hero.set_hero_position_y(pos_y+1);
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
+
+                    if (game_board_->get_tile_at(pos_x, pos_y+1)->getObjectInTile() == "item") {
+                        applyItemEffect(pos_x, pos_y+1, hero);
+                    }
                     game_board_->get_tile_at(pos_x, (pos_y+1))->setObjectInTile("hero");
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
@@ -347,6 +376,10 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                     if ((pos_x-1) < 0 || !game_board_->get_tile_at((pos_x-1), pos_y)->moveableTile()) continue;
                     hero.set_hero_position_x(pos_x-1);
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
+
+                    if (game_board_->get_tile_at(pos_x-1, pos_y)->getObjectInTile() == "item") {
+                        applyItemEffect(pos_x-1, pos_y, hero);
+                    }
                     game_board_->get_tile_at((pos_x-1), pos_y)->setObjectInTile("hero");
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
@@ -358,6 +391,10 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                     if ((pos_x+1) > 4 || !game_board_->get_tile_at((pos_x+1), pos_y)->moveableTile()) continue;
                     hero.set_hero_position_x(pos_x+1);
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
+
+                    if (game_board_->get_tile_at(pos_x+1, pos_y)->getObjectInTile() == "item") {
+                        applyItemEffect(pos_x+1, pos_y, hero);
+                    }
                     game_board_->get_tile_at((pos_x+1), pos_y)->setObjectInTile("hero");
                     this->current_game_state_->heroTurnPass();
                     is_hero_turn = 0;
@@ -602,6 +639,89 @@ void Game::setMonstersHealthBars(int damaged_monster, float full_hp, float curre
     monsters_health_bars_[damaged_monster].setSize(sf::Vector2f(100*current_hp/full_hp, 20));
 }
 
+void Game::monsterMove(int enemy_number, int distance_x, int distance_y, int pos_x, int pos_y, std::string direction, bool recursion) {
+    if (direction == "x") {
+        if ((distance_x == 0) && !(recursion)) {
+            if (game_board_->get_tile_at((pos_x+1), pos_y)->moveableTile() && 
+                game_board_->get_tile_at((pos_x+1), pos_y)->getObjectInTile() != "item") {
+                sf::sleep(sf::seconds(0.5));
+                my_hordes_.enemy(enemy_number)->set_monster_position_x((pos_x+1));
+                game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
+                game_board_->get_tile_at((pos_x+1), pos_y)->setObjectInTile("monster");
+            } else if (game_board_->get_tile_at((pos_x-1), pos_y)->moveableTile() && 
+                game_board_->get_tile_at((pos_x-1), pos_y)->getObjectInTile() != "item") {
+                sf::sleep(sf::seconds(0.5));
+                my_hordes_.enemy(enemy_number)->set_monster_position_x((pos_x-1));
+                game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
+                game_board_->get_tile_at((pos_x-1), pos_y)->setObjectInTile("monster");
+            }
+        }
+        else if (distance_x > 0) {
+            if (game_board_->get_tile_at((pos_x-1), pos_y)->moveableTile()) {
+                if ((game_board_->get_tile_at((pos_x-1), pos_y)->getObjectInTile() == "item") && recursion) {
+                    monsterMove(enemy_number, distance_x, distance_y, pos_x, pos_y, "y", false);
+                } else if (game_board_->get_tile_at((pos_x-1), pos_y)->getObjectInTile() != "item") {
+                    sf::sleep(sf::seconds(0.5));
+                    my_hordes_.enemy(enemy_number)->set_monster_position_x((pos_x-1));
+                    game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
+                    game_board_->get_tile_at((pos_x-1), pos_y)->setObjectInTile("monster");
+                }
+            }
+        } else if (distance_x < 0) {
+            if (game_board_->get_tile_at((pos_x+1), pos_y)->moveableTile()) {
+                if ((game_board_->get_tile_at((pos_x+1), pos_y)->getObjectInTile() == "item") && recursion) {
+                    monsterMove(enemy_number, distance_x, distance_y, pos_x, pos_y, "y", false);
+                } else if (game_board_->get_tile_at((pos_x+1), pos_y)->getObjectInTile() != "item") {
+                    sf::sleep(sf::seconds(0.5));
+                    my_hordes_.enemy(enemy_number)->set_monster_position_x(pos_x+1);
+                    game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
+                    game_board_->get_tile_at((pos_x+1), pos_y)->setObjectInTile("monster");
+                }
+            }
+        }
+        } else if (direction == "y") {
+            if ((distance_y == 0) && !(recursion)) {
+            if (game_board_->get_tile_at(pos_x, (pos_y+1))->moveableTile() && 
+            game_board_->get_tile_at(pos_x, (pos_y+1))->getObjectInTile() != "item") {
+                sf::sleep(sf::seconds(0.5));
+                my_hordes_.enemy(enemy_number)->set_monster_position_y((pos_y+1));
+                game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
+                game_board_->get_tile_at(pos_x, (pos_y+1))->setObjectInTile("monster");
+            } else if (game_board_->get_tile_at(pos_x, (pos_y-1))->moveableTile() && 
+            game_board_->get_tile_at(pos_x, (pos_y-1))->getObjectInTile() != "item") {
+                sf::sleep(sf::seconds(0.5));
+                my_hordes_.enemy(enemy_number)->set_monster_position_y((pos_y+1));
+                game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
+                game_board_->get_tile_at(pos_x, (pos_y-1))->setObjectInTile("monster");
+            }
+            }
+            else if (distance_y > 0) {
+            if (game_board_->get_tile_at(pos_x, (pos_y-1))->moveableTile()) {
+                if ((game_board_->get_tile_at(pos_x, (pos_y-1))->getObjectInTile() == "item") && recursion) {
+                    monsterMove(enemy_number, distance_x, distance_y, pos_x, pos_y, "x", false);
+                } else if (game_board_->get_tile_at(pos_x, (pos_y-1))->getObjectInTile() != "item") {
+                    sf::sleep(sf::seconds(0.5));
+                    my_hordes_.enemy(enemy_number)->set_monster_position_y(pos_y-1);
+                    game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
+                    game_board_->get_tile_at(pos_x, (pos_y-1))->setObjectInTile("monster");
+                }
+            }
+        } else if (distance_y < 0) {
+            if (game_board_->get_tile_at(pos_x, (pos_y+1))->moveableTile()) {
+                if ((game_board_->get_tile_at(pos_x, (pos_y+1))->getObjectInTile() == "item") && recursion) {
+                    monsterMove(enemy_number, distance_x, distance_y, pos_x, pos_y, "x", false);
+                } else if (game_board_->get_tile_at(pos_x, (pos_y+1))->getObjectInTile() != "item") {
+                    sf::sleep(sf::seconds(0.5));
+                    my_hordes_.enemy(enemy_number)->set_monster_position_y(pos_y+1);
+                    game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
+                    game_board_->get_tile_at(pos_x, (pos_y+1))->setObjectInTile("monster");
+                }
+            }
+        }
+    }
+}
+
+
 void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock) {
     if(rogue_.isAlive() || mage_.isAlive() || knight_.isAlive()){
         
@@ -668,41 +788,43 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
 
             // tem que virar else if quando o if acima funcionar
             else if (fabs<int>(nearest_hero.distance_x) >= fabs<int>(nearest_hero.distance_y)) { 
-                if (nearest_hero.distance_x > 0) {
-                    if (game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->moveableTile()) {
-                        sf::sleep(sf::seconds(0.5));
-                        my_hordes_.enemy(n)->set_monster_position_x((monster_pos_x-1));
-                        game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
-                        game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->setObjectInTile("monster");
-                    }
-                } 
+                monsterMove(n, nearest_hero.distance_x, nearest_hero.distance_y, monster_pos_x, monster_pos_y, "x", true);
+        //         if (nearest_hero.distance_x > 0) {
+        //             if (game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->moveableTile()) {
+        //                 sf::sleep(sf::seconds(0.5));
+        //                 my_hordes_.enemy(n)->set_monster_position_x((monster_pos_x-1));
+        //                 game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
+        //                 game_board_->get_tile_at((monster_pos_x-1), monster_pos_y)->setObjectInTile("monster");
+        //             }
+        //         } 
 
-                else if (nearest_hero.distance_x < 0) {
-                    if (game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->moveableTile()) {
-                        sf::sleep(sf::seconds(0.5));
-                        my_hordes_.enemy(n)->set_monster_position_x(monster_pos_x+1);
-                        game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
-                        game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->setObjectInTile("monster");
-                    }
-                }
-        }
+        //         else if (nearest_hero.distance_x < 0) {
+        //             if (game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->moveableTile()) {
+        //                 sf::sleep(sf::seconds(0.5));
+        //                 my_hordes_.enemy(n)->set_monster_position_x(monster_pos_x+1);
+        //                 game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
+        //                 game_board_->get_tile_at((monster_pos_x+1), monster_pos_y)->setObjectInTile("monster");
+        //             }
+        //         }
+            }
 
-            else if (fabs(nearest_hero.distance_x) < fabs(nearest_hero.distance_y)){
-                if (nearest_hero.distance_y > 0) {
-                    if (game_board_->get_tile_at(monster_pos_x, (monster_pos_y-1))->moveableTile()) {
-                        sf::sleep(sf::seconds(0.5));
-                        my_hordes_.enemy(n)->set_monster_position_y(monster_pos_y-1);
-                        game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
-                        game_board_->get_tile_at(monster_pos_x, (monster_pos_y-1))->setObjectInTile("monster");
-                    }
-                } else if (nearest_hero.distance_y < 0) {
-                    if (game_board_->get_tile_at(monster_pos_x, (monster_pos_y+1))->moveableTile()) {
-                        sf::sleep(sf::seconds(0.5));
-                        my_hordes_.enemy(n)->set_monster_position_y(monster_pos_y+1);
-                        game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
-                        game_board_->get_tile_at(monster_pos_x, (monster_pos_y+1))->setObjectInTile("monster");
-                    }
-                }
+            else if (fabs(nearest_hero.distance_x) < fabs(nearest_hero.distance_y)) {
+                monsterMove(n, nearest_hero.distance_x, nearest_hero.distance_y, monster_pos_x, monster_pos_y, "y", true);
+                // if (nearest_hero.distance_y > 0) {
+                //     if (game_board_->get_tile_at(monster_pos_x, (monster_pos_y-1))->moveableTile()) {
+                //         sf::sleep(sf::seconds(0.5));
+                //         my_hordes_.enemy(n)->set_monster_position_y(monster_pos_y-1);
+                //         game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
+                //         game_board_->get_tile_at(monster_pos_x, (monster_pos_y-1))->setObjectInTile("monster");
+                //     }
+                // } else if (nearest_hero.distance_y < 0) {
+                //     if (game_board_->get_tile_at(monster_pos_x, (monster_pos_y+1))->moveableTile()) {
+                //         sf::sleep(sf::seconds(0.5));
+                //         my_hordes_.enemy(n)->set_monster_position_y(monster_pos_y+1);
+                //         game_board_->get_tile_at(monster_pos_x, monster_pos_y)->deleteObjectInTile();
+                //         game_board_->get_tile_at(monster_pos_x, (monster_pos_y+1))->setObjectInTile("monster");
+                //     }
+                // }
             }
 
             else {
