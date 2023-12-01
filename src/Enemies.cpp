@@ -87,9 +87,8 @@ void Enemies::setAllInStartPosition(std::vector<std::unique_ptr<Item>> &itens, B
             my_board->get_tile_at(i, j)->deleteObjectInTile();
         }
     }
-    for(auto it=itens.begin();it<itens.end();it++) {
-        itens.erase(it);
-        my_board->initializeNumberOfItems();
+    for(auto it = itens.begin(); it != itens.end(); it++) {
+        (*it)->set_item_to_used();
     }
     
     for(int i=0; i < this->hordeSize();++i){
