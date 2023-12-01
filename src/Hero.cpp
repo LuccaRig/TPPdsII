@@ -22,8 +22,8 @@ Hero::Hero(std::string hero_type) {
 
     if (hero_type_ == "knight") {
         hero_hp_ = hero_full_hp_ = 35;
-        hero_attack_ = 50;
-        hero_special_attack_ = 30;
+        hero_attack_ = 10;
+        hero_special_attack_ = 4;
         hero_number_ = 0;
         skill_cooldown_ = 2;
         
@@ -36,8 +36,8 @@ Hero::Hero(std::string hero_type) {
         hero_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
     }
     else if (hero_type_ == "rogue"){
-        hero_hp_ = hero_full_hp_ = 20;
-        hero_attack_ = 80;
+        hero_hp_ = hero_full_hp_ = 25;
+        hero_attack_ = 10;
         hero_special_attack_ = 5;
         hero_number_ = 2;
         skill_cooldown_ = 1;
@@ -50,9 +50,9 @@ Hero::Hero(std::string hero_type) {
         hero_sprite_.setTexture(hero_texture_);
         hero_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
     }
-    else if (hero_type_ == "mage"){
+    else if (hero_type_ == "mage") {
         hero_hp_ = hero_full_hp_ = 30;
-        hero_attack_ = 50;
+        hero_attack_ = 9;
         hero_special_attack_ = 10;
         hero_number_ = 1;
         skill_cooldown_ = 2;
@@ -108,6 +108,10 @@ void Hero::set_hero_attack(int changed_attack) {
 int Hero::get_hero_special_attack() {
     return hero_special_attack_;
 }
+
+void Hero::set_hero_special_attack(int change) {
+    hero_special_attack_ += change;
+} 
 
 int Hero::get_skill_cooldown() {
     return skill_cooldown_;
