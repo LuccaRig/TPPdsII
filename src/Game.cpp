@@ -36,10 +36,10 @@ Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue") {
     this->initWindow();
     this->current_game_state_ = new GameState();
     game_board_->initializeNumberOfItems();
-    game_board_->set_number_of_items(3);
-    items_.push_back(std::unique_ptr<Item> (new Item(2, 3)));
-    items_.push_back(std::unique_ptr<Item> (new Item(4, 3)));
-    items_.push_back(std::unique_ptr<Item> (new Item(3, 4)));
+    // game_board_->set_number_of_items(3);
+    // items_.push_back(std::unique_ptr<Item> (new Item(2, 3)));
+    // items_.push_back(std::unique_ptr<Item> (new Item(4, 3)));
+    // items_.push_back(std::unique_ptr<Item> (new Item(3, 4)));
     // items_.push_back(std::unique_ptr<Item> (new Item(1, 1)));
 }
 
