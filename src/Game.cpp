@@ -36,11 +36,6 @@ Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue") {
     this->initWindow();
     this->current_game_state_ = new GameState();
     game_board_->initializeNumberOfItems();
-    // game_board_->set_number_of_items(3);
-    // items_.push_back(std::unique_ptr<Item> (new Item(2, 3)));
-    // items_.push_back(std::unique_ptr<Item> (new Item(4, 3)));
-    // items_.push_back(std::unique_ptr<Item> (new Item(3, 4)));
-    // items_.push_back(std::unique_ptr<Item> (new Item(1, 1)));
 }
 
 Game::~Game() {
@@ -354,18 +349,16 @@ void Game::render(float delta_time) {
 }
 
 void Game::applyItemEffect(int x, int y, Hero& hero) {
-    int n = 0;
-    for (int i = 0; i < game_board_->get_number_of_items(); i++) {
-        if (!(items_[i]->itemWasUsed())) {
-            if ((items_[i]->get_item_position_x() == x) && (items_[i]->get_item_position_y()) == y) {
-                n = i;            
+    auto n = items_.begin();
+    for (auto it = items_.begin(); it < items_.end(); it++) {
+            if (((*it)->get_item_position_x() == x) && ((*it)->get_item_position_y()) == y) {
+                n = it;            
                 break;
             }
-        }
     }
-    items_[n]->set_item_to_used();
-    std::string item_type = items_[n]->get_item_type();
-    int item_effect = items_[n]->get_item_effect();
+    (*n)->set_item_to_used();
+    std::string item_type = (*n)->get_item_type();
+    int item_effect = (*n)->get_item_effect();
     if (item_type == "heal") {
         hero.set_hero_hp(-item_effect);
         set_hero_health_bars(hero.get_hero_number(), hero.get_hero_full_hp(), hero.get_hero_hp());
@@ -374,6 +367,8 @@ void Game::applyItemEffect(int x, int y, Hero& hero) {
     } else if (item_type == "spellBuff") {
         hero.set_hero_special_attack(item_effect);
     }
+    items_.erase(n);
+    game_board_->set_number_of_items(-1);
 }
 
 void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
@@ -1225,7 +1220,7 @@ void Game::playerTurnControl(float delta_time, sf::Clock clock) {
 void Game::run(sf::Clock clock) {
     float delta_time = clock.restart().asSeconds();
     if (my_hordes_.get_horde_number() == 0) initMonstersHealthBars();
-    my_hordes_.createHordeEnemies(game_board_, rogue_, mage_, knight_);
+    my_hordes_.createHordeEnemies(items_, game_board_, rogue_, mage_, knight_);
     while(this->game_window_->isOpen()) {
 
         //Conta a passagem de tempo desde a ultima vez que o clock.restart() foi chamado
@@ -1244,7 +1239,7 @@ void Game::run(sf::Clock clock) {
         this->monsterTakeAction(my_hordes_.hordeSize(), delta_time, clock);
 
         if (my_hordes_.get_horde_number() == 1 && my_hordes_.allEnemiesAreDead()) initMonstersHealthBars();
-        my_hordes_.createHordeEnemies(game_board_, rogue_, mage_, knight_);
+        my_hordes_.createHordeEnemies(items_, game_board_, rogue_, mage_, knight_);
         if (my_hordes_.get_horde_number() == 2 && my_hordes_.allEnemiesAreDead()) initMonstersHealthBars();
 
         this->paleyrWinCloseWindow(delta_time, clock);
