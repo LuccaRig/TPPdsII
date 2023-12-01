@@ -369,7 +369,10 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                 case sf::Keyboard::Up:
                     pos_y = hero.get_hero_position_y();
                     pos_x = hero.get_hero_position_x();
-                    if ((pos_y-1) < 0 || !game_board_->get_tile_at(pos_x, (pos_y-1))->moveableTile()) continue;
+                    if ((pos_y-1) < 0 || !game_board_->get_tile_at(pos_x, (pos_y-1))->moveableTile()) {
+                        is_hero_turn = 0;
+                        break;
+                    }
                     hero.set_hero_position_y(pos_y-1);
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at(pos_x, (pos_y-1))->setObjectInTile("hero");
@@ -380,7 +383,10 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                 case sf::Keyboard::Down:
                     pos_y = hero.get_hero_position_y();
                     pos_x = hero.get_hero_position_x();
-                    if ((pos_y+1) > 4 || !game_board_->get_tile_at(pos_x, (pos_y+1))->moveableTile()) continue;
+                    if ((pos_y+1) > 4 || !game_board_->get_tile_at(pos_x, (pos_y+1))->moveableTile()) {
+                        is_hero_turn = 0;
+                        break;
+                    }
                     hero.set_hero_position_y(pos_y+1);
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at(pos_x, (pos_y+1))->setObjectInTile("hero");
@@ -391,7 +397,10 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                 case sf::Keyboard::Left:
                     pos_x = hero.get_hero_position_x();
                     pos_y = hero.get_hero_position_y();
-                    if ((pos_x-1) < 0 || !game_board_->get_tile_at((pos_x-1), pos_y)->moveableTile()) continue;
+                    if ((pos_x-1) < 0 || !game_board_->get_tile_at((pos_x-1), pos_y)->moveableTile()) {
+                        is_hero_turn = 0;
+                        break;
+                    }
                     hero.set_hero_position_x(pos_x-1);
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at((pos_x-1), pos_y)->setObjectInTile("hero");
@@ -402,7 +411,10 @@ void Game::heroWalk(Hero &hero, float delta_time, sf::Clock clock) {
                 case sf::Keyboard::Right:
                     pos_x = hero.get_hero_position_x();
                     pos_y = hero.get_hero_position_y();
-                    if ((pos_x+1) > 4 || !game_board_->get_tile_at((pos_x+1), pos_y)->moveableTile()) continue;
+                    if ((pos_x+1) > 4 || !game_board_->get_tile_at((pos_x+1), pos_y)->moveableTile()) {
+                        is_hero_turn = 0;
+                        break;
+                    }
                     hero.set_hero_position_x(pos_x+1);
                     game_board_->get_tile_at(pos_x, pos_y)->deleteObjectInTile();
                     game_board_->get_tile_at((pos_x+1), pos_y)->setObjectInTile("hero");
