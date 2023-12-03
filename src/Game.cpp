@@ -230,13 +230,11 @@ void Game::putMonsterInBoard(int position_x, int position_y, Monster &monster, f
 void Game::putItemInBoard(int position_x, int position_y, Item& item,sf::RectangleShape &tileShape) {
     if ((item.itemWasUsed()) || (item.get_item_type() == "empty")) return;
     if (position_x == item.get_item_position_x() && position_y == item.get_item_position_y()) {
-        if (item.get_item_position_x() < 5 && item.get_item_position_y() < 5) {
-            game_board_->get_tile_at(position_x, position_y)->setObjectInTile("item");
-                item.get_item_sprite().setScale(3.f, 3.f);
-                item.get_item_sprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - item.get_item_sprite().getLocalBounds().width*3) / 2,
+        game_board_->get_tile_at(position_x, position_y)->setObjectInTile("item");
+            item.get_item_sprite().setScale(3.f, 3.f);
+            item.get_item_sprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - item.get_item_sprite().getLocalBounds().width*3) / 2,
                                                 tileShape.getPosition().y + (tileShape.getSize().y - item.get_item_sprite().getLocalBounds().height*3) / 2);
-                this->game_window_->draw(item.get_item_sprite());
-       }
+            this->game_window_->draw(item.get_item_sprite());
    }
 }
 
