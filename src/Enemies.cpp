@@ -119,23 +119,23 @@ bool Enemies::allEnemiesAreDead() {
 
 void Enemies::createHordeEnemies(std::vector<std::unique_ptr<Item>> &itens, Board* my_board, Hero &rogue, Hero &mage, Hero &knight) {
     if(horde_number_ == 0){
-        enemies_.push_back(std::unique_ptr<Monster>(new Monster("unholy skull")));
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("virulent wight")));
-        enemies_.push_back(std::unique_ptr<Monster>(new Monster("sand golem")));
-        enemies_.push_back(std::unique_ptr<Monster>(new Monster("ghastly beholder")));
-        enemies_.push_back(std::unique_ptr<Monster>(new Monster("bloody abomination")));
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("ocular watcher")));
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("unholy skull")));
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("unholy skull")));
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("death knight")));
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("virulent wight")));
         setAllInStartPosition(itens, my_board, rogue, mage, knight);
         this->hordePass();
     }
     if(horde_number_ == 1 && this->allEnemiesAreDead()){
         this->deleteMonsterPool();
-        enemies_.push_back(std::unique_ptr<Monster>(new Monster("unholy skull")));
-        enemies_.push_back(std::unique_ptr<Monster>(new Monster("virulent wight")));
-        enemies_.push_back(std::unique_ptr<Monster>(new Monster("sand golem")));
-        enemies_.push_back(std::unique_ptr<Monster>(new Monster("ghastly beholder")));
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("bloody abomination")));
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("sand golem")));
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("bloody abomination")));
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("ghastly beholder")));
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("death knight")));
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("ghastly beholder")));
         setAllInStartPosition(itens, my_board, rogue, mage, knight);
         this->hordePass();
     }

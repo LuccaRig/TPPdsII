@@ -57,6 +57,8 @@ class Game {
 
     void putMonsterInBoard(int position_y, int position_x, Monster &monster, float delta_time,sf::RectangleShape &tileShape);
 
+    /// @brief testa se há um item não vazio na coordenada dos parâmetros e, se sim, ajusta as proporções
+    /// do sprite do item e o desenha tile
     void putItemInBoard(int position_y, int position_x, Item &item, sf::RectangleShape &tileShape);
 
     /// @brief Muda o tamanho das barras de vida dos heróis
@@ -110,8 +112,14 @@ class Game {
     /// @brief decide a movimentação em uma direção específica, função auxiliar a monsterTakeAction
     /// @param enemy_number número do inimigo que vai se movimentar
     /// @param distance_ distância do inimigo ao herói mais próximo em uma direção específica
-    /// @param order_of_recursion a função poderá ser recursiva mas só se a ordem for igual a 0
+    /// @param recursion a função poderá ser recursiva somente se recursion for true
     void monsterMove(int enemy_number, int distance_x, int distance_y, int pos_x, int pos_y, std::string direction, bool rescursion);
+
+    /// @brief Determina a ação de cada monstro 
+    /// @param number_of_monsters: numero de monstros que serão movimentados
+    /// @param delta_time: Tempo decorrido desde o ultimo clock 
+    /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
+    void monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock);
  
     /// @return Retorna se a habilidade do herói atual está em cooldown
     bool isSkillOnCooldown();
@@ -120,12 +128,6 @@ class Game {
 
     /// @brief Escreve que a habilidade está em cooldown
     void writeCooldown(int is_on_cooldown);
-
-    /// @brief Determina a ação de cada monstro 
-    /// @param monster: numero de monstros que serão movimentados
-    /// @param delta_time: Tempo decorrido desde o ultimo clock 
-    /// @param clock: Um argumento do tipo sf::Clock para atualizar o delta time 
-    void monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock);
 
     /// @brief Constrói as barras de vida dos monstros
     void initMonstersHealthBars();
@@ -140,6 +142,7 @@ class Game {
     void gameOverCloseWindow(float delta_time, sf::Clock clock);
     
     /// @brief aplica efeito do item no herói
+    /// PRECONDIÇÃO: herói se movimentou para a coordenada de um item que não foi usado
     void applyItemEffect(int pos_x, int pos_y, Hero& hero);
 
     void paleyrWinCloseWindow(float delta_time, sf::Clock clock);

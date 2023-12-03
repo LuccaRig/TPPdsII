@@ -236,7 +236,6 @@ void Game::putItemInBoard(int position_x, int position_y, Item& item,sf::Rectang
                 item.get_item_sprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - item.get_item_sprite().getLocalBounds().width*3) / 2,
                                                 tileShape.getPosition().y + (tileShape.getSize().y - item.get_item_sprite().getLocalBounds().height*3) / 2);
                 this->game_window_->draw(item.get_item_sprite());
-            
        }
    }
 }
@@ -285,6 +284,7 @@ void Game::boardRender(float delta_time) {
             //Desenha o quadrado na janela
             this->game_window_->draw(tileShape);
 
+            //Chama funções que desenham heróis, monstros e itens na tela
             putHeroInBoard(i, j, mage_, delta_time, tileShape);
             putHeroInBoard(i, j, knight_, delta_time, tileShape);
             putHeroInBoard(i, j, rogue_, delta_time, tileShape);
@@ -348,6 +348,7 @@ void Game::render(float delta_time) {
 
 void Game::applyItemEffect(int x, int y, Hero& hero) {
     auto n = items_.begin();
+    // Loop acha o item que tem as coordenadas dos parâmetros e que ainda não foi usado
     for (auto it = items_.begin(); it < items_.end(); it++) {
             if (((*it)->get_item_position_x() == x) && ((*it)->get_item_position_y()) == y) {
                 if(!(*it)->itemWasUsed()) {
@@ -356,6 +357,8 @@ void Game::applyItemEffect(int x, int y, Hero& hero) {
                 }
             }
     }
+
+    // Efeito do item é aplicado ao herói dependendo do seu tipo, item é caracterizado como usado
     (*n)->set_item_to_used();
     std::string item_type = (*n)->get_item_type();
     int item_effect = (*n)->get_item_effect();
@@ -766,7 +769,11 @@ void Game::setMonstersHealthBars(int damaged_monster, float full_hp, float curre
 }
 
 void Game::monsterMove(int enemy_number, int distance_x, int distance_y, int pos_x, int pos_y, std::string direction, bool recursion) {
+     // se a função já tiver sido chamada por recursão, recursion é false pra não permitir mais recursões
     if (direction == "x") {
+        // se a função foi chamada por recursão para a minimizar a distância do monstro em relação ao herói
+        // na direção x por haver um item na direção y mas a distância x já foi 0, monstro deve se movimentar
+        // para direita ou esquerda só para não ficar preso
         if ((distance_x == 0) && !(recursion)) {
             if (game_board_->get_tile_at((pos_x+1), pos_y)->moveableTile() && 
                 game_board_->get_tile_at((pos_x+1), pos_y)->getObjectInTile() != "item") {
@@ -782,6 +789,8 @@ void Game::monsterMove(int enemy_number, int distance_x, int distance_y, int pos
                 game_board_->get_tile_at((pos_x-1), pos_y)->setObjectInTile("monster");
             }
         }
+        // minimização da distância x caso não haja nenhum item no caminho. Caso haja e a chamada atual não seja
+        // recursiva, monsterMove é chamada para minimizar distância y mas sem permitir mais recursões
         else if (distance_x > 0) {
             if (game_board_->get_tile_at((pos_x-1), pos_y)->moveableTile()) {
                 if ((game_board_->get_tile_at((pos_x-1), pos_y)->getObjectInTile() == "item") && recursion) {
@@ -805,8 +814,9 @@ void Game::monsterMove(int enemy_number, int distance_x, int distance_y, int pos
                 }
             }
         }
-        } else if (direction == "y") {
-            if ((distance_y == 0) && !(recursion)) {
+    // mesma lógica, mas para a direção y
+    } else if (direction == "y") {
+        if ((distance_y == 0) && !(recursion)) {
             if (game_board_->get_tile_at(pos_x, (pos_y+1))->moveableTile() && 
             game_board_->get_tile_at(pos_x, (pos_y+1))->getObjectInTile() != "item") {
                 sf::sleep(sf::seconds(0.5));
@@ -873,12 +883,17 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
     hero[2].pos_x = rogue_.get_hero_position_x();
     hero[2].pos_y = rogue_.get_hero_position_y();
 
+    // loop que permite o acesso a cada monstro no vetor para tomar ação caso esteja vivo
     for(int n = 0; n < number_of_monsters; n++) {
         if(!my_hordes_.enemy(n)->monsterIsDead()){
             int monster_pos_x = my_hordes_.enemy(n)->get_monster_position_x();
             int monster_pos_y = my_hordes_.enemy(n)->get_monster_position_y();
 
-            // descobre e armazena qual o herói mais próximo ao monstro 
+            // Próximos dois loops descobrem e armazenam qual o herói mais próximo ao monstro 
+            // Importante: todas decisões de movimentação utilizadas em monsterMove tem base na decisão
+            // arbitrária de que a distância em alguma direção é uma subtração, nesta ordem:
+            // (posição_do_monstro - posição_do_herói). Isso implica ações específicas para quando 
+            // a distância direcional for negativa ou positiva
             int nearest_hero_number = 0;
             for (int m = 0; m < 3; m++) {
                 hero[m].distance_x = monster_pos_x - hero[m].pos_x;
@@ -896,8 +911,10 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
                 }
             }
 
-            // decide qual será a ação do monstro sabendo qual o herói mais próximo a ele
+            // próximos 3 blocos condicionais principais decidem qual será a ação do monstro sabendo 
+            // qual o herói mais próximo a ele
 
+            // se a distância for 1, o monstro deve atacar o herói
             if (nearest_hero.distance == 1) {
                 int dmg = my_hordes_.enemy(n)->get_dmg_output();
                 if (nearest_hero_number == 0) {
@@ -912,11 +929,13 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
                 }; 
             }
 
-            // tem que virar else if quando o if acima funcionar
+            // se a distância na direção x for maior ou igual à distância y, monstro minimiza 
+            // distância x preferencialmente
             else if (fabs(nearest_hero.distance_x) >= fabs(nearest_hero.distance_y)) { 
                 monsterMove(n, nearest_hero.distance_x, nearest_hero.distance_y, monster_pos_x, monster_pos_y, "x", true);
             }
 
+            // se a distância na direção y for maior do que a x, monstro minimiza distância y preferencialmente
             else if (fabs(nearest_hero.distance_x) < fabs(nearest_hero.distance_y)) {
                 monsterMove(n, nearest_hero.distance_x, nearest_hero.distance_y, monster_pos_x, monster_pos_y, "y", true);
             }

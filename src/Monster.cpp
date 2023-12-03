@@ -84,7 +84,7 @@
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
 
-        else if (monster_type_ == "ocular whatcher") {
+        else if (monster_type_ == "ocular watcher") {
             monster_hp_ = monster_full_hp_ = 7;
             monster_dmg_ = 3;
             monster_exp_drop_ = 1;
@@ -123,6 +123,8 @@
         }
 }
 
+    // obs.: template só foi usado devido a um erro de reconhecimento de um tipo pelo compilador. Essa foi
+    // a única forma que funcionou
     template <typename T>
     void Monster::set_monster_hp(Board* my_game_board,  std::vector<std::unique_ptr<T>>& items_, int dmg) {
         monster_hp_ -= dmg;
@@ -142,7 +144,6 @@
           if (monster_hp_ <= 0) {
             monster_hp_ = 0;
             my_game_board->get_tile_at(monster_position_x_, monster_position_y_)->deleteObjectInTile();
-            // my_game_board->get_tile_at(monster_position_x_, monster_position_y_)->setObjectInTile("item");
             items_.push_back(std::unique_ptr<Item> (new Item(monster_position_x_, monster_position_y_)));
           }
           else if (monster_hp_ >= monster_full_hp_) {
