@@ -22,7 +22,7 @@ Hero::Hero(std::string hero_type) {
 
     if (hero_type_ == "knight") {
         hero_hp_ = hero_full_hp_ = 35;
-        hero_attack_ = 15;
+        hero_attack_ = 20;
         hero_special_attack_ = 4;
         hero_number_ = 0;
         skill_cooldown_ = 2;
@@ -37,7 +37,7 @@ Hero::Hero(std::string hero_type) {
     }
     else if (hero_type_ == "rogue"){
         hero_hp_ = hero_full_hp_ = 25;
-        hero_attack_ = 18;
+        hero_attack_ = 20;
         hero_special_attack_ = 5;
         hero_number_ = 2;
         skill_cooldown_ = 1;
@@ -52,8 +52,8 @@ Hero::Hero(std::string hero_type) {
     }
     else if (hero_type_ == "mage") {
         hero_hp_ = hero_full_hp_ = 30;
-        hero_attack_ = 12;
-        hero_special_attack_ = 10;
+        hero_attack_ = 20;
+        hero_special_attack_ = 15;
         hero_number_ = 1;
         skill_cooldown_ = 2;
         
