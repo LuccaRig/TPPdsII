@@ -17,16 +17,15 @@
         monster_position_x_ = 0;
         monster_position_y_ = 0;
 
-        if (monster_type_ == "bloody abomination") {
+        if (monster_type_ == "bloody abomination 1" || monster_type_ == "bloody abomination 2") {
+            if (monster_type_ == "bloody abomination 1") monster_number_ = 4;
+            if (monster_type_ == "bloody abomination 2") monster_number_ = 5;
             monster_hp_ = monster_full_hp_ = 12;
             monster_dmg_ = 8;
             monster_exp_drop_ = 1;
-            monster_number_ = 4;
 
             //Parte das texturas e animações
-            monster_texture_.loadFromFile("Textures/BloodyAbominationIdleSide.png");
-            monster_sprite_.setTexture(monster_texture_);
-            monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
+            monster_texture_.loadFromFile("Textures/BloodyAbominationIdleSide.png");  
         }
         else if (monster_type_ == "death knight") {
             monster_hp_ = monster_full_hp_ = 20;
@@ -35,9 +34,25 @@
             monster_number_ = 5;
 
             //Parte das texturas e animações
-            monster_texture_.loadFromFile("Textures/DeathKnightIdleSide.png");
-            monster_sprite_.setTexture(monster_texture_);
-            monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
+            monster_texture_.loadFromFile("Textures/DeathKnightIdleSide.png"); 
+        } 
+        else if (monster_type_ == "stalker") {
+            monster_hp_ = monster_full_hp_ = 15;
+            monster_dmg_ = 6;
+            monster_exp_drop_ = 1;
+            monster_number_ = 5;
+
+            //Parte das texturas e animações
+            monster_texture_.loadFromFile("Textures/SkeweringStalker.png");
+        }
+        else if (monster_type_ == "floating eye") {
+            monster_hp_ = monster_full_hp_ = 25;
+            monster_dmg_ = 5;
+            monster_exp_drop_ = 1;
+            monster_number_ = 5;
+
+            //Parte das texturas e animações
+            monster_texture_.loadFromFile("Textures/FloatingEye.png");
         }
         else if (monster_type_ == "sand golem") {
             monster_hp_ = monster_full_hp_ = 40;
@@ -46,44 +61,38 @@
             monster_number_ = 2;
 
             //Parte das texturas e animações
-            monster_texture_.loadFromFile("Textures/SandGolemIdleSide.png");
-            monster_sprite_.setTexture(monster_texture_);
-            monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
+            monster_texture_.loadFromFile("Textures/SandGolemIdleSide.png");   
         }
-        else if (monster_type_ == "ghastly beholder") {
+        else if (monster_type_ == "ghastly beholder 1" || monster_type_ == "ghastly beholder 2") {
+            if (monster_type_ == "ghastly beholder 1") monster_number_ = 3;
+            if (monster_type_ == "ghastly beholder 1") monster_number_ = 4;
             monster_hp_ = monster_full_hp_ = 10;
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
-            monster_number_ = 3;
 
             //Parte das texturas e animações
-            monster_texture_.loadFromFile("Textures/GhastlyBeholderIdleSide.png");
-            monster_sprite_.setTexture(monster_texture_);
-            monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
+            monster_texture_.loadFromFile("Textures/GhastlyBeholderIdleSide.png");  
         }
-        else if (monster_type_ == "unholy skull") {
+        else if (monster_type_ == "unholy skull 1" || monster_type_ == "unholy skull 2") {
+            if (monster_type_ == "unholy skull 1") monster_number_ = 0;
+            if (monster_type_ == "unholy skull 2") monster_number_ = 0;
             monster_hp_ = monster_full_hp_ = 10;
             monster_dmg_ = 4;
             monster_exp_drop_ = 1;
-            monster_number_ = 0;
 
             //Parte das texturas e animações
-            monster_texture_.loadFromFile("Textures/UnholySkullIdleSide.png");
-            monster_sprite_.setTexture(monster_texture_);
-            monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
+            monster_texture_.loadFromFile("Textures/UnholySkullIdleSide.png");   
         }
-        else if (monster_type_ == "virulent wight") {
+        else if (monster_type_ == "virulent wight 1" || monster_type_ == "virulent wight 2") {
+            if (monster_type_ == "virulent wight 1") monster_number_ = 1;
+            if (monster_type_ == "virulent wight 2") monster_number_ = 1;
             monster_hp_ = monster_full_hp_ = 13;
             monster_dmg_ = 5;
             monster_exp_drop_ = 1;
-            monster_number_ = 1;
 
             //Parte das texturas e animações
-            monster_texture_.loadFromFile("Textures/VirulentWightIdleSide.png");
-            monster_sprite_.setTexture(monster_texture_);
-            monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
+            monster_texture_.loadFromFile("Textures/VirulentWightIdleSide.png");   
         }
-
         else if (monster_type_ == "ocular watcher") {
             monster_hp_ = monster_full_hp_ = 7;
             monster_dmg_ = 3;
@@ -92,8 +101,8 @@
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/OcularWatcherIdleSide.png");
-            monster_sprite_.setTexture(monster_texture_);
-            monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
+                monster_sprite_.setTexture(monster_texture_);
+    monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         } 
         else if (monster_type_ == "bloodshot eye") {
             monster_hp_ = monster_full_hp_ = 5;
@@ -105,6 +114,7 @@
             monster_texture_.loadFromFile("Textures/BloodshotEyeIdleSide.png");
             monster_sprite_.setTexture(monster_texture_);
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
+            
         }
         else if (monster_type_ == "BOSS") {
             monster_hp_ = monster_full_hp_ = 100;
@@ -118,9 +128,9 @@
             //Parte das texturas e animações
             number_of_frames_ = 9;
             monster_texture_.loadFromFile("Textures/GrandmasterWarlockIdle.png");
-            monster_sprite_.setTexture(monster_texture_);
-            monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
+    monster_sprite_.setTexture(monster_texture_);
+    monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
 }
 
     // obs.: template só foi usado devido a um erro de reconhecimento de um tipo pelo compilador. Essa foi
