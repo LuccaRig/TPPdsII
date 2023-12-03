@@ -16,6 +16,7 @@
         animation_timer_ = 0.0f;
         monster_position_x_ = 0;
         monster_position_y_ = 0;
+        monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
 
         if (monster_type_ == "bloody abomination 1" || monster_type_ == "bloody abomination 2") {
             if (monster_type_ == "bloody abomination 1") monster_number_ = 4;
@@ -44,6 +45,7 @@
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/SkeweringStalker.png");
+            monster_sprite_.setTextureRect(sf::IntRect(0, 0, 20, 20));
         }
         else if (monster_type_ == "floating eye") {
             monster_hp_ = monster_full_hp_ = 25;
@@ -71,8 +73,6 @@
             monster_exp_drop_ = 1;
 
             //Parte das texturas e animações
-            monster_sprite_.setTexture(monster_texture_);
-            monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
             monster_texture_.loadFromFile("Textures/GhastlyBeholderIdleSide.png");  
         }
         else if (monster_type_ == "unholy skull 1" || monster_type_ == "unholy skull 2") {
@@ -103,8 +103,8 @@
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/OcularWatcherIdleSide.png");
-                monster_sprite_.setTexture(monster_texture_);
-    monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
+            monster_sprite_.setTexture(monster_texture_);
+            monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         } 
         else if (monster_type_ == "bloodshot eye") {
             monster_hp_ = monster_full_hp_ = 5;
@@ -132,7 +132,6 @@
             monster_texture_.loadFromFile("Textures/GrandmasterWarlockIdle.png");
         }
     monster_sprite_.setTexture(monster_texture_);
-    monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
 }
 
     // obs.: template só foi usado devido a um erro de reconhecimento de um tipo pelo compilador. Essa foi

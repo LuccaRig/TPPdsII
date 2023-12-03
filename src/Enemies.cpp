@@ -120,10 +120,10 @@ bool Enemies::allEnemiesAreDead() {
 void Enemies::createHordeEnemies(std::vector<std::unique_ptr<Item>> &itens, Board* my_board, Hero &rogue, Hero &mage, Hero &knight) {
     if(horde_number_ == 0){
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("virulent wight 1")));
-        enemies_.push_back(std::unique_ptr<Monster>(new Monster("bloodshot eye")));
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("stalker")));
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("unholy skull 1")));
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("unholy skull 2")));
-        enemies_.push_back(std::unique_ptr<Monster>(new Monster("death knight")));
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("floating eye")));
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("virulent wight 2")));
         setAllInStartPosition(itens, my_board, rogue, mage, knight);
         this->hordePass();
