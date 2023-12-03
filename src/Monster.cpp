@@ -71,6 +71,8 @@
             monster_exp_drop_ = 1;
 
             //Parte das texturas e animações
+            monster_sprite_.setTexture(monster_texture_);
+            monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
             monster_texture_.loadFromFile("Textures/GhastlyBeholderIdleSide.png");  
         }
         else if (monster_type_ == "unholy skull 1" || monster_type_ == "unholy skull 2") {
