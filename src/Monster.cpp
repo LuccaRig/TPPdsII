@@ -57,7 +57,7 @@
             monster_number_ = 3;
 
             //Parte das texturas e animações
-            monster_texture_.loadFromFile("Textures/GhastlyBeholderIdleSide.png");
+            monster_texture_.loadFromFile("Textures/FloatingEye.png");
             monster_sprite_.setTexture(monster_texture_);
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         }
