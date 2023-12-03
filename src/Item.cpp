@@ -21,17 +21,17 @@ Item::Item(int x, int y) {
         item_texture_.loadFromFile("Textures/potion_red.png");
         item_sprite_.setTexture(item_texture_);
         item_sprite_.setTextureRect(sf::IntRect(0, 0, 7, 8));
-        item_effect_ = 50;
+        item_effect_ = 15;
     } else if (item_type_ == "spellBuff") {
         item_texture_.loadFromFile("Textures/potion_blue.png");
         item_sprite_.setTexture(item_texture_);
         item_sprite_.setTextureRect(sf::IntRect(0, 0, 7, 8));
-        item_effect_ = 25;
+        item_effect_ = 8;
     } else if (item_type_ == "dmgBuff") {
         item_texture_.loadFromFile("Textures/potion_green.png");
         item_sprite_.setTexture(item_texture_);
         item_sprite_.setTextureRect(sf::IntRect(0, 0, 7, 8));
-        item_effect_ = 40;
+        item_effect_ = 8;
     }
 }
 
@@ -42,7 +42,7 @@ std::string Item::returnsRandomItem() {
     item_n[3] = "spellBuff";
     item_n[4] = "dmgBuff";
     // chance final de cair item vai ser 50%
-	int random = 1 + rand()%4;
+	int random = 1 + rand()%8;
 
     if (random <= 4) {
         return item_n[random];

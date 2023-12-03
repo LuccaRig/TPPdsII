@@ -25,8 +25,10 @@ class Monster {
     /// @brief Retorna o hp atual do monstro
     int get_monster_hp();
 
-    /// @brief  adiciona o valor recebido em pontos de vida para o monstro. PRECONDIÇÃO: parâmetro deve ser valor negativo 
+    /// @brief  subtrai o valor recebido em pontos de vida para o monstro e checa se o monstro foi derrotado
+    /// para, caso sim, um item seja criado para aparecer na coordenada do monstro
     /// @param  attack_ do herói
+    /// @param items_ vetor de itens onde o item será criado
     template<typename T>
     void set_monster_hp(Board* my_game_board, std::vector<std::unique_ptr<T>>& items_, int dmg);
 
@@ -63,9 +65,10 @@ class Monster {
     /// @brief Define um corte ou sprite específico do monstro
     void set_monster_sprite(sf::Sprite& defined_sprite);
 
+    /// @brief atualiza o sprite do monstro 
+    /// @param deltaTime 
     void updateAnimation(float deltaTime);
 
-    // aqui será construído um item e monster_item_drop_ será igualado à função returns_random_item
   private:
     //Características
     std::string monster_type_;
@@ -73,7 +76,6 @@ class Monster {
     int monster_hp_;
     int monster_dmg_;
     int monster_exp_drop_;
-    std::string monster_item_;
     int monster_number_;
 
     int monster_position_x_;
