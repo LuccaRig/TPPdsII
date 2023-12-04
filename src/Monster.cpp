@@ -45,7 +45,6 @@
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/SkeweringStalker.png");
-            monster_sprite_.setTextureRect(sf::IntRect(0, 0, 20, 20));
         }
         else if (monster_type_ == "floating eye") {
             monster_hp_ = monster_full_hp_ = 25;
