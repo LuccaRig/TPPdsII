@@ -42,10 +42,14 @@ Durante o turno do heroi é necessário selecionar uma das ações do heroi, cas
     <dd>Esperar: Muitas vezes a jogada mais sábia é apenas esperar, por isso essa ação passa a vez de um heroi para seu próximo companheiro.</dd>
 </dl>
 
+<img src="https://github.com/LuccaRig/TPPdsII/blob/main/Resources/MenuDoHeroi.png">
+
 ## Nivel do heroi e barras de vida
 
-Todos os herois quando confrontados por um novo desafio são capazes de se adaptarem e ficarem cada vez mais fortes, por isso quando um número de inimigos é derrotado o heroi sobe de nível, aumentando seus todos os sues status.
-Ja quando um heroi e atacado sua barra de vida cai, quando ela chegar a zero o heroi morre abandonando seus aliados.
+Todos os herois quando confrontados por um novo desafio são capazes de se adaptarem e ficarem cada vez mais fortes, por isso quando um número de inimigos é derrotado o heroi sobe de nível, aumentando seus todos os seus status.
+Ja quando um heroi é atacado sua barra de vida cai, quando ela chegar a zero o heroi morre abandonando seus aliados.
+
+<img src="https://github.com/LuccaRig/TPPdsII/blob/main/Resources/NiveisEBarrasDevida.png">
 
 ## Itens no tabuleiro
 
