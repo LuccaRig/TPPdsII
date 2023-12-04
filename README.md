@@ -1,6 +1,6 @@
 
 # TPPdsII
-Esse repositório tem a finalidade de realizar um controle de versão do código feito para a disciplina PDS2, além disso ele está sendo utilizado para a correção e acompanhamento do projeto pelo monitor/professor. Nosso projeto tem como objetivo colocar em prática os conceitos aprendidos durante o semestre, como Classes, Herança, Vetores, Polimorfismo e técnicas de desenvolvimento de software mais eficientes. Para isso decidimos criar um jogo de estratégia estilo RPG e incluimos uma bibilioteca gráfica, para auxiliar na visualização dos objetos do jogo, além de tornar a experiência de desenvolvimento mais completa.
+Esse repositório tem a finalidade de realizar um controle de versão do código feito para a disciplina PDS2. Além disso, ele está sendo utilizado para a correção e acompanhamento do projeto pelo monitor/professor. Nosso projeto tem como objetivo colocar em prática os conceitos aprendidos durante o semestre, como Classes, Encapsulamento, Herança, Vetores, Polimorfismo e técnicas de desenvolvimento de software mais eficientes. Para isso decidimos criar um jogo de estratégia estilo RPG e incluimos uma bibilioteca gráfica, para auxiliar na visualização dos objetos do jogo, além de tornar a experiência de desenvolvimento mais completa.
 
 # User Storys
 
@@ -14,11 +14,11 @@ Como jogador, devo ser capaz de me locomover na masmorra, por isso será utizado
 
 ### Hero
 
-Como jogador, quero poder controlar 3 diferentes heróis, que me permitam atacar os monstros de formas diferentes ao entender as características de cada herói. Também sendo capaz de movimentar meus heróis e utilizar habilidades especiais com cada um deles.
+Como jogador, quero poder controlar 3 diferentes heróis, que me permitam atacar os monstros de formas diferentes ao entender as características de cada herói. Também quero ser capaz de movimentar meus heróis e utilizar a habilidade especial de cada um deles.
 
 ### Monster
 
-Como jogador, quero ser capaz de enfrentar e derrotar diferentes tipos de monstros (todos capazes de se movimentar), cada um dotado de características específicas relacionadas ao número de pontos de vida, quantidade de dano do ataque e aparência estética. Além disso, ao serem derrotados, quero que os monstros deixem experiência para ser coletada e deve existir uma chance de eles deixarem um item vantajoso ao herói que coletá-lo.
+Como jogador, quero ser capaz de enfrentar e derrotar diferentes tipos de monstros (todos capazes de se movimentar), cada um dotado de características específicas relacionadas ao número de pontos de vida, quantidade de dano do ataque e aparência estética. Além disso, ao serem derrotados, quero que os monstros deixem experiência para ser coletada. Por fim, deve existir uma chance de eles deixarem um item vantajoso ao herói que coletá-lo.
 
 ### Itens
 
@@ -34,10 +34,10 @@ Todas as opções do jogo devem ser selecionadas utilizando as setinhas do tecla
 
 ## Menu do jogador
 
-Durante o turno do herói é necessário selecionar uma das ações do herói, caso você tente realizar uma ação invalida(ex: atacar um alvo invalido ou se mover para a parede), é possível selecionar outra ação. As possíveis ações são:
+Durante o turno do herói é necessário selecionar uma das ações do herói, caso você tente realizar uma ação inválida (ex: atacar um alvo inválido ou se mover para a parede), é possível selecionar outra ação. As possíveis ações são:
 <dl>
     <dd>Mover: Após selecionar mover, aperte novamente as setinhas para escolher qual direção o herói vai se mexer.</dd>
-    <dd>Atacar: Após selecionar essa ação é necessario apertar a setinhas novamente e escolher a direção do ataque, lembre-se que todos os heróis atacam apenas um quadrado de distância e não atacam na diagonal.</dd>
+    <dd>Atacar: Após selecionar essa ação é necessário apertar a setinhas novamente e escolher a direção do ataque, lembre-se que todos os heróis atacam apenas um quadrado de distância e não atacam na diagonal.</dd>
     <dd>Habilidade: Cada herói possui uma habilidade única e essa opção ativa esse poder.</dd>
     <dd>Esperar: Muitas vezes a jogada mais sábia é apenas esperar, por isso essa ação passa a vez de um herói para seu próximo companheiro.</dd>
 </dl>
@@ -46,19 +46,19 @@ Durante o turno do herói é necessário selecionar uma das ações do herói, c
 
 ## Nivel do heroi e barras de vida
 
-Todos os heróis quando confrontados por um novo desafio são capazes de se adaptar e ficam cada vez mais fortes, por isso quando um número de inimigos é derrotado o herói sobe de nível, aumentando todos os seus status.
-Já quando um herói é atacado sua barra de vida cai, quando ela chegar a zero o herói morre abandonando seus aliados.
+Todos os heróis quando confrontados por um novo desafio são capazes de se adaptar e ficam cada vez mais fortes, por isso, quando um número de inimigos é derrotado, o herói sobe de nível, o que aumenta todos os seus status.
+Já quando um herói é atacado sua barra de vida diminui. Quando ela chegar a zero, o herói morre, abandonando seus aliados.
 
 <img src="https://github.com/LuccaRig/TPPdsII/blob/main/Resources/NiveisEBarrasDevida.png">
 
 ## Itens no tabuleiro
 
+Os itens são divididos em três tipos de poção: a poção vermelha, que aumenta os pontos de vida do herói que coletá-la; a poção azul, que aumenta a força do ataque especial do herói; e a poção verde, que aumenta a força do ataque normal do herói. Essas poções tem chance de aparecerem em um quadrado onde um monstro acabou de ser derrotado e desaparecem do tabuleiro quando uma horda é derrotada.
 
 
 ## Cooldown
 
-Para aumentar a estratégia do jogo, colocamos uma mecânica que as habilidade não podem ser utilizadas múltiplas vezes, caso você tente pode acabar perdendo um turno! No entanto fique tranquilo, colocamos um aviso para quando a habilidade
-for selecionada, mas não pode ser utilizada, para te auxiliar nas decisões
+Para aumentar a estratégia do jogo, colocamos uma mecânica que as habilidade não podem ser utilizadas múltiplas vezes, caso você tente, pode acabar perdendo um turno! No entanto, fique tranquilo, colocamos um aviso para quando a habilidade for selecionada, mas não pode ser utilizada, para te auxiliar nas decisões.
 
 # Personagens do jogador
 
@@ -68,7 +68,7 @@ for selecionada, mas não pode ser utilizada, para te auxiliar nas decisões
   <dt>Magia de chamas</dt>
   <dd>Quando utiliza sua habilidade, realiza um ataque devastador em todos os inimigos na linha e na coluna onde está posicionado</dd>
   <dt>Tempo de recuperação elevado</dt>
-  <dd>Por ter uma habilidade muito poderosa, se cansa muito com o uso, é necessário esperar 2 turnos para utiliza-la novamente</dd>
+  <dd>Por ter uma habilidade muito poderosa, se cansa muito com o uso, é necessário esperar 2 turnos para utilizá-la novamente</dd>
   <dt>Ataque e vida medianos</dt>
   <dd>Seu ponto forte é sua magia, por isso não possui um ataque muito forte nem uma vida muito alta</dd>
 </dl>
@@ -79,12 +79,12 @@ for selecionada, mas não pode ser utilizada, para te auxiliar nas decisões
   <dt>Ataque letal</dt>
   <dd>Quando utiliza sua habilidade, faz com que seus ataques fiquem permanentemente mais poderosos, tornando-se um perigo para os inimigos no final do jogo</dd>
   <dt>Tempo de recuperação baixo</dt>
-  <dd>Sua habilidade se basea em afiar as suas armas, logo pode se recuperar em um turno e utiliza-la novamente</dd>
+  <dd>Sua habilidade se basea em afiar as suas armas, logo pode se recuperar em um turno e utilizá-la novamente</dd>
   <dt>Ataque alto e vida extremamente baixa</dt>
-  <dd>Sua habilidade faz com que o ladino seja extremamente mortal, isso se você conseguir mante-lo fora da linha de frente, e utiliza-lo em momentos estratégicos</dd>
+  <dd>Sua habilidade faz com que o ladino seja extremamente mortal, isso se você conseguir mantê-lo fora da linha de frente, e utilizá-lo em momentos estratégicos</dd>
 </dl>
 
-## Guerreiro
+## Cavaleiro
 <img src="https://github.com/LuccaRig/TPPdsII/blob/main/Resources/RadiantPaladinIdleSide.gif" width="60" height="60"/>
 <dl>
   <dt>Vontade inabalável</dt>
