@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <math.h>
+#include <sstream>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -85,13 +86,11 @@ void Game::heroFirstLevel() {
 }
 
 void Game::heroLevel(Hero &hero, int hero_type) {
-    int lvl = hero.get_hero_lvl();
+    std::stringstream printed_hero_lvl;
+    printed_hero_lvl << "Lvl " << hero.get_hero_lvl();
+    hero_lvl_printed_[hero_type] = printed_hero_lvl.str();
     font_.loadFromFile("Resources/Retro Gaming.ttf");
     hero_lvl_.resize(3);
-    if (lvl == 2) hero_lvl_printed_[hero_type] = "Lvl 2";
-    else if (lvl == 3) hero_lvl_printed_[hero_type] = "Lvl 3";
-    else if (lvl == 4) hero_lvl_printed_[hero_type] = "Lvl 4";
-    else if (lvl == 5) hero_lvl_printed_[hero_type] = "Lvl 5";
     hero_lvl_position_= {{218, 20}, {128, 140}, {160, 260}};
     for (unsigned int i = 0; i < hero_lvl_.size(); i++) {
         hero_lvl_[i].setFont(font_);
@@ -748,10 +747,10 @@ void Game::initMonstersHealthBars() {
 
 
     boss_.setFont(font_);
-    boss_.setString("Vida do Boss");
+    boss_.setString("Boss");
     boss_.setCharacterSize(30);
     boss_.setFillColor(sf::Color::White);
-    boss_.setPosition(sf::Vector2f(900, 20));
+    boss_.setPosition(sf::Vector2f(965, 20));
 
     boss_health_bar_.setSize(sf::Vector2f(220, 30));
     boss_health_bar_.setFillColor(sf::Color(128, 0, 0));
