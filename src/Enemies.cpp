@@ -62,7 +62,7 @@ std::pair<int, int> Enemies::randomPositionSpawn(Board* my_board) {
 }
 
 void Enemies::eyeSpawn(Board* my_board) {
-    if(!(boss_turns_%2)){
+    if(boss_turns_){
         int pos_x = this->randomPositionSpawn(my_board).first;
         int pos_y = this->randomPositionSpawn(my_board).second;
         enemy_count_++;
