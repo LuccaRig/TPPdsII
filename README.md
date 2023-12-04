@@ -7,6 +7,8 @@ Esse repositório tem a finalidade de realizar um controle de versão do código
 
 # Personagens
 <img src="https://github.com/LuccaRig/TPPdsII/blob/main/Resources/NovicePyromancerIdle.gif" width="80" height="80"/>
+<img src="https://github.com/LuccaRig/TPPdsII/blob/main/Resources/HalflingAssassinIdleSide.gif" width="80" height="80"/>
+<img src="https://github.com/LuccaRig/TPPdsII/blob/main/Resources/RadiantPaladinIdleSide.gif" width="80" height="80"/>
 
 
 
@@ -66,15 +68,7 @@ Logo em seguida é necessário fazer um clone do repositório do projeto:
 Para compilar e executar é necessário estar no diretório onde o repositório foi clonado e em seguida executar os comandos:
 
 ```
-    make clean
-```
-
-```
-    make
-```
-
-```
-    ./Game.app
+    make clean; make; ./Game.app
 ```
 
 Se tudo estiver correto uma janela com o jogo funcionando deverá ser aberta, Divirta-se 😉
