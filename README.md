@@ -5,8 +5,8 @@ Esse repositório tem a finalidade de realizar um controle de versão do código
 
 **CHECAR A PASTA LOGIC PARA A ENTREGA DO DIA 27/10(Arquivos .h da lógica do jogo estão nela)**
 
-#My gif
-<img src="https://github.com/LuccaRig/TPPdsII/blob/main/Resources/NovicePyromancerIdle.gif" width="250" height="250"/>
+# My gif
+<img src="https://github.com/LuccaRig/TPPdsII/blob/main/Resources/NovicePyromancerIdle.gif" width="150" height="150"/>
 
 
 # User Storys
