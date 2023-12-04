@@ -34,20 +34,20 @@ Todas as opções do jogo devem ser selecionadas utilizando as setinhas do tecla
 
 ## Menu do jogador
 
-Durante o turno do heroi é necessário selecionar uma das ações do heroi, caso você tente realizar uma ação invalida(ex: atacar um alvo invalido ou se mover para a parede), é possível selecionar outra ação. As possíveis ações são:
+Durante o turno do herói é necessário selecionar uma das ações do herói, caso você tente realizar uma ação invalida(ex: atacar um alvo invalido ou se mover para a parede), é possível selecionar outra ação. As possíveis ações são:
 <dl>
-    <dd>Mover: Após selecionar mover, aperte novamente as setinhas para escolher qual direção o heroi vai se mexer.</dd>
-    <dd>Atacar: Após selecionar essa ação é necessario apertar a setinhas novamente e escolher a direção do ataque, lembre-se que todos os herois atacam apenas um quadrado de distância e não atacam na diagonal.</dd>
-    <dd>Habilidade: Cada heroi possui uma habilidade única e essa opção ativa esse poder.</dd>
-    <dd>Esperar: Muitas vezes a jogada mais sábia é apenas esperar, por isso essa ação passa a vez de um heroi para seu próximo companheiro.</dd>
+    <dd>Mover: Após selecionar mover, aperte novamente as setinhas para escolher qual direção o herói vai se mexer.</dd>
+    <dd>Atacar: Após selecionar essa ação é necessario apertar a setinhas novamente e escolher a direção do ataque, lembre-se que todos os heróis atacam apenas um quadrado de distância e não atacam na diagonal.</dd>
+    <dd>Habilidade: Cada herói possui uma habilidade única e essa opção ativa esse poder.</dd>
+    <dd>Esperar: Muitas vezes a jogada mais sábia é apenas esperar, por isso essa ação passa a vez de um herói para seu próximo companheiro.</dd>
 </dl>
 
 <img src="https://github.com/LuccaRig/TPPdsII/blob/main/Resources/MenuDoHeroi.png">
 
 ## Nivel do heroi e barras de vida
 
-Todos os herois quando confrontados por um novo desafio são capazes de se adaptarem e ficarem cada vez mais fortes, por isso quando um número de inimigos é derrotado o heroi sobe de nível, aumentando seus todos os seus status.
-Ja quando um heroi é atacado sua barra de vida cai, quando ela chegar a zero o heroi morre abandonando seus aliados.
+Todos os heróis quando confrontados por um novo desafio são capazes de se adaptar e ficam cada vez mais fortes, por isso quando um número de inimigos é derrotado o herói sobe de nível, aumentando todos os seus status.
+Já quando um herói é atacado sua barra de vida cai, quando ela chegar a zero o herói morre abandonando seus aliados.
 
 <img src="https://github.com/LuccaRig/TPPdsII/blob/main/Resources/NiveisEBarrasDevida.png">
 
@@ -57,7 +57,7 @@ Ja quando um heroi é atacado sua barra de vida cai, quando ela chegar a zero o 
 
 ## Cooldown
 
-Para aumentar a estratégia do jogo, colocamos uma mecânica que as habilidade não podem ser utilizadas multiplas vezes, caso você tente pode acabar perdendo um turno! No entanto fique tranquilo, colocamos um aviso para quando a habilidade
+Para aumentar a estratégia do jogo, colocamos uma mecânica que as habilidade não podem ser utilizadas múltiplas vezes, caso você tente pode acabar perdendo um turno! No entanto fique tranquilo, colocamos um aviso para quando a habilidade
 for selecionada, mas não pode ser utilizada, para te auxiliar nas decisões
 
 # Personagens do jogador
@@ -92,7 +92,7 @@ for selecionada, mas não pode ser utilizada, para te auxiliar nas decisões
   <dt>Tempo de recuperação elevado</dt>
   <dd>Não é capaz de regenerar todas feridas a todo momento, por isso precisa esperar 2 turnos para usar sua habilidade novamente</dd>
   <dt>Ataque médio e vida extremamente alta</dt>
-  <dd>Por ter muita vida e conseguir se regenerar, o guerreiro é o mais durável no campo de batalha, podendo resistir ataques inimigos e manter seus aliados longe do  combate</dd>
+  <dd>Por ter muita vida e conseguir se regenerar, o guerreiro é o mais durável no campo de batalha, podendo resistir ataques inimigos e manter seus aliados longe do combate</dd>
 </dl>
 
 # Instalação e Execução da parte gráfica
