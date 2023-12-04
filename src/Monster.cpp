@@ -19,8 +19,8 @@
         monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
 
         if (monster_type_ == "bloody abomination 1" || monster_type_ == "bloody abomination 2") {
-            if (monster_type_ == "bloody abomination 1") monster_number_ = 4;
-            if (monster_type_ == "bloody abomination 2") monster_number_ = 5;
+            if (monster_type_ == "bloody abomination 1") monster_number_ = 0;
+            if (monster_type_ == "bloody abomination 2") monster_number_ = 2;
             monster_hp_ = monster_full_hp_ = 12;
             monster_dmg_ = 8;
             monster_exp_drop_ = 1;
@@ -32,7 +32,7 @@
             monster_hp_ = monster_full_hp_ = 20;
             monster_dmg_ = 6;
             monster_exp_drop_ = 1;
-            monster_number_ = 5;
+            monster_number_ = 4;
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/DeathKnightIdleSide.png"); 
@@ -41,7 +41,7 @@
             monster_hp_ = monster_full_hp_ = 15;
             monster_dmg_ = 6;
             monster_exp_drop_ = 1;
-            monster_number_ = 5;
+            monster_number_ = 1;
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/SkeweringStalker.png");
@@ -51,7 +51,7 @@
             monster_hp_ = monster_full_hp_ = 25;
             monster_dmg_ = 5;
             monster_exp_drop_ = 1;
-            monster_number_ = 5;
+            monster_number_ = 4;
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/FloatingEye.png");
@@ -60,14 +60,14 @@
             monster_hp_ = monster_full_hp_ = 40;
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
-            monster_number_ = 2;
+            monster_number_ = 1;
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/SandGolemIdleSide.png");   
         }
         else if (monster_type_ == "ghastly beholder 1" || monster_type_ == "ghastly beholder 2") {
             if (monster_type_ == "ghastly beholder 1") monster_number_ = 3;
-            if (monster_type_ == "ghastly beholder 1") monster_number_ = 4;
+            if (monster_type_ == "ghastly beholder 2") monster_number_ = 5;
             monster_hp_ = monster_full_hp_ = 10;
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
@@ -76,8 +76,8 @@
             monster_texture_.loadFromFile("Textures/GhastlyBeholderIdleSide.png");  
         }
         else if (monster_type_ == "unholy skull 1" || monster_type_ == "unholy skull 2") {
-            if (monster_type_ == "unholy skull 1") monster_number_ = 0;
-            if (monster_type_ == "unholy skull 2") monster_number_ = 0;
+            if (monster_type_ == "unholy skull 1") monster_number_ = 2;
+            if (monster_type_ == "unholy skull 2") monster_number_ = 3;
             monster_hp_ = monster_full_hp_ = 10;
             monster_dmg_ = 4;
             monster_exp_drop_ = 1;
@@ -86,8 +86,8 @@
             monster_texture_.loadFromFile("Textures/UnholySkullIdleSide.png");   
         }
         else if (monster_type_ == "virulent wight 1" || monster_type_ == "virulent wight 2") {
-            if (monster_type_ == "virulent wight 1") monster_number_ = 1;
-            if (monster_type_ == "virulent wight 2") monster_number_ = 1;
+            if (monster_type_ == "virulent wight 1") monster_number_ = 0;
+            if (monster_type_ == "virulent wight 2") monster_number_ = 5;
             monster_hp_ = monster_full_hp_ = 13;
             monster_dmg_ = 5;
             monster_exp_drop_ = 1;
