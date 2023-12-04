@@ -135,7 +135,7 @@ void Enemies::createHordeEnemies(std::vector<std::unique_ptr<Item>> &itens, Boar
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("bloody abomination 2")));
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("ghastly beholder 1")));
         enemies_.push_back(std::unique_ptr<Monster>(new Monster("death knight")));
-        enemies_.push_back(std::unique_ptr<Monster>(new Monster("ghastly beholder 1")));
+        enemies_.push_back(std::unique_ptr<Monster>(new Monster("ghastly beholder 2")));
         setAllInStartPosition(itens, my_board, rogue, mage, knight);
         this->hordePass();
     }
