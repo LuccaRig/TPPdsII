@@ -857,12 +857,6 @@ void Game::monsterMove(int enemy_number, int distance_x, int distance_y, int pos
 
 void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock) {
     if((rogue_.isAlive() || mage_.isAlive() || knight_.isAlive()) && !current_game_state_->playerVictory(my_hordes_)){
-        
-        if(this->my_hordes_.bossIsAlive()){
-            srand((unsigned) time(NULL));
-            this->my_hordes_.eyeSpawn(game_board_);
-            this->my_hordes_.bossTurnIncrement();
-        }
     
     struct heroes {
         int pos_x;
@@ -941,6 +935,12 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
             delta_time = clock.restart().asSeconds();
         }
     }
+
+    if(this->my_hordes_.bossIsAlive()){
+            srand((unsigned) time(NULL));
+            this->my_hordes_.eyeSpawn(game_board_);
+            this->my_hordes_.bossTurnIncrement();
+        }
     
     current_game_state_->heroTurnRestart();
     }
