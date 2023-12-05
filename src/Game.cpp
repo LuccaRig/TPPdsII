@@ -859,6 +859,7 @@ void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock
     if((rogue_.isAlive() || mage_.isAlive() || knight_.isAlive()) && !current_game_state_->playerVictory(my_hordes_)){
         
         if(this->my_hordes_.bossIsAlive()){
+            srand((unsigned) time(NULL));
             this->my_hordes_.eyeSpawn(game_board_);
             this->my_hordes_.bossTurnIncrement();
         }

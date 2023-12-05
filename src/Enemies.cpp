@@ -51,11 +51,12 @@ void Enemies::bossTurnIncrement() {
 void Enemies::randomEyeSelect() {
     int random_selec = rand()%2;
     if(random_selec == 0) enemies_.push_back(std::unique_ptr<Monster>(new Monster("bloodshot eye")));
-    else if(random_selec == 1) enemies_.push_back(std::unique_ptr<Monster>(new Monster("ocular whatcher")));
+    if(random_selec == 1) enemies_.push_back(std::unique_ptr<Monster>(new Monster("ocular watcher")));
 }
 
 
 std::pair<int, int> Enemies::randomPositionSpawn(Board* my_board) {
+    srand((unsigned) time(NULL));
     int random_position_x = rand()%5;
     int random_position_y = rand()%5;
     return std::make_pair(random_position_x, random_position_y);
