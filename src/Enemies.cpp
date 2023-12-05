@@ -91,24 +91,36 @@ void Enemies::setAllInStartPosition(std::vector<std::unique_ptr<Item>> &itens, B
     for(auto it = itens.begin(); it != itens.end(); it++) {
         (*it)->set_item_to_used();
     }
-    
-    for(int i=0; i < this->hordeSize();++i){
-        if(i < 2) this->enemy(i)->set_monster_position_x(i*2);
-        if(i == 2) this->enemy(i)->set_monster_position_x(4);
-        if(i > 2){
-            this->enemy(i)->set_monster_position_y(4);
-            if(i == 3) this->enemy(i)->set_monster_position_x(0);
-            if(i == 4) this->enemy(i)->set_monster_position_x(2);
-            if(i == 5) this->enemy(i)->set_monster_position_x(4);
-            
+    if(horde_number_ < 2) {
+        for(int i=0; i < this->hordeSize();++i){
+            if(i < 2) this->enemy(i)->set_monster_position_x(i*2);
+            if(i == 2) this->enemy(i)->set_monster_position_x(4);
+            if(i > 2){
+                this->enemy(i)->set_monster_position_y(4);
+                if(i == 3) this->enemy(i)->set_monster_position_x(0);
+                if(i == 4) this->enemy(i)->set_monster_position_x(2);
+                if(i == 5) this->enemy(i)->set_monster_position_x(4);
+                
+            }
         }
+        rogue.set_hero_position_x(3);
+        rogue.set_hero_position_y(2);
+        mage.set_hero_position_x(1);
+        mage.set_hero_position_y(2);
+        knight.set_hero_position_x(2);
+        knight.set_hero_position_y(2);
     }
-    rogue.set_hero_position_x(3);
-    rogue.set_hero_position_y(2);
-    mage.set_hero_position_x(1);
-    mage.set_hero_position_y(2);
-    knight.set_hero_position_x(2);
-    knight.set_hero_position_y(2);
+    else{
+        this->enemy(0)->set_monster_position_x(2);
+        this->enemy(0)->set_monster_position_y(0);
+
+        rogue.set_hero_position_x(3);
+        rogue.set_hero_position_y(4);
+        mage.set_hero_position_x(1);
+        mage.set_hero_position_y(4);
+        knight.set_hero_position_x(2);
+        knight.set_hero_position_y(4);
+    }
 }
 
 bool Enemies::allEnemiesAreDead() {
