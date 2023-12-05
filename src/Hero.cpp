@@ -11,7 +11,7 @@
 
 Hero::Hero(std::string hero_type) {
     current_exp_ = 0;
-    needed_exp_ = 2;
+    needed_exp_ = 4;
     hero_lvl_ = 1;
     hero_type_ = hero_type;
     hero_sprite_ = sf::Sprite();
@@ -140,21 +140,21 @@ void Hero::lvlUp(std::string hero_type) {
         hero_full_hp_ += 5;
         hero_attack_ += 1;
         hero_special_attack_ += 4;
-        needed_exp_ += 2;
+        needed_exp_ += 3;
     }
     else if (hero_type == "rogue") {
         hero_hp_ += 2;
         hero_full_hp_ += 2;
         hero_attack_ += 2;
         hero_special_attack_ += 1;
-        needed_exp_ += 2;
+        needed_exp_ += 3;
     }
     else if (hero_type == "mage") {
         hero_hp_ += 4;
         hero_full_hp_ += 4;
         hero_attack_ += 1;
         hero_special_attack_ += 2;
-        needed_exp_ += 2;
+        needed_exp_ += 3;
     }
 }
 

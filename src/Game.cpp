@@ -700,11 +700,26 @@ bool Game::isNextSkillOnCooldown() {
              rogue_.get_skill_cooldown() != 1) return true;
     return false;
   }
-    else if (rogue_.isAlive() && mage_.isAlive() && !knight_.isAlive()) {
+  else if (rogue_.isAlive() && mage_.isAlive() && !knight_.isAlive()) {
     if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" &&
         mage_.get_skill_cooldown() != 2) return true;
     else if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" &&
              rogue_.get_skill_cooldown() != 1) return true;
+    return false;
+  }
+  else if (!mage_.isAlive() && !knight_.isAlive()) {
+    if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" &&
+        rogue_.get_skill_cooldown() != 1) return true;
+    return false;
+  }
+  else if (!mage_.isAlive() && !rogue_.isAlive()) {
+    if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" &&
+        knight_.get_skill_cooldown() != 2) return true;
+    return false;
+  }
+  else if (!rogue_.isAlive() && !knight_.isAlive()) {
+    if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" &&
+        mage_.get_skill_cooldown() != 2) return true;
     return false;
   }
   return false;
