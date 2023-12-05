@@ -53,8 +53,10 @@ class Game {
     /// funcionando como deveria
     void run(sf::Clock clock);
 
+    /// @brief Coloca os heróis no tabuleiro
     void putHeroInBoard(int position_y, int position_x, Hero &hero, float delta_time,sf::RectangleShape &tileShape);
 
+    /// @brief Coloca os monstros no tabuleiro
     void putMonsterInBoard(int position_y, int position_x, Monster &monster, float delta_time,sf::RectangleShape &tileShape);
 
     /// @brief testa se há um item não vazio na coordenada dos parâmetros e, se sim, ajusta as proporções
@@ -124,6 +126,7 @@ class Game {
     /// @return Retorna se a habilidade do herói atual está em cooldown
     bool isSkillOnCooldown();
 
+    /// @return Retorna se a habilidade do próximo herói está em cooldown
     bool isNextSkillOnCooldown();
 
     /// @brief Escreve que a habilidade está em cooldown
@@ -135,17 +138,21 @@ class Game {
     /// @brief Muda o tamanho das barras de vida dos monstros
     void setMonstersHealthBars(int damaged_monster, float full_hp, float current_hp);
 
+    /// @brief Desenha a tela de game over
     void gameOverRender();
     
+    /// @brief Desenha a tela de vitória do jogador
     void playerWinRender();
 
+    /// @brief Faz com que qualquer tecla feche o jogo após o game over
     void gameOverCloseWindow(float delta_time, sf::Clock clock);
     
     /// @brief aplica efeito do item no herói
     /// PRECONDIÇÃO: herói se movimentou para a coordenada de um item que não foi usado
     void applyItemEffect(int pos_x, int pos_y, Hero& hero);
 
-    void paleyrWinCloseWindow(float delta_time, sf::Clock clock);
+    /// @brief Faz com que qualquer tecla feche o jogo após a vitória do player
+    void playerWinCloseWindow(float delta_time, sf::Clock clock);
 
   private:
     //Variables
