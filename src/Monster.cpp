@@ -23,7 +23,7 @@
             if (monster_type_ == "bloody abomination 2") monster_number_ = 2;
             monster_hp_ = monster_full_hp_ = 18;
             monster_dmg_ = 10;
-            monster_exp_drop_ = 1;
+            monster_exp_drop_ = 5;
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/BloodyAbominationIdleSide.png");  
@@ -31,7 +31,7 @@
         else if (monster_type_ == "death knight") {
             monster_hp_ = monster_full_hp_ = 32;
             monster_dmg_ = 7;
-            monster_exp_drop_ = 1;
+            monster_exp_drop_ = 6;
             monster_number_ = 4;
 
             //Parte das texturas e animações
@@ -40,7 +40,7 @@
         else if (monster_type_ == "stalker") {
             monster_hp_ = monster_full_hp_ = 15;
             monster_dmg_ = 8;
-            monster_exp_drop_ = 1;
+            monster_exp_drop_ = 4;
             monster_number_ = 1;
 
             //Parte das texturas e animações
@@ -49,7 +49,7 @@
         else if (monster_type_ == "floating eye") {
             monster_hp_ = monster_full_hp_ = 25;
             monster_dmg_ = 5;
-            monster_exp_drop_ = 1;
+            monster_exp_drop_ = 3;
             monster_number_ = 4;
 
             //Parte das texturas e animações
@@ -58,7 +58,7 @@
         else if (monster_type_ == "sand golem") {
             monster_hp_ = monster_full_hp_ = 42;
             monster_dmg_ = 2;
-            monster_exp_drop_ = 1;
+            monster_exp_drop_ = 3;
             monster_number_ = 1;
 
             //Parte das texturas e animações
@@ -68,7 +68,7 @@
             if (monster_type_ == "ghastly beholder 1") monster_number_ = 3;
             if (monster_type_ == "ghastly beholder 2") monster_number_ = 5;
             monster_hp_ = monster_full_hp_ = 14;
-            monster_dmg_ = 2;
+            monster_dmg_ = 3;
             monster_exp_drop_ = 1;
 
             //Parte das texturas e animações
@@ -89,7 +89,7 @@
             if (monster_type_ == "virulent wight 2") monster_number_ = 5;
             monster_hp_ = monster_full_hp_ = 15;
             monster_dmg_ = 6;
-            monster_exp_drop_ = 1;
+            monster_exp_drop_ = 2;
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/VirulentWightIdleSide.png");   
