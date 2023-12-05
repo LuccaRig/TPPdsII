@@ -41,7 +41,7 @@ std::string Item::returnsRandomItem() {
     item_n[2] = "heal";
     item_n[3] = "spellBuff";
     item_n[4] = "dmgBuff";
-    // chance final de cair item vai ser 50%
+    // chance final de cair item é 50%
 	int random = 1 + rand()%8;
 
     if (random <= 4) {
