@@ -21,17 +21,17 @@ Item::Item(int x, int y) {
         item_texture_.loadFromFile("Textures/potion_red.png");
         item_sprite_.setTexture(item_texture_);
         item_sprite_.setTextureRect(sf::IntRect(0, 0, 7, 8));
-        item_effect_ = 15;
+        item_effect_ = 10;
     } else if (item_type_ == "spellBuff") {
         item_texture_.loadFromFile("Textures/potion_blue.png");
         item_sprite_.setTexture(item_texture_);
         item_sprite_.setTextureRect(sf::IntRect(0, 0, 7, 8));
-        item_effect_ = 8;
+        item_effect_ = 2;
     } else if (item_type_ == "dmgBuff") {
         item_texture_.loadFromFile("Textures/potion_green.png");
         item_sprite_.setTexture(item_texture_);
         item_sprite_.setTextureRect(sf::IntRect(0, 0, 7, 8));
-        item_effect_ = 8;
+        item_effect_ = 2;
     }
 }
 
