@@ -103,7 +103,9 @@ class Game {
     void heroAttack(Hero &hero, float delta_time, sf::Clock clock);
 
     /// @brief Realiza a habilidade de um herói que aumenta o próprio status
-    void heroUseBuffSkill(int hero_number, std::string hero_type, Hero &hero);
+    void heroUseBuffSkill(std::string hero_type, Hero &hero);
+
+    void heroUseHealSkill(std::string hero_type, Hero &hero);
 
     /// @brief Realiza a habilidade de um herói que da dano aos monstros
     void heroUseDamageSkill(std::string hero_type, Hero &hero);
