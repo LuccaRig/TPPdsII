@@ -21,7 +21,7 @@
         if (monster_type_ == "bloody abomination 1" || monster_type_ == "bloody abomination 2") {
             if (monster_type_ == "bloody abomination 1") monster_number_ = 0;
             if (monster_type_ == "bloody abomination 2") monster_number_ = 2;
-            monster_hp_ = monster_full_hp_ = 16;
+            monster_hp_ = monster_full_hp_ = 18;
             monster_dmg_ = 10;
             monster_exp_drop_ = 1;
 
@@ -29,7 +29,7 @@
             monster_texture_.loadFromFile("Textures/BloodyAbominationIdleSide.png");  
         }
         else if (monster_type_ == "death knight") {
-            monster_hp_ = monster_full_hp_ = 30;
+            monster_hp_ = monster_full_hp_ = 32;
             monster_dmg_ = 7;
             monster_exp_drop_ = 1;
             monster_number_ = 4;
@@ -56,7 +56,7 @@
             monster_texture_.loadFromFile("Textures/FloatingEye.png");
         }
         else if (monster_type_ == "sand golem") {
-            monster_hp_ = monster_full_hp_ = 40;
+            monster_hp_ = monster_full_hp_ = 42;
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
             monster_number_ = 1;
@@ -67,7 +67,7 @@
         else if (monster_type_ == "ghastly beholder 1" || monster_type_ == "ghastly beholder 2") {
             if (monster_type_ == "ghastly beholder 1") monster_number_ = 3;
             if (monster_type_ == "ghastly beholder 2") monster_number_ = 5;
-            monster_hp_ = monster_full_hp_ = 13;
+            monster_hp_ = monster_full_hp_ = 14;
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
 
@@ -96,7 +96,7 @@
         }
         else if (monster_type_ == "ocular watcher") {
             monster_hp_ = monster_full_hp_ = 1;
-            monster_dmg_ = 4;
+            monster_dmg_ = 5;
             monster_exp_drop_ = 1;
             monster_number_ = 2;
 
@@ -107,7 +107,7 @@
         } 
         else if (monster_type_ == "bloodshot eye") {
             monster_hp_ = monster_full_hp_ = 1;
-            monster_dmg_ = 3;
+            monster_dmg_ = 4;
             monster_exp_drop_ = 1;
             monster_number_ = 1;
 

@@ -281,6 +281,10 @@ void Game::boardRender(float delta_time) {
             //Desenha o quadrado na janela
             this->game_window_->draw(tileShape);
 
+            for (auto& item_itr : items_) {
+                putItemInBoard(i, j, *(item_itr), tileShape);
+            }
+
             //Chama funções que desenham heróis, monstros e itens na tela
             putHeroInBoard(i, j, mage_, delta_time, tileShape);
             putHeroInBoard(i, j, knight_, delta_time, tileShape);
@@ -288,10 +292,6 @@ void Game::boardRender(float delta_time) {
             for(int k = 0; k < my_hordes_.hordeSize(); ++k) {
                 putMonsterInBoard(i, j, *(my_hordes_.enemy(k)), delta_time, tileShape);
             }
-            for (auto& item_itr : items_) {
-                putItemInBoard(i, j, *(item_itr), tileShape);
-            }
-
         }
     }
 }
@@ -857,6 +857,8 @@ void Game::monsterMove(int enemy_number, int distance_x, int distance_y, int pos
 
 void Game::monsterTakeAction(int number_of_monsters, float delta_time, sf::Clock clock) {
     if((rogue_.isAlive() || mage_.isAlive() || knight_.isAlive()) && !current_game_state_->playerVictory(my_hordes_)){
+
+    this->render(delta_time);
     
     struct heroes {
         int pos_x;
