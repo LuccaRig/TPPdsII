@@ -21,9 +21,9 @@ Hero::Hero(std::string hero_type) {
     animation_timer_ = 0.0f;
 
     if (hero_type_ == "knight") {
-        hero_hp_ = hero_full_hp_ = 35;
-        hero_attack_ = 20;
-        hero_special_attack_ = 4;
+        hero_hp_ = hero_full_hp_ = 40;
+        hero_attack_ = 7;
+        hero_special_attack_ = 10;
         hero_number_ = 0;
         skill_cooldown_ = 2;
         
@@ -37,8 +37,8 @@ Hero::Hero(std::string hero_type) {
     }
     else if (hero_type_ == "rogue"){
         hero_hp_ = hero_full_hp_ = 25;
-        hero_attack_ = 20;
-        hero_special_attack_ = 5;
+        hero_attack_ = 10;
+        hero_special_attack_ = 2;
         hero_number_ = 2;
         skill_cooldown_ = 1;
 
@@ -52,8 +52,8 @@ Hero::Hero(std::string hero_type) {
     }
     else if (hero_type_ == "mage") {
         hero_hp_ = hero_full_hp_ = 30;
-        hero_attack_ = 20;
-        hero_special_attack_ = 15;
+        hero_attack_ = 5;
+        hero_special_attack_ = 10;
         hero_number_ = 1;
         skill_cooldown_ = 2;
         
@@ -139,19 +139,19 @@ void Hero::lvlUp(std::string hero_type) {
         hero_hp_ += 5;
         hero_full_hp_ += 5;
         hero_attack_ += 1;
-        hero_special_attack_ += 2;
+        hero_special_attack_ += 4;
         needed_exp_ += 2;
     }
     else if (hero_type == "rogue") {
         hero_hp_ += 2;
         hero_full_hp_ += 2;
-        hero_attack_ += 3;
+        hero_attack_ += 2;
         hero_special_attack_ += 1;
         needed_exp_ += 2;
     }
     else if (hero_type == "mage") {
-        hero_hp_ += 2;
-        hero_full_hp_ += 2;
+        hero_hp_ += 4;
+        hero_full_hp_ += 4;
         hero_attack_ += 1;
         hero_special_attack_ += 2;
         needed_exp_ += 2;

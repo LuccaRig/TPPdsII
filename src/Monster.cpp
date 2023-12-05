@@ -21,16 +21,16 @@
         if (monster_type_ == "bloody abomination 1" || monster_type_ == "bloody abomination 2") {
             if (monster_type_ == "bloody abomination 1") monster_number_ = 0;
             if (monster_type_ == "bloody abomination 2") monster_number_ = 2;
-            monster_hp_ = monster_full_hp_ = 12;
-            monster_dmg_ = 8;
+            monster_hp_ = monster_full_hp_ = 16;
+            monster_dmg_ = 10;
             monster_exp_drop_ = 1;
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/BloodyAbominationIdleSide.png");  
         }
         else if (monster_type_ == "death knight") {
-            monster_hp_ = monster_full_hp_ = 20;
-            monster_dmg_ = 6;
+            monster_hp_ = monster_full_hp_ = 30;
+            monster_dmg_ = 7;
             monster_exp_drop_ = 1;
             monster_number_ = 4;
 
@@ -39,7 +39,7 @@
         } 
         else if (monster_type_ == "stalker") {
             monster_hp_ = monster_full_hp_ = 15;
-            monster_dmg_ = 6;
+            monster_dmg_ = 8;
             monster_exp_drop_ = 1;
             monster_number_ = 1;
 
@@ -67,7 +67,7 @@
         else if (monster_type_ == "ghastly beholder 1" || monster_type_ == "ghastly beholder 2") {
             if (monster_type_ == "ghastly beholder 1") monster_number_ = 3;
             if (monster_type_ == "ghastly beholder 2") monster_number_ = 5;
-            monster_hp_ = monster_full_hp_ = 10;
+            monster_hp_ = monster_full_hp_ = 13;
             monster_dmg_ = 2;
             monster_exp_drop_ = 1;
 
@@ -77,7 +77,7 @@
         else if (monster_type_ == "unholy skull 1" || monster_type_ == "unholy skull 2") {
             if (monster_type_ == "unholy skull 1") monster_number_ = 2;
             if (monster_type_ == "unholy skull 2") monster_number_ = 3;
-            monster_hp_ = monster_full_hp_ = 10;
+            monster_hp_ = monster_full_hp_ = 12;
             monster_dmg_ = 4;
             monster_exp_drop_ = 1;
 
@@ -87,16 +87,16 @@
         else if (monster_type_ == "virulent wight 1" || monster_type_ == "virulent wight 2") {
             if (monster_type_ == "virulent wight 1") monster_number_ = 0;
             if (monster_type_ == "virulent wight 2") monster_number_ = 5;
-            monster_hp_ = monster_full_hp_ = 13;
-            monster_dmg_ = 5;
+            monster_hp_ = monster_full_hp_ = 15;
+            monster_dmg_ = 6;
             monster_exp_drop_ = 1;
 
             //Parte das texturas e animações
             monster_texture_.loadFromFile("Textures/VirulentWightIdleSide.png");   
         }
         else if (monster_type_ == "ocular watcher") {
-            monster_hp_ = monster_full_hp_ = 7;
-            monster_dmg_ = 3;
+            monster_hp_ = monster_full_hp_ = 1;
+            monster_dmg_ = 4;
             monster_exp_drop_ = 1;
             monster_number_ = 2;
 
@@ -106,8 +106,8 @@
             monster_sprite_.setTextureRect(sf::IntRect(0, 0, 16, 16));
         } 
         else if (monster_type_ == "bloodshot eye") {
-            monster_hp_ = monster_full_hp_ = 5;
-            monster_dmg_ = 2;
+            monster_hp_ = monster_full_hp_ = 1;
+            monster_dmg_ = 3;
             monster_exp_drop_ = 1;
             monster_number_ = 1;
 
@@ -118,8 +118,8 @@
             
         }
         else if (monster_type_ == "BOSS") {
-            monster_hp_ = monster_full_hp_ = 100;
-            monster_dmg_ = 5;
+            monster_hp_ = monster_full_hp_ = 167;
+            monster_dmg_ = 8;
             monster_exp_drop_ = 1;
             monster_number_ = 8;
 
