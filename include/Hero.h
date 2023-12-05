@@ -11,13 +11,12 @@
 
 #include "Board.h"
 #include "Skill.h"
-//#include "Item.h"
 
 class Hero {
 
   public:
 
-    /// @brief Constructor TODO: Atribui os status para cada hero_type_, assim como o spell_type_
+    /// @brief Constructor
     Hero(std::string hero_type);
 
     /// @brief Destructor
@@ -52,9 +51,6 @@ class Hero {
 
     /// @brief Diminui o cooldown da skill do herói
     void decreaseSkillCooldown();
-
-    // /// @brief Utiliza um item dropado por um monstro
-    // void UseItem(Item dropped_item);
 
     /// @brief Altera a experiência atual do herói
     void set_current_exp(int monster_exp, std::string hero_type);
@@ -95,6 +91,7 @@ class Hero {
     /// @brief Define um corte ou sprite específico do heroi
     void set_hero_sprite(sf::Sprite defined_sprite);
 
+    /// @brief Permite que o sprite seja animado
     void updateAnimation(float deltaTime);    
 
   private:

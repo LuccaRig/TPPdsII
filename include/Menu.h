@@ -13,23 +13,30 @@ class Menu {
 
   public:
 
+    /// @brief Construtor do menu inicial do jogo
     Menu();
 
+    /// @brief Destrutor
     ~Menu();
 
+    /// @brief Inicializa a janela do menu
     void initMenuWindow();
 
+    /// @brief Determina qual ação foi escolhida no menu
     void loopEvents();
 
+    /// @brief Desenha o menu na janela
     void drawMenu();
 
+    /// @brief Abre a janela do menu
     void runMenu();
 
   private:
-
+    //Variáveis do loop do menu
     int position_;
     bool keyboard_pressed_, enter_pressed_;
 
+    //Características da janela e do menu
     sf::RenderWindow *menu_window_;
     sf::RectangleShape *menu_close_;
     sf::Font menu_font_;

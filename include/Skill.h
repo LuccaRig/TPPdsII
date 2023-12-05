@@ -23,6 +23,7 @@ class Skill{
     int skill_damage();
 
   private: 
+    //Características das habilidades
     int skill_hp_;
     int skill_attack_;
     int changed_target_hp_;
