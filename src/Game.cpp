@@ -169,7 +169,7 @@ void Game::playerWinRender() {
     this->game_window_->draw(press_esc_quit);
 }
 
-void Game::paleyrWinCloseWindow(float delta_time, sf::Clock clock) {
+void Game::playerWinCloseWindow(float delta_time, sf::Clock clock) {
     while(this->current_game_state_->playerVictory(my_hordes_) && 
     this->game_window_->pollEvent(this->SFML_event_)) {
         this->render(delta_time);
@@ -1221,7 +1221,7 @@ void Game::run(sf::Clock clock) {
         if (my_hordes_.get_horde_number() == 2 && my_hordes_.allEnemiesAreDead()) initMonstersHealthBars();
 
         //Se o jogador vencer o jogo a janela será fechada com qualquer tecla apertada
-        this->paleyrWinCloseWindow(delta_time, clock);
+        this->playerWinCloseWindow(delta_time, clock);
         
         //Se for GameOver a janela será fechada com qualquer tecla apertada
         this->gameOverCloseWindow(delta_time, clock);
