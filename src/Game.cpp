@@ -281,16 +281,15 @@ void Game::boardRender(float delta_time) {
             //Desenha o quadrado na janela
             this->game_window_->draw(tileShape);
 
-            for (auto& item_itr : items_) {
-                putItemInBoard(i, j, *(item_itr), tileShape);
-            }
-
             //Chama funções que desenham heróis, monstros e itens na tela
             putHeroInBoard(i, j, mage_, delta_time, tileShape);
             putHeroInBoard(i, j, knight_, delta_time, tileShape);
             putHeroInBoard(i, j, rogue_, delta_time, tileShape);
             for(int k = 0; k < my_hordes_.hordeSize(); ++k) {
                 putMonsterInBoard(i, j, *(my_hordes_.enemy(k)), delta_time, tileShape);
+            }
+            for (auto& item_itr : items_) {
+                putItemInBoard(i, j, *(item_itr), tileShape);
             }
         }
     }
@@ -585,13 +584,25 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
     }
 }
 
-void Game::heroUseBuffSkill(int hero_number, std::string hero_type, Hero &hero) {
-  if (hero_type == "knight") {
+void Game::heroUseBuffSkill(std::string hero_type, Hero &hero) {
+    if (hero.get_skill_cooldown() == 1) {
+      Skill skill(hero_type, hero.get_hero_special_attack());
+      hero.set_hero_attack(skill.skill_buff());
+      hero.restartSkillCooldown();
+      this->current_game_state_->heroTurnPass();
+    }
+    else {
+      hero.decreaseSkillCooldown();
+      this->current_game_state_->heroTurnPass();
+    }
+  
+}
+
+void Game::heroUseHealSkill(std::string hero_type, Hero &hero) {
     if (hero.get_skill_cooldown() == 2) {
       Skill skill(hero_type, hero.get_hero_special_attack());
       hero.set_hero_hp(-skill.skill_heal());
-      set_hero_health_bars(hero_number, hero.get_hero_full_hp(), hero.get_hero_hp());
-      hero.set_hero_attack(skill.skill_buff());
+      set_hero_health_bars(0, hero.get_hero_full_hp(), hero.get_hero_hp());
       hero.restartSkillCooldown();
       this->current_game_state_->heroTurnPass();
     }
@@ -599,21 +610,6 @@ void Game::heroUseBuffSkill(int hero_number, std::string hero_type, Hero &hero) 
       hero.decreaseSkillCooldown();
       this->current_game_state_->heroTurnPass();
     }
-  }
-  else if (hero_type == "rogue") {
-    if (hero.get_skill_cooldown() == 1) {
-      Skill skill(hero_type, hero.get_hero_special_attack());
-      hero.set_hero_hp(-skill.skill_heal());
-      set_hero_health_bars(hero_number, hero.get_hero_full_hp(), hero.get_hero_hp());
-      hero.set_hero_attack(skill.skill_buff());
-      hero.restartSkillCooldown();
-      this->current_game_state_->heroTurnPass();
-    }
-    else {
-      hero.decreaseSkillCooldown();
-      this->current_game_state_->heroTurnPass();
-    }
-  }
 }
 
 void Game::heroUseDamageSkill(std::string hero_type, Hero &hero) {
@@ -705,21 +701,6 @@ bool Game::isNextSkillOnCooldown() {
         mage_.get_skill_cooldown() != 2) return true;
     else if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" &&
              rogue_.get_skill_cooldown() != 1) return true;
-    return false;
-  }
-  else if (!mage_.isAlive() && !knight_.isAlive()) {
-    if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" &&
-        rogue_.get_skill_cooldown() != 1) return true;
-    return false;
-  }
-  else if (!mage_.isAlive() && !rogue_.isAlive()) {
-    if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" &&
-        knight_.get_skill_cooldown() != 2) return true;
-    return false;
-  }
-  else if (!rogue_.isAlive() && !knight_.isAlive()) {
-    if (this->current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" &&
-        mage_.get_skill_cooldown() != 2) return true;
     return false;
   }
   return false;
@@ -1146,12 +1127,12 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
           }
 
           if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()) {
-            heroUseBuffSkill(2, "rogue", rogue_);
+            heroUseBuffSkill("rogue", rogue_);
             //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
             enter_pressed_hero_menu_ = false;
           }
           else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && knight_.isAlive()) {
-            heroUseBuffSkill(0, "knight", knight_);
+            heroUseHealSkill("knight", knight_);
             //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
             enter_pressed_hero_menu_ = false;
           }
