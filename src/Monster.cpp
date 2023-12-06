@@ -141,7 +141,12 @@
           if (monster_hp_ <= 0) {
             monster_hp_ = 0;
             my_game_board->get_tile_at(monster_position_x_, monster_position_y_)->deleteObjectInTile();
-            items_.push_back(std::unique_ptr<Item> (new Item(monster_position_x_, monster_position_y_)));
+            Item* new_item = std::unique_ptr<Item> (new Item(monster_position_x_, monster_position_y_));
+            items_.push_back(new_item);
+            if (new_item->get_item_type() != "empty") {
+                my_game_board->get_tile_at(monster_position_x_, monster_position_y_)->setObjectInTile("item");
+            }
+
           }
           else if (monster_hp_ >= monster_full_hp_) {
             monster_hp_ = monster_full_hp_;
