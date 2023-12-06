@@ -68,7 +68,8 @@ void Enemies::eyeSpawn(Board* my_board) {
         int pos_y = this->randomPositionSpawn(my_board).second;
         enemy_count_++;
         this->randomEyeSelect();
-        while(!(my_board->get_tile_at(pos_x, pos_y)->moveableTile())){
+        while(!(my_board->get_tile_at(pos_x, pos_y)->moveableTile()) ||
+             (my_board->get_tile_at(pos_x, pos_y)->getObjectInTile() == "item")) {
             pos_x = this->randomPositionSpawn(my_board).first;
             pos_y = this->randomPositionSpawn(my_board).second;
         }
