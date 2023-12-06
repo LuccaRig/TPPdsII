@@ -1128,18 +1128,15 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
 
           if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "rogue" && rogue_.isAlive()) {
             heroUseBuffSkill("rogue", rogue_);
-            //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
             enter_pressed_hero_menu_ = false;
           }
           else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "knight" && knight_.isAlive()) {
             heroUseHealSkill("knight", knight_);
-            //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
             enter_pressed_hero_menu_ = false;
           }
           else if(current_game_state_->whichHeroTurn(rogue_, mage_, knight_) == "mage" && mage_.isAlive()) {
             heroUseDamageSkill("mage", mage_);
             heroLevel(mage_, mage_.get_hero_number());
-            //my_hordes_.createHordeEnemies(rogue_, mage_, knight_);
             enter_pressed_hero_menu_ = false;
           }
           else {
