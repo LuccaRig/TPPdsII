@@ -4,6 +4,9 @@
 
 Skill::Skill(std::string type, int skill_effect) 
 {
+    skill_hp_ = 0;
+    skill_attack_ = 0;
+    changed_target_hp_ = 0;
     skill_type_ = type;
 
     if (skill_type_ == "knight"){
