@@ -42,6 +42,12 @@ class Game {
     /// @brief Indica o lvl dos heróis na frente do nome
     void heroLevel(Hero &hero, int hero_type);
 
+    /// @brief Constrói o texto dos status iniciais dos heróis
+    void heroFirstStatus();
+
+    /// @brief Indica os status dos heróis abaixo da barra de vida
+    void heroStatus(Hero &hero, int hero_type);
+
     /// @brief Atualiza a janela para cada evento que deve ocorrer
     void update();
 
@@ -167,7 +173,7 @@ class Game {
     Board *game_board_;
     GameState *current_game_state_;
 
-    //Nomes e barras de vida dos heróis
+    //Nomes, status e barras de vida dos heróis
     sf::Font font_;
     std::vector<sf::Text> heros_;
     std::vector<sf::Vector2f> hero_names_position_;
@@ -180,6 +186,11 @@ class Game {
     std::vector<sf::Vector2f> hero_lvl_position_;
     std::vector<std::string> hero_lvl_printed_;
     int init_hero_lvl_;
+
+    std::vector<sf::Text> hero_status_;
+    std::vector<sf::Vector2f> hero_status_position_;
+    std::vector<std::string> hero_status_printed_;
+    int init_hero_status_;
 
     //Menu de opções dos jogadores
     int hero_menu_position_, is_hero_turn;
