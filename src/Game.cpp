@@ -25,7 +25,8 @@ void Game::initWindow(){
     this->game_board_ = new Board();
 }
 
-Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue") {
+Game::Game() : mage_("mage"), knight_("knight"), rogue_("rogue"),
+fire_ball_("fireball"), buff_skill_("buffskill"), heal_skill_("healskill") {
     //Construindo background
     background_.loadFromFile("Textures/Background.png");
     background_sprite_.setTexture(background_);
@@ -337,6 +338,8 @@ void Game::boardRender(float delta_time) {
 
 void Game::renderSkills(int position_x, int position_y, sf::RectangleShape& tileShape, float delta_time) {
     renderDamageSkill(position_x, position_y, delta_time, tileShape, !fire_ball_.isAnimationFinished());
+    renderBuffSkill(position_x, position_y, delta_time, tileShape, !buff_skill_.isAnimationFinished());
+    renderHealSkill(position_x, position_y, delta_time, tileShape, !heal_skill_.isAnimationFinished());
 }
 
 void Game::render(float delta_time) {
@@ -356,7 +359,7 @@ void Game::render(float delta_time) {
     }
     if (current_game_state_->isPlayerTurn(rogue_.isAlive() + mage_.isAlive() + knight_.isAlive()) && 
         !current_game_state_->isGameOver(rogue_, mage_, knight_) && !current_game_state_->playerVictory(my_hordes_)) {
-            if(fire_ball_.isAnimationFinished()) {
+            if(fire_ball_.isAnimationFinished() && buff_skill_.isAnimationFinished()) {
             this->game_window_->draw(background_hero_menu_);
             for (auto it : hero_menu_texts_) {
                 this->game_window_->draw(it);
@@ -635,6 +638,8 @@ void Game::heroAttack(Hero &hero, float delta_time, sf::Clock clock) {
 
 void Game::heroUseBuffSkill(std::string hero_type, Hero &hero) {
     if (hero.get_skill_cooldown() == 1) {
+      buff_skill_.magicAnimationStart();
+      buff_skill_.set_frame_zero();
       Skill skill(hero_type, hero.get_hero_special_attack());
       hero.set_hero_attack(skill.skill_buff());
       hero.restartSkillCooldown();
@@ -649,6 +654,8 @@ void Game::heroUseBuffSkill(std::string hero_type, Hero &hero) {
 
 void Game::heroUseHealSkill(std::string hero_type, Hero &hero) {
     if (hero.get_skill_cooldown() == 2) {
+      heal_skill_.magicAnimationStart();
+      heal_skill_.set_frame_zero();
       Skill skill(hero_type, hero.get_hero_special_attack());
       hero.set_hero_hp(-skill.skill_heal());
       set_hero_health_bars(0, hero.get_hero_full_hp(), hero.get_hero_hp());
@@ -1074,6 +1081,26 @@ void Game::renderDamageSkill(int position_x, int position_y, float delta_time, s
                                                 tileShape.getPosition().y + (tileShape.getSize().y - fire_ball_.get_magic_sprite().getLocalBounds().height*3) / 2);
         fire_ball_.attackMagicAnimation(delta_time);
         this->game_window_->draw(fire_ball_.get_magic_sprite()); 
+    }
+}
+
+void Game::renderBuffSkill(int position_x, int position_y, float delta_time, sf::RectangleShape &tileShape, bool skill_is_used) {
+    if((rogue_.get_hero_position_x() == position_x && rogue_.get_hero_position_y() == position_y) && skill_is_used) {
+        buff_skill_.get_magic_sprite().setScale(3.f,3.f);
+        buff_skill_.get_magic_sprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - buff_skill_.get_magic_sprite().getLocalBounds().width*3) / 2,
+                                                tileShape.getPosition().y + (tileShape.getSize().y - buff_skill_.get_magic_sprite().getLocalBounds().height*3) / 2);
+        buff_skill_.buffMagicAnimation(delta_time);
+        this->game_window_->draw(buff_skill_.get_magic_sprite()); 
+    }
+}
+
+void Game::renderHealSkill(int position_x, int position_y, float delta_time, sf::RectangleShape &tileShape, bool skill_is_used) {
+    if((knight_.get_hero_position_x() == position_x && knight_.get_hero_position_y() == position_y) && skill_is_used) {
+        heal_skill_.get_magic_sprite().setScale(3.f,3.f);
+        heal_skill_.get_magic_sprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - heal_skill_.get_magic_sprite().getLocalBounds().width*3) / 2,
+                                                tileShape.getPosition().y + (tileShape.getSize().y - heal_skill_.get_magic_sprite().getLocalBounds().height*3) / 2);
+        heal_skill_.healMagicAnimation(delta_time);
+        this->game_window_->draw(heal_skill_.get_magic_sprite()); 
     }
 }
 

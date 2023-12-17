@@ -11,11 +11,19 @@
 class Magic{
   public:
     /// @brief Constructor
-    Magic();
+    Magic(std::string);
 
     /// @brief Realiza a animacao da magia de ataque fire_ball_
     /// @param delta_time = tempo decorrido desde o ultimo clock
     void attackMagicAnimation(float delta_time);
+
+    /// @brief Realiza a animacao da magia buff_skill_
+    /// @param delta_time = tempo decorrido desde o ultimo clock
+    void buffMagicAnimation(float delta_time);
+
+    /// @brief Realiza a animacao da magia buff_skill_
+    /// @param delta_time = tempo decorrido desde o ultimo clock
+    void healMagicAnimation(float delta_time);
 
     /// @brief getter para o sprite atual da magia
     /// @return uma referencia para o sprite atual da magia
