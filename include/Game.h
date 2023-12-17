@@ -91,6 +91,20 @@ class Game {
     /// @param delta_time = tempo decorrido desde o ultimo clock para realizar as animacoes
     void renderDamageSkill(int position_x, int position_y, float delta_time, sf::RectangleShape &tileShape, bool skill_is_used);
 
+    /// @brief Renderiza a magia heal_skill_
+    /// @param position_x = posicao x que será renderizada do tabuleiro 
+    /// @param position_y = posicao y que será renderizada do tabuleiro
+    /// @param tileShape = tamanho/caracteristicas do quadrado do tabuleiro
+    /// @param delta_time = tempo decorrido desde o ultimo clock para realizar as animacoes
+    void renderBuffSkill(int position_x, int position_y, float delta_time, sf::RectangleShape &tileShape, bool skill_is_used);
+
+    /// @brief Renderiza a magia buff_skill_
+    /// @param position_x = posicao x que será renderizada do tabuleiro 
+    /// @param position_y = posicao y que será renderizada do tabuleiro
+    /// @param tileShape = tamanho/caracteristicas do quadrado do tabuleiro
+    /// @param delta_time = tempo decorrido desde o ultimo clock para realizar as animacoes
+    void renderHealSkill(int position_x, int position_y, float delta_time, sf::RectangleShape &tileShape, bool skill_is_used);
+
     /// @brief Constrói o menu das opções do turno dos heróis
     void setHeroMenu();
 
@@ -240,6 +254,8 @@ class Game {
     Hero knight_;
     Hero rogue_;
     Magic fire_ball_;
+    Magic buff_skill_;
+    Magic heal_skill_;
 
     Enemies my_hordes_;
     std::vector<std::unique_ptr<Item>> items_;
