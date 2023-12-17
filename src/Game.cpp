@@ -5,6 +5,7 @@
 #include "Skill.h"
 #include "Item.h"
 
+
 #include <iostream>
 #include <math.h>
 #include <sstream>
@@ -329,8 +330,13 @@ void Game::boardRender(float delta_time) {
             for (auto& item_itr : items_) {
                 putItemInBoard(i, j, *(item_itr), tileShape);
             }
+            renderSkills(i, j, tileShape, delta_time);
         }
     }
+}
+
+void Game::renderSkills(int position_x, int position_y, sf::RectangleShape& tileShape, float delta_time) {
+    renderDamageSkill(position_x, position_y, delta_time, tileShape, !fire_ball_.isAnimationFinished());
 }
 
 void Game::render(float delta_time) {
@@ -350,13 +356,15 @@ void Game::render(float delta_time) {
     }
     if (current_game_state_->isPlayerTurn(rogue_.isAlive() + mage_.isAlive() + knight_.isAlive()) && 
         !current_game_state_->isGameOver(rogue_, mage_, knight_) && !current_game_state_->playerVictory(my_hordes_)) {
-        this->game_window_->draw(background_hero_menu_);
-        for (auto it : hero_menu_texts_) {
-            this->game_window_->draw(it);
-        }
-        this->game_window_->draw(which_hero_);
-        this->game_window_->draw(which_direction_);
-        this->game_window_->draw(skill_on_cooldown_);
+            if(fire_ball_.isAnimationFinished()) {
+            this->game_window_->draw(background_hero_menu_);
+            for (auto it : hero_menu_texts_) {
+                this->game_window_->draw(it);
+            }
+            this->game_window_->draw(which_hero_);
+            this->game_window_->draw(which_direction_);
+            this->game_window_->draw(skill_on_cooldown_);
+            }
     }
     if (my_hordes_.get_horde_number() == 1 || my_hordes_.get_horde_number() == 2) {
         this->game_window_->draw(monsters_);
@@ -658,6 +666,8 @@ void Game::heroUseDamageSkill(std::string hero_type, Hero &hero) {
     Skill skill(hero_type, hero.get_hero_special_attack());
     int pos_to_attack_x = 0, pos_to_attack_y = 0;
     Monster* monster_to_be_attacked;
+    fire_ball_.magicAnimationStart();
+    fire_ball_.set_frame_zero();
 
     pos_to_attack_x = hero.get_hero_position_x();
     pos_to_attack_y = hero.get_hero_position_y();
@@ -1051,6 +1061,22 @@ void Game::chooseDirection(int enter_is_pressed) {
     which_direction_.setPosition(sf::Vector2f(345, 550));
 }
 
+void Game::renderDamageSkill(int position_x, int position_y, float delta_time, sf::RectangleShape &tileShape, bool skill_is_used) {
+    bool friendly_fire = false;
+
+    if((position_x == mage_.get_hero_position_x()) && position_y == mage_.get_hero_position_y()) friendly_fire = true;
+    if((position_x == knight_.get_hero_position_x()) && position_y == knight_.get_hero_position_y()) friendly_fire = true;
+    if((position_x == rogue_.get_hero_position_x()) && position_y == rogue_.get_hero_position_y()) friendly_fire = true;
+    
+    if((mage_.get_hero_position_x() == position_x || mage_.get_hero_position_y() == position_y) && !friendly_fire && skill_is_used) {
+        fire_ball_.get_magic_sprite().setScale(3.f,3.f);
+        fire_ball_.get_magic_sprite().setPosition(tileShape.getPosition().x + (tileShape.getSize().x - fire_ball_.get_magic_sprite().getLocalBounds().width*3) / 2,
+                                                tileShape.getPosition().y + (tileShape.getSize().y - fire_ball_.get_magic_sprite().getLocalBounds().height*3) / 2);
+        fire_ball_.attackMagicAnimation(delta_time);
+        this->game_window_->draw(fire_ball_.get_magic_sprite()); 
+    }
+}
+
 void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
   sf::Event event;
   while (game_window_->pollEvent(event)) {
@@ -1223,7 +1249,7 @@ void Game::loopHeroMenu(float delta_time, sf::Clock clock) {
 }
 
 
-void Game::playerTurnControl(float delta_time, sf::Clock clock) {
+void Game::playerTurnControl(float delta_time, sf::Clock clock) { 
     if (!init_hero_lvl_) heroFirstLevel();
     if (!init_hero_status_) heroFirstStatus();
     setHeroMenu();
