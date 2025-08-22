@@ -6,6 +6,7 @@
 #include <utility>
 #include <cstdlib>  
 #include <ctime>
+#include <memory>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
